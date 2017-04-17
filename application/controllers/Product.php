@@ -26,4 +26,16 @@ class Product extends CI_Controller
         $this->layoutData['content'] = $this->load->view('web/product/keyIn', $data, true);
         $this->load->view('web/layout/app', $this->layoutData);
     }
+
+    /**
+     * 商品key in
+     */
+    public function keyInUpdate()
+    {
+        $allProduct = $this->input->post('product');
+
+        $this->load->model('Product_model');
+
+        $this->Product_model->create($allProduct);
+    }
 }
