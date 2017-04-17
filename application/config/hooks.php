@@ -15,4 +15,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $hook['pre_system'] = function() {
     $dotenv = new Dotenv\Dotenv(FCPATH);
     $dotenv->load();
+
+    require FCPATH . "/vendor/larapack/dd/src/helper.php";
 };
