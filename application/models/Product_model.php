@@ -13,10 +13,16 @@ class Product_model extends CI_Model {
 	 */
 	public function __construct()
 	{
-
 		parent::__construct();
 		$this->load->database();
+	}
 
+	/**
+	 * get all
+	 */
+	public function getAll()
+	{
+		return $this->db->order_by('created_at', 'desc')->get(self::DB_NAME)->result_array();
 	}
 
 	/**

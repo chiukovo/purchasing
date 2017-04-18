@@ -30,6 +30,22 @@ class Product extends CI_Controller
     /**
      * 商品key in
      */
+    public function listData()
+    {
+        $this->load->model('Product_model');
+
+        $data = [
+            'product' =>  $this->Product_model->getAll()
+        ];
+
+        //layout data
+        $this->layoutData['content'] = $this->load->view('web/product/list', $data, true);
+        $this->load->view('web/layout/app', $this->layoutData);
+    }
+
+    /**
+     * 商品key in
+     */
     public function keyInUpdate()
     {
         $allProduct = $this->input->post('product');
