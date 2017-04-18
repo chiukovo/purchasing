@@ -10,6 +10,7 @@ class Product extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('Product_model');
 
         //設定layout data
         $this->layoutData = [];
@@ -20,7 +21,9 @@ class Product extends CI_Controller
      */
     public function keyIn()
     {
-        $data = [];
+        $data = [
+            'product' =>  $this->Product_model->getAll()
+        ];
 
         //layout data
         $this->layoutData['content'] = $this->load->view('web/product/keyIn', $data, true);
@@ -30,17 +33,9 @@ class Product extends CI_Controller
     /**
      * 商品key in
      */
-    public function listData()
+    public function getAllProduct()
     {
-        $this->load->model('Product_model');
-
-        $data = [
-            'product' =>  $this->Product_model->getAll()
-        ];
-
-        //layout data
-        $this->layoutData['content'] = $this->load->view('web/product/list', $data, true);
-        $this->load->view('web/layout/app', $this->layoutData);
+        echo json_encode($this->Product_model->getAll());
     }
 
     /**
@@ -49,8 +44,6 @@ class Product extends CI_Controller
     public function keyInUpdate()
     {
         $allProduct = $this->input->post('product');
-
-        $this->load->model('Product_model');
 
         $this->Product_model->create($allProduct);
     }

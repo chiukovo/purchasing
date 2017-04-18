@@ -1,4 +1,4 @@
-<div id="keyIn">
+<div id="keyIn" v-cloak>
 	<div>
 		<button @click="addProduct">新增產品</button>
 	</div>
@@ -22,6 +22,33 @@
 		<button type="button" @click="formPost">送出</button>
 		<input id="csrf" type="hidden" name="chiuko_o_token" value="<?php echo $this->security->get_csrf_hash(); ?>" />
 	</div>
-</div>
 
-<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=1"></script>
+	<h1>目前商品</h1>
+	<table>
+		<tr>
+			<th>名稱</th>
+			<th>售價</th>
+			<th>折扣</th>
+			<th>重量</th>
+			<th>商品狀態</th>
+			<th>新增時間</th>
+			<th>操作</th>
+		</tr>
+
+		<tr v-for="product in allProduct">
+			<td>{{ product.name }}</td>
+			<td>{{ product.money }}</td>
+			<td>{{ product.discount }}</td>
+			<td>{{ product.weight }}</td>
+			<td>
+				{{ getStatusCn(product.status) }}
+			</td>
+			<td>{{ product.created_at }}</td>
+			<td>
+				<button type="button">刪除</button>
+				<button type="button">修改</button>
+			</td>
+		</tr>
+	</table>
+</div>
+<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=3"></script>

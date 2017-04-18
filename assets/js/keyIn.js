@@ -10,6 +10,10 @@ var keyIn = new Vue({
             status: 1,
         }],
         csrf_value: $('#csrf').val(),
+        allProduct: [],
+    },
+    mounted: function () {
+        getALLNowProduct()
     },
     methods: {
         addProduct: function () {
@@ -27,6 +31,13 @@ var keyIn = new Vue({
         },
         formPost: function () {
             ajaxformPost();
+        },
+        getStatusCn: function (status) {
+            if ( status == 1 ) {
+                return '上架';
+            } else if ( status == 2 ) {
+                return '下架';
+            }
         }
     }
 });
@@ -48,8 +59,18 @@ function ajaxformPost()
             chiuko_o_token: keyIn.csrf_value,
         },
         success: function(response) {
-
+            location.reload();
         },
     });
+}
 
+function getALLNowProduct()
+{
+    $.ajax({
+        type: "get",
+        url: "getAllProduct",
+        success: function(response) {
+            keyIn.allProduct = JSON.parse(response);
+        },
+    });
 }
