@@ -42,15 +42,15 @@
 			</td>
 			<td>
 				<span v-show="product.checkText">{{ product.money }}</span>
-				<input v-show="product.checkInput" type="text" v-model="product.money">
+				<input v-show="product.checkInput" type="number" v-model="product.money">
 			</td>
 			<td>
 				<span v-show="product.checkText">{{ product.discount }}</span>
-				<input v-show="product.checkInput" type="text" v-model="product.discount">
+				<input v-show="product.checkInput" type="number" v-model="product.discount">
 			</td>
 			<td>
 				<span v-show="product.checkText">{{ product.weight }}</span>
-				<input v-show="product.checkInput" type="text" v-model="product.weight">
+				<input v-show="product.checkInput" type="number" v-model="product.weight">
 			</td>
 			<td>
 				<span v-show="product.checkText">{{ getStatusCn(product.status) }}</span>
