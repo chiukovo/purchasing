@@ -19,12 +19,12 @@
 	</ul>
 
 	<div>
-		<button type="button" @click="formPost">送出</button>
+		<button type="button" @click="keyInPost">送出</button>
 		<input id="csrf" type="hidden" name="chiuko_o_token" value="<?php echo $this->security->get_csrf_hash(); ?>" />
 	</div>
 
 	<h1>目前商品</h1>
-	<table>
+	<table width="100%">
 		<tr>
 			<th>名稱</th>
 			<th>售價</th>
@@ -35,18 +35,40 @@
 			<th>操作</th>
 		</tr>
 
-		<tr v-for="product in allProduct">
-			<td>{{ product.name }}</td>
-			<td>{{ product.money }}</td>
-			<td>{{ product.discount }}</td>
-			<td>{{ product.weight }}</td>
+		<tr v-for="(product, key) in allProduct">
 			<td>
-				{{ getStatusCn(product.status) }}
+				<span v-show="product.checkText">{{ product.name }}</span>
+				<input v-show="product.checkInput" type="text" v-model="product.name">
+			</td>
+			<td>
+				<span v-show="product.checkText">{{ product.money }}</span>
+				<input v-show="product.checkInput" type="text" v-model="product.money">
+			</td>
+			<td>
+				<span v-show="product.checkText">{{ product.discount }}</span>
+				<input v-show="product.checkInput" type="text" v-model="product.discount">
+			</td>
+			<td>
+				<span v-show="product.checkText">{{ product.weight }}</span>
+				<input v-show="product.checkInput" type="text" v-model="product.weight">
+			</td>
+			<td>
+				<span v-show="product.checkText">{{ getStatusCn(product.status) }}</span>
+				<select v-show="product.checkInput" v-model="product.status">
+					<option value="1" :selected="product.status == 1" >上架</option>
+					<option value="2" :selected="product.status == 2" >下架</option>
+				</select>
 			</td>
 			<td>{{ product.created_at }}</td>
 			<td>
-				<button type="button">刪除</button>
-				<button type="button">修改</button>
+				<div v-show="product.checkText">
+					<button type="button" @click="deleteCheck(product.name, product.id, key)">刪除</button>
+					<button type="button" @click="changeMethod(key)">修改</button>
+				</div>
+				<div v-show="product.checkInput">
+					<button type="button" @click="changeMethod(key)">取消</button>
+					<button type="button" @click="editUpdate(product, key)">送出</button>
+				</div>
 			</td>
 		</tr>
 	</table>

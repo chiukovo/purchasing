@@ -47,4 +47,34 @@ class Product extends CI_Controller
 
         $this->Product_model->create($allProduct);
     }
+
+    /**
+     * 商品key in
+     */
+    public function editUpdate()
+    {
+        $updateProduct = $this->input->post('product');
+
+        $id = $updateProduct['id'];
+
+        unset($updateProduct['id'], $updateProduct['checkText'], $updateProduct['checkInput']);
+
+        $this->Product_model->updateFieldById($id, $updateProduct);
+
+        //new csrf
+        echo $this->security->get_csrf_hash();
+    }
+
+    /**
+     * 商品key in
+     */
+    public function deleteById()
+    {
+        $id = $this->input->post('id');
+
+        $this->Product_model->deleteById($id);
+
+        //new csrf
+        echo $this->security->get_csrf_hash();
+    }
 }

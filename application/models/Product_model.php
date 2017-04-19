@@ -37,4 +37,23 @@ class Product_model extends CI_Model {
 			$this->db->insert(self::DB_NAME, $info);
 		}
 	}
+
+	/**
+	 * update Password By Id
+	 *
+	 * @return bool true on success, false on failure
+	 */
+	public function updateFieldById($id, $updateData)
+	{
+		return $this->db->update(self::DB_NAME, $updateData, array('id' => $id));
+	}
+
+	/**
+	 * delete By Id
+	 * @return bool true on success, false on failure
+	 */
+	public function deleteById($id)
+	{
+		return $this->db->delete(self::DB_NAME, array('id' => $id));
+	}
 }
