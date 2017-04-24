@@ -21,7 +21,6 @@
 
 	<div>
 		<button type="button" @click="keyInPost">送出</button>
-		<input id="csrf" type="hidden" name="chiuko_o_token" value="<?php echo $this->security->get_csrf_hash(); ?>" />
 	</div>
 
 	<h1>目前商品</h1>
@@ -79,4 +78,4 @@
 		</tr>
 	</table>
 </div>
-<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=3"></script>
+<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=4"></script>

@@ -92,4 +92,12 @@ class Product extends CI_Controller
         //new csrf
         echo $this->security->get_csrf_hash();
     }
+
+    /**
+     * 取得上架商品
+     */
+    public function getOnlineProduct()
+    {
+        echo json_encode($this->Product_model->getOnline());
+    }
 }

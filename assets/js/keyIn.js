@@ -9,7 +9,7 @@ var keyIn = new Vue({
             remark: '',
             status: 1,
         }],
-        csrf_value: $('#csrf').val(),
+        csrf_value: $('#csrf').attr('content'),
         allProduct: []
     },
     mounted: function () {

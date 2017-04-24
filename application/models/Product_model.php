@@ -26,6 +26,16 @@ class Product_model extends CI_Model {
 	}
 
 	/**
+	 * get online producu
+	 */
+	public function getOnline()
+	{
+		return $this->db->order_by('created_at', 'desc')
+			->get_where(self::DB_NAME, array('status' => 1))
+			->result_array();
+	}
+
+	/**
 	 * create
 	 *
 	 * @return bool true on success, false on failure
