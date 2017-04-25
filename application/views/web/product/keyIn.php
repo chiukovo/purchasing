@@ -5,9 +5,10 @@
 	<ul>
 		<li v-for="(info, key) in product">
 			名稱: <input type="text" name="name" v-model="info.name" />
-			售價: <input type="number" name="money" v-model="info.money" />
+			進貨金額: <input type="number" name="money" v-model="info.money" />
+			規格: <input type="text" name="standard" v-model="info.standard" />
+			匯率: <input type="number" name="rate" v-model="info.rate" />
 			數量: <input type="number" name="amount" v-model="info.amount" />
-			折扣(%): <input type="number" name="discount" v-model="info.discount" />
 			重量(g): <input type="number" name="weight" v-model="info.weight" />
 			商品狀態:
 			<select v-model="info.status">
@@ -27,9 +28,10 @@
 	<table width="100%">
 		<tr>
 			<th>名稱</th>
-			<th>售價</th>
+			<th>進貨金額</th>
+			<th>規格</th>
+			<th>匯率</th>
 			<th>數量</th>
-			<th>折扣(%)</th>
 			<th>重量(g)</th>
 			<th>商品狀態</th>
 			<th>新增時間</th>
@@ -46,12 +48,16 @@
 				<input v-show="product.checkInput" type="number" v-model="product.money">
 			</td>
 			<td>
-				<span v-show="product.checkText">{{ product.amount }}</span>
-				<input v-show="product.checkInput" type="number" v-model="product.amount">
+				<span v-show="product.checkText">{{ product.standard }}</span>
+				<input v-show="product.checkInput" type="text" v-model="product.standard">
 			</td>
 			<td>
-				<span v-show="product.checkText">{{ product.discount }}</span>
-				<input v-show="product.checkInput" type="number" v-model="product.discount">
+				<span v-show="product.checkText">{{ product.rate }}</span>
+				<input v-show="product.checkInput" type="number" v-model="product.rate">
+			</td>
+			<td>
+				<span v-show="product.checkText">{{ product.amount }}</span>
+				<input v-show="product.checkInput" type="number" v-model="product.amount">
 			</td>
 			<td>
 				<span v-show="product.checkText">{{ product.weight }}</span>
