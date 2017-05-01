@@ -15,7 +15,6 @@ class AddOrder extends AbstractMigration
               `productId` VARCHAR(200) NULL,
               `date` DATETIME NULL,
               `idCard` VARCHAR(45) NULL,
-              `payment` FLOAT NOT NULL DEFAULT 0,
               `rate` FLOAT NULL,
               `total_cost_us` FLOAT NOT NULL DEFAULT 0,
               `total_cost_nt` FLOAT NOT NULL DEFAULT 0,

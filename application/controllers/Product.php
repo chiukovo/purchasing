@@ -19,6 +19,16 @@ class Product extends CI_Controller
     /**
      * 商品key in
      */
+    public function index()
+    {
+        //layout data
+        $this->layoutData['content'] = $this->load->view('web/product/index', '', true);
+        $this->load->view('web/layout/app', $this->layoutData);
+    }
+
+    /**
+     * 商品key in
+     */
     public function keyIn()
     {
         $data = [

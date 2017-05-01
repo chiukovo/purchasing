@@ -16,7 +16,9 @@
 </head>
 
 <body>
+	<div id="mainBody">
 	<?php echo $content;?>
+	</div>
 </body>
 
 </html>
