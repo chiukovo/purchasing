@@ -14,6 +14,7 @@ class AddProduct extends AbstractMigration
               `id` int(11) NOT NULL AUTO_INCREMENT,
               `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
               `weight` float DEFAULT NULL,
+              `amount` int(11) NOT NULL DEFAULT 0,
               `money` float DEFAULT NULL,
               `discount` float DEFAULT NULL,
               `remark` text COLLATE utf8_unicode_ci,
