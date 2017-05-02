@@ -1,19 +1,14 @@
 var keyIn = new Vue({
     el: '#keyIn',
     data: {
-        product: [{
-            name: '',
-            weight: '',
-            money: '',
-            discount: '',
-            remark: '',
-            status: 1,
-        }],
-        csrf_value: $('#csrf').val(),
-        allProduct: []
+        allProduct: [],
+        allProductName: [],
+        date: '',
+        idCard: '',
+        csrf_value: $('#csrf').attr('content'),
     },
     mounted: function () {
-        getALLNowProduct()
+        autoSearch();
     },
     methods: {
         addProduct: function () {
@@ -21,8 +16,9 @@ var keyIn = new Vue({
                 name: '',
                 weight: '',
                 money: '',
-                discount: '',
                 remark: '',
+                standard: '',
+                rate: '',
                 status: 1,
             });
         },
@@ -138,21 +134,23 @@ function deleteById(id, key)
     });
 }
 
-function getALLNowProduct()
+function autoSearch()
 {
     $.ajax({
         type: "get",
         url: "getAllProduct",
         success: function(response) {
+
             keyIn.allProduct = JSON.parse(response);
 
-            //add check show
+            //add autocomplete
             keyIn.allProduct.map(function (value) {
-                value.checkText = true;
-                value.checkInput = false;
-
-                return value;
+                keyIn.allProductName.push({
+                    value: value.name,
+                });
             });
+
+            $('#autocomplete').autocomplete({lookup: keyIn.allProductName});
         },
     });
 }

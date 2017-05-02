@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta id="csrf" content="<?php echo $this->security->get_csrf_hash(); ?>">
 <title>purchasing</title>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/sweetalert.css">
 <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js"></script>
@@ -15,7 +16,9 @@
 </head>
 
 <body>
+	<div id="mainBody">
 	<?php echo $content;?>
+	</div>
 </body>
 
 </html>
