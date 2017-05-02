@@ -19,7 +19,6 @@ class AddProduct extends AbstractMigration
               `discount` float DEFAULT NULL,
               `remark` text COLLATE utf8_unicode_ci,
               `created_at` datetime DEFAULT NULL,
-              `status` int(11) NOT NULL DEFAULT '1' COMMENT '0: 下架, 1: 上架',
               PRIMARY KEY (`id`)
             ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
