@@ -3,8 +3,12 @@ var keyIn = new Vue({
     data: {
         allProduct: [],
         allProductName: [],
+        keyInProduct: [],
+        listProduct: [],
         date: '',
         idCard: '',
+        isDefault: true,
+        isEdit: false,
         csrf_value: $('#csrf').attr('content'),
     },
     mounted: function () {
@@ -12,61 +16,63 @@ var keyIn = new Vue({
     },
     methods: {
         addProduct: function () {
-            this.product.push({
-                name: '',
-                weight: '',
-                money: '',
-                remark: '',
-                standard: '',
-                rate: '',
-                status: 1,
+            this.listProduct.push({
+                name: this.keyInProduct.name,
+                weight: this.keyInProduct.weight,
+                amount: this.keyInProduct.amount,
+                money: this.keyInProduct.money,
+                remark: this.keyInProduct.remark,
+                standard: this.keyInProduct.standard,
+                isDefault: true,
+                isEdit: false,
             });
-        },
-        removeProduct: function (key) {
-            this.product.splice(key, 1);
+
+            //emtpy this ヽ(ຈل͜ຈ)ﾉ
+            this.keyInProduct = [];
         },
         keyInPost: function () {
             ajaxKeyInPost();
         },
-        editUpdate: function (product, key) {
-            editUpdate(product, key);
-        },
-        getStatusCn: function (status) {
-            if ( status == 1 ) {
-                return '上架';
-            } else if ( status == 2 ) {
-                return '下架';
+        changeMethod: function (nowKey, type) {
+            switch (type) {
+                case 'edit':
+                case 'enter':
+                    changeMethod(nowKey);
+                    break;
+                case 'delete':
+                    this.deleteCheck(nowKey);
+                    break;
             }
         },
-        checkSeleted: function (status, source) {
-            if (status == source) {
-                return "selected";
-            }
-        },
-        changeMethod: function (nowKey) {
-            keyIn.allProduct = keyIn.allProduct.map(function (product, key) {
-                if (nowKey == key) {
-                    product.checkText = ! product.checkText;
-                    product.checkInput = ! product.checkInput;
-                }
+        deleteCheck: function (nowKey) {
+            var thisName = keyIn.listProduct[nowKey].name;
+            thisName = (typeof thisName == "undefined") ? '' : thisName;
 
-                return product;
-            });
-        },
-        deleteCheck: function (name, id, key) {
             swal({
                 title: "注意",
-                text: "您確定要刪除" + name + "嗎？",
+                text: "您確定要刪除" + thisName + "嗎？",
                 showCancelButton: true,
                 cancelButtonText: "取消",
                 type: "warning"
             },
             function () {
-                deleteById(id, key);
+                keyIn.listProduct.splice(nowKey, 1);
             });
         }
     }
 });
+
+function changeMethod(nowKey)
+{
+    keyIn.listProduct = keyIn.listProduct.map(function (product, key) {
+        if (nowKey == key) {
+            product.isDefault = ! product.isDefault;
+            product.isEdit = ! product.isEdit;
+        }
+
+        return product;
+    });
+}
 
 function ajaxKeyInPost()
 {
@@ -90,50 +96,6 @@ function ajaxKeyInPost()
     });
 }
 
-function editUpdate(updateProduct, updateKey)
-{
-    $.ajax({
-        type: "POST",
-        url: "editUpdate",
-        data: {
-            product: updateProduct,
-            chiuko_o_token: keyIn.csrf_value,
-        },
-        success: function(response) {
-            keyIn.csrf_value = response;
-
-            keyIn.allProduct = keyIn.allProduct.map(function (product, key) {
-                if (updateKey == key) {
-                    updateProduct.checkText = ! updateProduct.checkText;
-                    updateProduct.checkInput = ! updateProduct.checkInput;
-
-                    return updateProduct;
-                }
-
-                return product;
-            });
-        },
-    });
-}
-
-
-function deleteById(id, key)
-{
-    $.ajax({
-        type: "POST",
-        url: "deleteById",
-        data: {
-            id: id,
-            chiuko_o_token: keyIn.csrf_value,
-        },
-        success: function(response) {
-            keyIn.csrf_value = response;
-
-            keyIn.allProduct.splice(key, 1);
-        },
-    });
-}
-
 function autoSearch()
 {
     $.ajax({
@@ -150,7 +112,7 @@ function autoSearch()
                 });
             });
 
-            $('#autocomplete').autocomplete({lookup: keyIn.allProductName});
+            $('.autocomplete').autocomplete({lookup: keyIn.allProductName});
         },
     });
 }
