@@ -11,6 +11,7 @@ class Product extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Product_model');
+        $this->load->model('PurchaseOrder_model');
 
         //設定layout data
         $this->layoutData = [];
@@ -47,7 +48,7 @@ class Product extends CI_Controller
     {
         $content = file_get_contents('https://tw.rter.info/capi.php');
         $currency = json_decode($content);
-        
+
         //美金匯率
         $USA = $currency->USDTWD->Exrate;
         $USA_time = $currency->USDTWD->UTC;
@@ -77,9 +78,17 @@ class Product extends CI_Controller
      */
     public function keyInUpdate()
     {
-        $allProduct = $this->input->post('product');
+        $listProduct = $this->input->post('listProduct');
+        $productOrder = $this->input->post('productOrder');
 
-        $this->Product_model->create($allProduct);
+        if ( ! empty($listProduct)) {
+            //code for order
+            $orderCode = date('YmdHis') . rand(10, 99);
+
+            $insertIds = $this->Product_model->create($listProduct, $orderCode);
+
+            $this->PurchaseOrder_model->create($productOrder, $insertIds);
+        }
     }
 
     /**

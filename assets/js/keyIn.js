@@ -1,6 +1,13 @@
 var keyIn = new Vue({
     el: '#keyIn',
     data: {
+        productOrder: {
+            date: '',
+            idCard: '',
+            rate: 0,
+            total_cost_us: 0,
+            total_cost_nt: 0,
+        },
         allProduct: [],
         allProductName: [],
         keyInProduct: [],
@@ -20,7 +27,8 @@ var keyIn = new Vue({
                 name: this.keyInProduct.name,
                 weight: this.keyInProduct.weight,
                 amount: this.keyInProduct.amount,
-                money: this.keyInProduct.money,
+                money_us: this.keyInProduct.money_us,
+                money_nt: this.keyInProduct.money_nt,
                 remark: this.keyInProduct.remark,
                 standard: this.keyInProduct.standard,
                 isDefault: true,
@@ -58,6 +66,9 @@ var keyIn = new Vue({
             function () {
                 keyIn.listProduct.splice(nowKey, 1);
             });
+        },
+        insert: function () {
+            ajaxKeyInPost();
         }
     }
 });
@@ -77,8 +88,8 @@ function changeMethod(nowKey)
 function ajaxKeyInPost()
 {
     //array remove empty data
-    keyIn.product = keyIn.product.filter(function (info) {
-        if (info.name != '') {
+    keyIn.listProduct = keyIn.listProduct.filter(function (info) {
+        if (typeof info.name != "undefined") {
             return info;
         }
     });
@@ -87,7 +98,8 @@ function ajaxKeyInPost()
         type: "POST",
         url: "keyInUpdate",
         data: {
-            product: keyIn.product,
+            listProduct: keyIn.listProduct,
+            productOrder: keyIn.productOrder,
             chiuko_o_token: keyIn.csrf_value,
         },
         success: function(response) {

@@ -7,23 +7,23 @@
 			<div class="purchase-infor">
 				<div class="form-group">
 					<label class="form-label">訂單日期</label>
-					<input type="date" value="">
+					<input type="date" data-date-format="DD-YYYY-MM" v-model="productOrder.date">
 				</div>
 				<div class="form-group">
 					<label class="form-label">信用卡名稱</label>
-					<input class="form-input" type="text" value="">
+					<input class="form-input" type="text" v-model="productOrder.idCard">
 				</div>
 				<div class="form-group">
 					<label class="form-label">本單匯率</label>
-					<input class="form-input" type="text" value="">
+					<input class="form-input" type="text" v-model="productOrder.rate">
 				</div>
 				<div class="form-group">
 					<label class="form-label">進貨總成本(US)</label>
-						<input class="form-input" type="text" value="">
+						<input class="form-input" type="text" v-model="productOrder.total_cost_us">
 				</div>
 				<div class="form-group">
 					<label class="form-label">進貨總成本(NT)</label>
-						<input class="form-input" type="text" value="">
+						<input class="form-input" type="text" v-model="productOrder.total_cost_nt">
 				</div>
 			</div>
 			<div class="purchase-add">
@@ -47,8 +47,12 @@
 					<input class="form-input" type="number" v-model="keyInProduct.weight">
 				</div>
 				<div class="form-group">
-					<label class="form-label">金額</label>
-					<input class="form-input" type="number" v-model="keyInProduct.money">
+					<label class="form-label">金額(US)</label>
+					<input class="form-input" type="number" v-model="keyInProduct.money_us">
+				</div>
+				<div class="form-group">
+					<label class="form-label">金額(NT)</label>
+					<input class="form-input" type="number" v-model="keyInProduct.money_nt">
 				</div>
 				<div class="form-group">
 					<label class="form-label">備註</label>
@@ -65,6 +69,7 @@
 					<th>數量</th>
 					<th>重量(lb)</th>
 					<th>金額(US)</th>
+					<th>金額(NT)</th>
 					<th>備註</th>
 					<th>功能</th>
 				</tr>
@@ -86,25 +91,31 @@
 						<span v-show="info.isEdit"><input type="number" v-model="info.weight" /></span>
 					</td>
 					<td>
-						<span v-show="info.isDefault">{{ info.money }}</span>
-						<span v-show="info.isEdit"><input type="number" v-model="info.money" /></span>
+						<span v-show="info.isDefault">{{ info.money_us }}</span>
+						<span v-show="info.isEdit"><input type="number" v-model="info.money_us" /></span>
+					</td>
+					<td>
+						<span v-show="info.isDefault">{{ info.money_nt }}</span>
+						<span v-show="info.isEdit"><input type="number" v-model="info.money_nt" /></span>
 					</td>
 					<td>
 						<span v-show="info.isDefault">{{ info.remark }}</span>
-						<span v-show="info.isEdit"><textarea class="form-textarea" v-model="keyInProduct.remark"></textarea></span>
+						<span v-show="info.isEdit"><textarea class="form-textarea" v-model="info.remark"></textarea></span>
 					</td>
 					<td>
 						<button class="btn btn-edit" v-show="info.isDefault" @click="changeMethod(key, 'edit')">修改</button>
 
 						<button class="btn btn-del" v-show="info.isEdit" @click="changeMethod(key, 'delete')">刪除</button>
 						<button class="btn btn-submit" v-show="info.isEdit" @click="changeMethod(key, 'enter')">確認</button>
-
 					</td>
 				</tr>
 			</table>
+			<div>
+				<button @click="insert()">送出儲存</button>
+			</div>
 		</div>
 	</div>
 	<div id="page-footer"></div>
 </div>
 
-<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=4"></script>
+<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=9"></script>

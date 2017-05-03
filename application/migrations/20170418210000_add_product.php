@@ -15,10 +15,13 @@ class AddProduct extends AbstractMigration
               `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
               `weight` float DEFAULT NULL,
               `amount` int(11) NOT NULL DEFAULT 0,
-              `money` float DEFAULT NULL,
+              `money_us` float DEFAULT NULL,
+              `money_nt` float DEFAULT NULL,
               `discount` float DEFAULT NULL,
               `remark` text COLLATE utf8_unicode_ci,
+              `code` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
               `created_at` datetime DEFAULT NULL,
+              `updated_at` datetime DEFAULT NULL,
               PRIMARY KEY (`id`)
             ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");

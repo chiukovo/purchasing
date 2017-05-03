@@ -40,12 +40,31 @@ class Product_model extends CI_Model {
 	 *
 	 * @return bool true on success, false on failure
 	 */
-	public function create($product)
+	public function create($product, $code)
 	{
+		$insertId = [];
+
 		foreach ($product as $info) {
-			$info['created_at'] = date('Y-m-d h:i:s');
-			$this->db->insert(self::DB_NAME, $info);
+			$insert = array(
+				'name' => isset($info['name']) ? $info['name'] : '',
+				'code' => $code,
+				'weight' => isset($info['weight']) ? $info['weight'] : '',
+				'amount' => isset($info['amount']) ? $info['amount'] : '',
+				'money_us' => isset($info['money_us']) ? $info['money_us'] : '',
+				'money_nt' => isset($info['money_nt']) ? $info['money_nt'] : '',
+				'remark' => isset($info['remark']) ? $info['remark'] : '',
+				'standard' => isset($info['standard']) ? $info['standard'] : '',
+				'created_at' => date('Y-m-d h:i:s'),
+				'updated_at' => date('Y-m-d h:i:s'),
+			);
+
+			if ($insert['name'] != '') {
+				$this->db->insert(self::DB_NAME, $insert);
+				$insertId[] = $this->db->insert_id();
+			}
 		}
+
+		return json_encode($insertId);
 	}
 
 	/**
