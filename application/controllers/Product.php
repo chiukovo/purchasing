@@ -28,6 +28,35 @@ class Product extends CI_Controller
     }
 
     /**
+     * 進貨單列表
+     */
+    public function list()
+    {
+        $paramData = $this->input->get();
+
+        if ( isset($paramData['start']) && isset($paramData['end'])) {
+            $start = $paramData['start'];
+            $end = $paramData['end'];
+        } else {
+            $first = new DateTime('first day of this month');
+            $start = $first->format('Y-m-d');
+
+            $last = new DateTime('last day of this month');
+            $end = $last->format('Y-m-d');
+        }
+
+        $data = [
+            'product' =>  $this->PurchaseOrder_model->getByDateRange($start, $end),
+            'start' => $start,
+            'end' => $end
+        ];
+
+        //layout data
+        $this->layoutData['content'] = $this->load->view('web/product/list', $data, true);
+        $this->load->view('web/layout/app', $this->layoutData);
+    }
+
+    /**
      * 商品key in
      */
     public function keyIn()
@@ -87,7 +116,7 @@ class Product extends CI_Controller
 
             $insertIds = $this->Product_model->create($listProduct, $orderCode);
 
-            $this->PurchaseOrder_model->create($productOrder, $insertIds);
+            $this->PurchaseOrder_model->create($productOrder, $insertIds, $orderCode);
         }
     }
 
@@ -119,13 +148,5 @@ class Product extends CI_Controller
 
         //new csrf
         echo $this->security->get_csrf_hash();
-    }
-
-    /**
-     * 取得上架商品
-     */
-    public function getOnlineProduct()
-    {
-        echo json_encode($this->Product_model->getOnline());
     }
 }

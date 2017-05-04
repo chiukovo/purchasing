@@ -26,6 +26,16 @@ class Product_model extends CI_Model {
 	}
 
 	/**
+	 * get by filters
+	 */
+	public function getByFilters($filters)
+	{
+		return $this->db->order_by('created_at', 'desc')
+			->get_where(self::DB_NAME, $filters)
+			->result_array();
+	}
+
+	/**
 	 * get online producu
 	 */
 	public function getOnline()
