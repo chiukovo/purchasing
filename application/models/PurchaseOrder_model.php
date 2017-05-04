@@ -67,6 +67,27 @@ class PurchaseOrder_model extends CI_Model {
 	}
 
 	/**
+	 * get all
+	 */
+	public function getByCode($code)
+	{
+		$result = array();
+
+		$get = $this->db->order_by('created_at', 'desc')
+			->where('code', $code)
+			->get(self::DB_NAME)
+			->result_array();
+
+		foreach ($get as $value) {
+			$product = $this->Product_model->getByFilters(['code' => $value['code']]);
+			$value['product'] = $product;
+			$result[] = $value;
+		}
+
+		return $result[0];
+	}
+
+	/**
 	 * create
 	 *
 	 * @return bool true on success, false on failure

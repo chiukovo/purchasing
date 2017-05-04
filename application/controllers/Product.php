@@ -61,13 +61,52 @@ class Product extends CI_Controller
      */
     public function keyIn()
     {
+        //layout data
+        $this->layoutData['content'] = $this->load->view('web/product/keyIn', '', true);
+        $this->load->view('web/layout/app', $this->layoutData);
+    }
+
+    /**
+     * 商品key in
+     */
+    public function productEdit()
+    {
+        $paramData = $this->input->get();
+
+        if ( ! isset($paramData['code']) || empty($paramData['code'])) {
+            redirect('/product/list');
+        }
+
         $data = [
-            'product' =>  $this->Product_model->getAll()
+            'code' => $paramData['code'],
         ];
 
         //layout data
-        $this->layoutData['content'] = $this->load->view('web/product/keyIn', $data, true);
+        $this->layoutData['content'] = $this->load->view('web/product/productEdit', $data, true);
         $this->load->view('web/layout/app', $this->layoutData);
+    }
+
+    /**
+     * get by code
+     */
+    public function getProductByCode()
+    {
+        $paramData = $this->input->get();
+
+        echo json_encode($this->PurchaseOrder_model->getByCode($paramData['code']));
+    }
+
+    /**
+     * 商品key in
+     */
+    public function productEditUpdate()
+    {
+        $listProduct = $this->input->post('listProduct');
+        $productOrder = $this->input->post('productOrder');
+
+        if ( ! empty($listProduct)) {
+
+        }
     }
 
     /**
