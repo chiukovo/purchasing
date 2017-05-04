@@ -32,7 +32,7 @@
 				</h3>
 				<div class="form-group">
 					<label class="form-label">品名</label>
-					<input type="text" class="autocomplete" v-model="keyInProduct.name" />
+					<input type="text" class="autocomplete" v-model="keyInProduct.name" data-model="keyInProduct" data-key="" />
 				</div>
 				<div class="form-group">
 					<label class="form-label">規格</label>
@@ -76,7 +76,7 @@
 				<tr v-for="(info, key) in listProduct">
 					<td>
 						<span v-show="info.isDefault">{{ info.name }}</span>
-						<span v-show="info.isEdit"><input type="text" v-model="info.name" /></span>
+						<span v-show="info.isEdit"><input type="text" class="autocomplete" v-model="info.name" data-model="listProduct" :data-key="key" /></span>
 					</td>
 					<td>
 						<span v-show="info.isDefault">{{ info.standard }}</span>
@@ -118,4 +118,4 @@
 	<div id="page-footer"></div>
 </div>
 
-<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=9"></script>
+<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=12"></script>
