@@ -123,16 +123,16 @@ function autoSearch()
                     value: value.name,
                 });
             });
-
-            $('.autocomplete').autocomplete({
-                lookup: keyIn.allProductName,
-                onSelect: function (suggestion) {
-                    var $input = $('.autocomplete').val(suggestion.value);
-                    var e = document.createEvent('HTMLEvents');
-                    e.initEvent('input', true, true);
-                    $input[0].dispatchEvent(e);
-                }
-            });
         },
     });
 }
+
+$('.autocomplete').autocomplete({
+    lookup: keyIn.allProductName,
+    onSelect: function (suggestion) {
+        var $input = $('.autocomplete').val(suggestion.value);
+        var e = document.createEvent('HTMLEvents');
+        e.initEvent('input', true, true);
+        $input[0].dispatchEvent(e);
+    }
+});
