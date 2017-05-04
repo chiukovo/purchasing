@@ -76,7 +76,7 @@
 				<tr v-for="(info, key) in listProduct">
 					<td>
 						<span v-show="info.isDefault">{{ info.name }}</span>
-						<span v-show="info.isEdit"><input type="text" class="autocomplete" v-model="info.name" /></span>
+						<span v-show="info.isEdit"><input type="text" v-model="info.name" /></span>
 					</td>
 					<td>
 						<span v-show="info.isDefault">{{ info.standard }}</span>

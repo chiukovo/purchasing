@@ -124,7 +124,15 @@ function autoSearch()
                 });
             });
 
-            $('.autocomplete').autocomplete({lookup: keyIn.allProductName});
+            $('.autocomplete').autocomplete({
+                lookup: keyIn.allProductName,
+                onSelect: function (suggestion) {
+                    var $input = $('.autocomplete').val(suggestion.value);
+                    var e = document.createEvent('HTMLEvents');
+                    e.initEvent('input', true, true);
+                    $input[0].dispatchEvent(e);
+                }
+            });
         },
     });
 }
