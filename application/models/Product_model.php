@@ -95,4 +95,12 @@ class Product_model extends CI_Model {
 	{
 		return $this->db->delete(self::DB_NAME, array('id' => $id));
 	}
+
+	/**
+	 * delete By Id
+	 */
+	public function deleteByCode($code)
+	{
+		$this->db->delete(self::DB_NAME, array('code' => $code));
+	}
 }

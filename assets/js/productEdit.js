@@ -152,12 +152,20 @@ function autoSearch()
     });
 }
 
-$('.autocomplete').autocomplete({
-    lookup: keyIn.allProductName,
-    onSelect: function (suggestion) {
-        var $input = $('.autocomplete').val(suggestion.value);
-        var e = document.createEvent('HTMLEvents');
-        e.initEvent('input', true, true);
-        $input[0].dispatchEvent(e);
-    }
+$(document).on('keydown.autocomplete', '.autocomplete', function() {
+    $('.autocomplete').autocomplete({
+        lookup: keyIn.allProductName,
+        onSelect: function (suggestion) {
+            var modelName = $(this).attr('data-model');
+            var modelKey = $(this).attr('data-key');
+
+            switch (modelName) {
+                case 'keyInProduct':
+                    keyIn.keyInProduct.name = suggestion.value;
+                    break;
+                case 'listProduct':
+                    keyIn.listProduct[modelKey].name = suggestion.value;
+            }
+        }
+    });
 });

@@ -104,8 +104,17 @@ class Product extends CI_Controller
         $listProduct = $this->input->post('listProduct');
         $productOrder = $this->input->post('productOrder');
 
-        if ( ! empty($listProduct)) {
 
+        if ( ! empty($listProduct) && ! empty($productOrder)) {
+            $this->Product_model->deleteByCode($productOrder['code']);
+            $insertIds = $this->Product_model->create($listProduct, $productOrder['code']);
+
+            $id = $productOrder['id'];
+            $productOrder['productId'] = $insertIds;
+            $productOrder['updated_at'] = date('Y-m-d h:i:s');
+            unset($productOrder['id']);
+
+            $this->PurchaseOrder_model->updateFieldById($id, $productOrder);
         }
     }
 
