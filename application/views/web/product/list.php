@@ -42,10 +42,39 @@ $(function() {
                 <td><?php echo $info['total_cost_us'];?></td>
                 <td><?php echo $info['total_cost_nt'];?></td>
                 <td><a href="<?php echo base_url(); ?>product/productEdit?code=<?php echo $info['code'];?>">edit</a></td>
-                <td></td>
+                <td>
+                    <a onclick="deleteCode('<?php echo $info['code'];?>', '<?php echo $info['date'];?>')">刪除</a>
+                </td>
             </tr>
             <?php } ?>
         </table>
 	</div>
 </div>
 <div id="page-footer"></div>
+
+<script type="text/javascript">
+
+function deleteCode(code, date)
+{
+    swal({
+        title: "注意",
+        text: "您確定要刪除" + date + "嗎？",
+        showCancelButton: true,
+        cancelButtonText: "取消",
+        type: "warning"
+    },
+    function () {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url();?>product/deleteByCode",
+            data: {
+                code: code,
+                chiuko_o_token: $('#csrf').attr('content'),
+            },
+            success: function(response) {
+                location.reload();
+            },
+        });
+    });
+}
+</script>

@@ -119,6 +119,18 @@ class Product extends CI_Controller
     }
 
     /**
+     * 商品key in
+     */
+    public function deleteByCode()
+    {
+        $code = $this->input->post('code');
+
+        $this->Product_model->deleteByCode($code);
+
+        $this->PurchaseOrder_model->deleteByCode($code);
+    }
+
+    /**
      * 商品訂單
      */
     public function order()

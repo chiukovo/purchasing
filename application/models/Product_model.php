@@ -97,7 +97,7 @@ class Product_model extends CI_Model {
 	}
 
 	/**
-	 * delete By Id
+	 * delete By code
 	 */
 	public function deleteByCode($code)
 	{

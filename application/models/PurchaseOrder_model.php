@@ -127,4 +127,12 @@ class PurchaseOrder_model extends CI_Model {
 	{
 		return $this->db->delete(self::DB_NAME, array('id' => $id));
 	}
+
+	/**
+	 * delete By code
+	 */
+	public function deleteByCode($code)
+	{
+		$this->db->delete(self::DB_NAME, array('code' => $code));
+	}
 }
