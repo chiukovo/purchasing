@@ -17,6 +17,10 @@ class AddWareHouse extends AbstractMigration
               `freight` TEXT COLLATE utf8_unicode_ci NOT NULL,
             PRIMARY KEY (`id`));
         ");
+
+        $this->query("
+            INSERT INTO `warehouse_setting` (`name`, `receiver`, `freight`) VALUES ('[]', '[]', '[]');
+        ");
     }
 
     /**
