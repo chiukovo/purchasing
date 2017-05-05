@@ -19,6 +19,7 @@
 	<div id="mainBody">
 	<?php echo $content;?>
 	</div>
+    <div id="page-footer"></div>
 </body>
 
 </html>

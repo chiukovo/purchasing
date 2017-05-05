@@ -1,8 +1,8 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.autocomplete.min.js"></script>
 
-<div id="keyIn">
-	<div id="page-header"></div>
-	<div id="page-container">
+<div id="page-header"></div>
+<div id="page-container">
+	<div id="keyIn">
 		<div class="page-body">
 			<div class="purchase-infor">
 				<div class="form-group">
@@ -115,7 +115,6 @@
 			</div>
 		</div>
 	</div>
-	<div id="page-footer"></div>
 </div>
 
 <script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=12"></script>

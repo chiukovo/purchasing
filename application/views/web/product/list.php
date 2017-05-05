@@ -50,7 +50,6 @@ $(function() {
         </table>
 	</div>
 </div>
-<div id="page-footer"></div>
 
 <script type="text/javascript">
 
