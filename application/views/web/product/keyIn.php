@@ -116,5 +116,4 @@
 		</div>
 	</div>
 </div>
-
-<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=12"></script>
+<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=13"></script>

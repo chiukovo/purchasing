@@ -14,7 +14,7 @@ class AddOrder extends AbstractMigration
               `id` INT NOT NULL AUTO_INCREMENT,
               `productId` VARCHAR(200) NULL,
               `date` DATE NULL,
-              `idCard` VARCHAR(45) NULL,
+              `idCard` VARCHAR(45) COLLATE utf8_unicode_ci NULL,
               `rate` FLOAT NULL,
               `code` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
               `total_cost_us` FLOAT NOT NULL DEFAULT 0,
