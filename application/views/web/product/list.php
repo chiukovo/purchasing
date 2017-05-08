@@ -24,17 +24,18 @@ $(function() {
             </form>
         </div>
         進貨單列表
-        <table>
+        <table id="list">
             <tr>
                 <th>訂單日期</th>
                 <th>信用卡</th>
                 <th>本單匯率</th>
                 <th>總成本(US)</th>
                 <th>總成本(NT)</th>
-                <th>功能</th>
                 <th>產品項目</th>
+                <th>功能</th>
             </tr>
-            <?php foreach($product as $info) { ?>
+            <?php foreach($product as $key => $info) { ?>
+            <tbody>
             <tr>
                 <td><?php echo $info['date'];?></td>
                 <td><?php echo $info['idCard'];?></td>
@@ -45,13 +46,54 @@ $(function() {
                 <td>
                     <a onclick="deleteCode('<?php echo $info['code'];?>', '<?php echo $info['date'];?>')">刪除</a>
                 </td>
+                <td><button type="button" @click='checkShow("<?php echo $key;?>")'>展開</button></td>
             </tr>
+            <td colspan="5" v-show='showProduct["<?php echo $key;?>"]'>
+                <table>
+                    <tr>
+                        <th>品名</th>
+                        <th>數量</th>
+                        <th>規格</th>
+                        <th>進貨金額(US)</th>
+                        <th>進貨金額(NT)</th>
+                        <th>備註</th>
+                    </tr>
+                    <?php foreach($info['product'] as $productInfo) { ?>
+                    <tr>
+                        <td><?php echo $productInfo['name']?></td>
+                        <td><?php echo $productInfo['amount']?></td>
+                        <td><?php echo $productInfo['standard']?></td>
+                        <td><?php echo $productInfo['money_us']?></td>
+                        <td><?php echo $productInfo['money_nt']?></td>
+                        <td><?php echo $productInfo['remark']?></td>
+                    </tr>
+                    <?php } ?>
+                </table>
+            </td>
+            </tbody>
             <?php } ?>
         </table>
 	</div>
 </div>
 
 <script type="text/javascript">
+var list = new Vue({
+    el: '#list',
+    data: {
+        count: <?php echo count($product);?>,
+        showProduct: [],
+    },
+    mounted: function () {
+        for(num = 0; num < this.count; num++) {
+            this.showProduct.push(false);
+        }
+    },
+    methods: {
+        checkShow: function (key) {
+            Vue.set(this.showProduct, key, !this.showProduct[key]);
+        }
+    }
+});
 
 function deleteCode(code, date)
 {
