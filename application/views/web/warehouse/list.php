@@ -71,6 +71,9 @@ new Vue({
     },
     methods: {
         onChange: function (e) {
+            var value = e.target.value;
+            this.type = event.currentTarget.getAttribute('data-type');
+            this.id = event.currentTarget.getAttribute('data-id');
         }
     }
 });
