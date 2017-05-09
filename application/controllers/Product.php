@@ -134,6 +134,28 @@ class Product extends CI_Controller
     /**
      * 商品key in
      */
+    public function editUpdate()
+    {
+        $listProduct = $this->input->post('listProduct');
+        $productOrder = $this->input->post('productOrder');
+
+
+        if ( ! empty($listProduct) && ! empty($productOrder)) {
+            $this->Product_model->deleteByCode($productOrder['code']);
+            $insertIds = $this->Product_model->create($listProduct, $productOrder['code']);
+
+            $id = $productOrder['id'];
+            $productOrder['productId'] = $insertIds;
+            $productOrder['updated_at'] = date('Y-m-d h:i:s');
+            unset($productOrder['id']);
+
+            $this->PurchaseOrder_model->updateFieldById($id, $productOrder);
+        }
+    }
+
+    /**
+     * 商品key in
+     */
     public function deleteByCode()
     {
         $code = $this->input->post('code');
@@ -196,15 +218,15 @@ class Product extends CI_Controller
     /**
      * 商品key in
      */
-    public function editUpdate()
+    public function updateWarehouse()
     {
         $updateProduct = $this->input->post('product');
 
-        $id = $updateProduct['id'];
+        /*$id = $updateProduct['id'];
 
         unset($updateProduct['id'], $updateProduct['checkText'], $updateProduct['checkInput']);
 
-        $this->Product_model->updateFieldById($id, $updateProduct);
+        $this->Product_model->updateFieldById($id, $updateProduct);*/
 
         //new csrf
         echo $this->security->get_csrf_hash();

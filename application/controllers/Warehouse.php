@@ -10,6 +10,7 @@ class Warehouse extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('Product_model');
         $this->load->model('WarehouseSetting_model');
 
         //設定layout data
@@ -54,5 +55,24 @@ class Warehouse extends CI_Controller
         $this->WarehouseSetting_model->updateFieldById(1, $updateData);
 
         echo $this->security->get_csrf_hash();
+    }
+
+    /**
+     * list
+     */
+    public function list()
+    {
+        $warehouse = $this->WarehouseSetting_model->getAll();
+
+        $data = [
+            'warehouse' => json_decode($warehouse->name),
+            'receiver' => json_decode($warehouse->receiver),
+            'freight' => json_decode($warehouse->freight),
+            'products' =>  $this->Product_model->getAll(),
+        ];
+
+        //layout data
+        $this->layoutData['content'] = $this->load->view('web/warehouse/list', $data, true);
+        $this->load->view('web/layout/app', $this->layoutData);
     }
 }
