@@ -1,6 +1,7 @@
 <!-- Include Date Range Picker -->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/table.css" />
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/daterangepicker.js"></script>
 <script type="text/javascript">
@@ -22,54 +23,68 @@ $(function() {
                 <input type="text" class="date" name="end" value="<?php echo $end;?>" />
                 <button type="submit">查詢</button>
             </form>
+
+            <a href="<?php echo base_url(); ?>product/keyIn"><button type="button">新增進貨</button></a>
         </div>
         進貨單列表
-        <table id="list">
-            <tr>
-                <th>訂單日期</th>
-                <th>信用卡</th>
-                <th>本單匯率</th>
-                <th>總成本(US)</th>
-                <th>總成本(NT)</th>
-                <th>產品項目</th>
-                <th>功能</th>
-            </tr>
+        <table class="table table-hover table-mc-light-blue" id="list">
+            <thead>
+                <tr>
+                    <th>訂單日期</th>
+                    <th>信用卡</th>
+                    <th>本單匯率</th>
+                    <th>總成本(US)</th>
+                    <th>總成本(NT)</th>
+                    <th>功能</th>
+                </tr>
+            </thead>
             <?php foreach($product as $key => $info) { ?>
             <tbody>
-            <tr>
+            <tr @click='checkShow("<?php echo $key;?>")'>
                 <td><?php echo $info['date'];?></td>
                 <td><?php echo $info['idCard'];?></td>
                 <td><?php echo $info['rate'];?></td>
                 <td><?php echo $info['total_cost_us'];?></td>
                 <td><?php echo $info['total_cost_nt'];?></td>
-                <td><a href="<?php echo base_url(); ?>product/productEdit?code=<?php echo $info['code'];?>">edit</a></td>
                 <td>
+                    <a href="<?php echo base_url(); ?>product/productEdit?code=<?php echo $info['code'];?>">edit</a>
                     <a onclick="deleteCode('<?php echo $info['code'];?>', '<?php echo $info['date'];?>')">刪除</a>
                 </td>
-                <td><button type="button" @click='checkShow("<?php echo $key;?>")'>展開</button></td>
             </tr>
-            <td colspan="5" v-show='showProduct["<?php echo $key;?>"]'>
-                <table>
-                    <tr>
-                        <th>品名</th>
-                        <th>數量</th>
-                        <th>規格</th>
-                        <th>進貨金額(US)</th>
-                        <th>進貨金額(NT)</th>
-                        <th>備註</th>
-                    </tr>
-                    <?php foreach($info['product'] as $productInfo) { ?>
-                    <tr>
-                        <td><?php echo $productInfo['name']?></td>
-                        <td><?php echo $productInfo['amount']?></td>
-                        <td><?php echo $productInfo['standard']?></td>
-                        <td><?php echo $productInfo['money_us']?></td>
-                        <td><?php echo $productInfo['money_nt']?></td>
-                        <td><?php echo $productInfo['remark']?></td>
-                    </tr>
-                    <?php } ?>
-                </table>
-            </td>
+            <tr class="expand" v-show='showProduct["<?php echo $key;?>"]'>
+                <td colspan="5">
+                    <div class="expand">
+                        <table>
+                            <tr>
+                                <th>品名</th>
+                                <th>數量</th>
+                                <th>規格</th>
+                                <th>進貨金額(US)</th>
+                                <th>進貨金額(NT)</th>
+                                <th>追蹤代碼</th>
+                                <th>存放倉庫</th>
+                                <th>貨運單位</th>
+                                <th>收貨人</th>
+                                <th>備註</th>
+                            </tr>
+                            <?php foreach($info['product'] as $productInfo) { ?>
+                            <tr>
+                                <td><?php echo $productInfo['name']?></td>
+                                <td><?php echo $productInfo['amount']?></td>
+                                <td><?php echo $productInfo['standard']?></td>
+                                <td><?php echo $productInfo['money_us']?></td>
+                                <td><?php echo $productInfo['money_nt']?></td>
+                                <td><?php echo $productInfo['tracking_code']?></td>
+                                <td><?php echo $productInfo['warehouse']?></td>
+                                <td><?php echo $productInfo['freight']?></td>
+                                <td><?php echo $productInfo['receiver']?></td>
+                                <td><?php echo $productInfo['remark']?></td>
+                            </tr>
+                            <?php } ?>
+                        </table>
+                    </div>
+                </td>
+            </tr>
             </tbody>
             <?php } ?>
         </table>

@@ -64,6 +64,10 @@ class Product_model extends CI_Model {
 				'money_nt' => isset($info['money_nt']) ? $info['money_nt'] : '',
 				'remark' => isset($info['remark']) ? $info['remark'] : '',
 				'standard' => isset($info['standard']) ? $info['standard'] : '',
+				'tracking_code' => isset($info['tracking_code']) ? $info['tracking_code'] : '',
+				'warehouse' => isset($info['warehouse']) ? $info['warehouse'] : '',
+				'freight' => isset($info['freight']) ? $info['freight'] : '',
+				'receiver' => isset($info['receiver']) ? $info['receiver'] : '',
 				'created_at' => date('Y-m-d h:i:s'),
 				'updated_at' => date('Y-m-d h:i:s'),
 			);

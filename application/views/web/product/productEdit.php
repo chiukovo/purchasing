@@ -54,6 +54,34 @@
 					<input class="form-input" type="number" v-model="keyInProduct.money_nt">
 				</div>
 				<div class="form-group">
+					<label class="form-label">追蹤代碼</label>
+					<input class="form-input" type="number" v-model="keyInProduct.tracking_code">
+				</div>
+				<div class="form-group">
+					<label class="form-label">存放倉庫</label>
+					<select v-model="keyInProduct.warehouse">
+						<?php foreach ($warehouse as $name) { ?>
+						<option value="<?php echo $name;?>"><?php echo $name;?></option>
+						<?php } ?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label class="form-label">貨運單位</label>
+					<select v-model="keyInProduct.freight">
+						<?php foreach ($freight as $name) { ?>
+						<option value="<?php echo $name;?>"><?php echo $name;?></option>
+						<?php } ?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label class="form-label">收貨人</label>
+					<select v-model="keyInProduct.receiver">
+						<?php foreach ($receiver as $name) { ?>
+						<option value="<?php echo $name;?>"><?php echo $name;?></option>
+						<?php } ?>
+					</select>
+				</div>
+				<div class="form-group">
 					<label class="form-label">備註</label>
 					<textarea class="form-textarea" v-model="keyInProduct.remark"></textarea>
 				</div>
@@ -69,6 +97,10 @@
 					<th>重量(lb)</th>
 					<th>金額(US)</th>
 					<th>金額(NT)</th>
+					<th>追蹤代碼</th>
+					<th>存放倉庫</th>
+					<th>貨運單位</th>
+					<th>收貨人</th>
 					<th>備註</th>
 					<th>功能</th>
 				</tr>
@@ -96,6 +128,41 @@
 					<td>
 						<span v-show="info.isDefault">{{ info.money_nt }}</span>
 						<span v-show="info.isEdit"><input type="number" v-model="info.money_nt" /></span>
+					</td>
+					<td>
+						<span v-show="info.isDefault">{{ info.tracking_code }}</span>
+						<span v-show="info.isEdit"><input type="text" v-model="info.tracking_code"></span>
+					</td>
+					<td>
+						<span v-show="info.isDefault">{{ info.warehouse }}</span>
+						<span v-show="info.isEdit">
+						<select v-model="info.warehouse">
+							<?php foreach ($warehouse as $name) { ?>
+							<option value="<?php echo $name;?>"
+							:selected="info.warehouse == '<?php echo $name?>' ? 'selected' : ''"><?php echo $name;?></option>
+							<?php } ?>
+						</select>
+						</span>
+					</td>
+					<td>
+						<span v-show="info.isDefault">{{ info.freight }}</span>
+						<span v-show="info.isEdit">
+						<select v-model="info.freight">
+							<?php foreach ($freight as $name) { ?>
+							<option value="<?php echo $name;?>" :selected="info.freight == '<?php echo $name?>' ? 'selected' : ''"><?php echo $name;?></option>
+							<?php } ?>
+						</select>
+						</span>
+					</td>
+					<td>
+						<span v-show="info.isDefault">{{ info.receiver }}</span>
+						<span v-show="info.isEdit">
+						<select v-model="info.receiver">
+							<?php foreach ($receiver as $name) { ?>
+							<option value="<?php echo $name;?>" :selected="info.receiver == '<?php echo $name?>' ? 'selected' : ''"><?php echo $name;?></option>
+							<?php } ?>
+						</select>
+						</span>
 					</td>
 					<td>
 						<span v-show="info.isDefault">{{ info.remark }}</span>

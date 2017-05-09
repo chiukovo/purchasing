@@ -81,12 +81,16 @@ class Product extends CI_Controller
     public function productEdit()
     {
         $paramData = $this->input->get();
+        $warehouse = $this->WarehouseSetting_model->getAll();
 
         if ( ! isset($paramData['code']) || empty($paramData['code'])) {
             redirect('/product/list');
         }
 
         $data = [
+            'warehouse' => json_decode($warehouse->name),
+            'receiver' => json_decode($warehouse->receiver),
+            'freight' => json_decode($warehouse->freight),
             'code' => $paramData['code'],
         ];
 
