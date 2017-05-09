@@ -56,7 +56,7 @@
 				</div>
 				<div class="form-group">
 					<label class="form-label">追蹤代碼</label>
-					<input class="form-input" type="number" v-model="keyInProduct.tracking_code">
+					<input class="form-input" type="text" v-model="keyInProduct.tracking_code">
 				</div>
 				<div class="form-group">
 					<label class="form-label">存放倉庫</label>
