@@ -12,6 +12,7 @@ class Product extends CI_Controller
         parent::__construct();
         $this->load->model('Product_model');
         $this->load->model('PurchaseOrder_model');
+        $this->load->model('WarehouseSetting_model');
 
         //設定layout data
         $this->layoutData = [];
@@ -61,8 +62,16 @@ class Product extends CI_Controller
      */
     public function keyIn()
     {
+        $warehouse = $this->WarehouseSetting_model->getAll();
+
+        $data = [
+            'warehouse' => json_decode($warehouse->name),
+            'receiver' => json_decode($warehouse->receiver),
+            'freight' => json_decode($warehouse->freight),
+        ];
+
         //layout data
-        $this->layoutData['content'] = $this->load->view('web/product/keyIn', '', true);
+        $this->layoutData['content'] = $this->load->view('web/product/keyIn', $data, true);
         $this->load->view('web/layout/app', $this->layoutData);
     }
 
