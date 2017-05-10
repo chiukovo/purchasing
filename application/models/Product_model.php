@@ -26,6 +26,22 @@ class Product_model extends CI_Model {
 	}
 
 	/**
+	 * get all
+	 */
+	public function searchByName($search)
+	{
+		if ($search == '') {
+			return $this->db->order_by('created_at', 'desc')->get(self::DB_NAME)->result_array();
+		} else {
+			return $this->db->order_by('created_at', 'desc')
+			->like('name', $search, 'both')
+			->get(self::DB_NAME)
+			->result_array();
+		}
+
+	}
+
+	/**
 	 * get by filters
 	 */
 	public function getByFilters($filters)
@@ -134,5 +150,39 @@ class Product_model extends CI_Model {
 	public function deleteByCode($code)
 	{
 		$this->db->delete(self::DB_NAME, array('code' => $code));
+	}
+
+	/**
+	 * 庫存用
+	 */
+	public function forWarehouseInUse($products)
+	{
+		$result = array();
+
+		foreach ($products as $product) {
+			$names[] = $product['name'];
+		}
+
+		$names = array_unique($names);
+
+		foreach ($names as $name) {
+			$amount = 0;
+			foreach ($products as $product) {
+				if ($name == $product['name']) {
+					$result[$name]['detail'][] = $product;
+
+					$result[$name]['standard'] = $product['standard'];
+					$result[$name]['weight'] = $product['weight'];
+					$amount = $amount + $product['amount'];
+				}
+			}
+
+			$result[$name]['amount'] = $amount;
+		}
+
+		return array(
+			'productsName' => $names,
+			'products' => $result,
+		);
 	}
 }

@@ -90,4 +90,28 @@ class Warehouse extends CI_Controller
         $this->layoutData['content'] = $this->load->view('web/warehouse/list', $data, true);
         $this->load->view('web/layout/app', $this->layoutData);
     }
+
+    /**
+     * list
+     */
+    public function in()
+    {
+        $paramData = $this->input->get();
+
+        $search = isset($paramData['search']) ? $paramData['search'] : '';
+
+        $products = $this->Product_model->searchByName($search);
+
+        $products = $this->Product_model->forWarehouseInUse($products);
+
+        $data = [
+            'products' => $products['products'],
+            'productsName' => $products['productsName'],
+            'search' => $search
+        ];
+
+        //layout data
+        $this->layoutData['content'] = $this->load->view('web/warehouse/in', $data, true);
+        $this->load->view('web/layout/app', $this->layoutData);
+    }
 }

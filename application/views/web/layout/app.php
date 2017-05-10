@@ -18,7 +18,11 @@
 
 <body>
 	<div id="mainBody">
-	<?php echo $content;?>
+        <div id="page-header"></div>
+            <div id="page-container">
+        	<?php echo $content;?>
+            </div>
+        </div>
 	</div>
     <div id="page-footer"></div>
 </body>
