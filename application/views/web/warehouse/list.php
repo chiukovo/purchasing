@@ -62,7 +62,7 @@
 </div>
 
 <script type="text/javascript">
-new Vue({
+var warehouse = new Vue({
     el: '#warehouse',
     data: {
         type: '',
@@ -74,23 +74,25 @@ new Vue({
             var value = e.target.value;
             this.type = event.currentTarget.getAttribute('data-type');
             this.id = event.currentTarget.getAttribute('data-id');
+
+            doUpdate(value);
         }
     }
 });
 
-function doUpdate()
+function doUpdate(value)
 {
     $.ajax({
         type: "POST",
-        url: "update",
+        url: "<?php echo base_url(); ?>/product/updateWarehouse",
         data: {
-            name: setting.name,
-            receiver: setting.receiver,
-            freight: setting.freight,
-            chiuko_o_token: setting.csrf_value,
+            value: value,
+            type: warehouse.type,
+            id: warehouse.id,
+            chiuko_o_token: warehouse.csrf_value,
         },
         success: function(csrf) {
-            setting.csrf_value = csrf;
+            warehouse.csrf_value = csrf;
         },
     });
 }

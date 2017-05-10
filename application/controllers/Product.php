@@ -220,13 +220,15 @@ class Product extends CI_Controller
      */
     public function updateWarehouse()
     {
-        $updateProduct = $this->input->post('product');
+        $postData = $this->input->post();
 
-        /*$id = $updateProduct['id'];
+        $id = $postData['id'];
 
-        unset($updateProduct['id'], $updateProduct['checkText'], $updateProduct['checkInput']);
+        $updateData = array(
+            $postData['type'] => $postData['value']
+        );
 
-        $this->Product_model->updateFieldById($id, $updateProduct);*/
+        $this->Product_model->updateFieldById($id, $updateData);
 
         //new csrf
         echo $this->security->get_csrf_hash();
