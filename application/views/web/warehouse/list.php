@@ -1,17 +1,34 @@
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/daterangepicker.css" />
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/daterangepicker.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('.date').daterangepicker({
+        singleDatePicker: true,
+        locale: {
+          format: 'YYYY-MM-DD'
+        }
+    });
+});
+</script>
 <div id="page-header"></div>
 <div id="page-container">
 	<div class="page-body">
 		<div class="page-tab">
 			<ul>
-				<li><a href="">全部</a></li>
+				<li><a href="<?php echo base_url()?>warehouse/list?type=&start=<?php echo $start;?>&end=<?php echo $end;?>">全部</a></li>
 				<?php foreach ($warehouse as $name) { ?>
 				<li class="active">
-					<a href=""><?php echo $name;?></a>
+					<a href="<?php echo base_url()?>warehouse/list?type=<?php echo $name;?>&start=<?php echo $start;?>&end=<?php echo $end;?>"><?php echo $name;?></a>
 				</li>
 				<?php } ?>
 			</ul>
 		</div>
-
+        <form>
+            <input type="text" class="date" name="start" value="<?php echo $start;?>" /> ~
+            <input type="text" class="date" name="end" value="<?php echo $end;?>" />
+            <button type="submit">查詢</button>
+        </form>
 		<table class="table" id="warehouse">
 			<tr>
 				<td>日期</td>
@@ -91,8 +108,8 @@ function doUpdate(value)
             id: warehouse.id,
             chiuko_o_token: warehouse.csrf_value,
         },
-        success: function(csrf) {
-            warehouse.csrf_value = csrf;
+        success: function() {
+            location.reload();
         },
     });
 }

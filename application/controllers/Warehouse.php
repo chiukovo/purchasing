@@ -53,8 +53,6 @@ class Warehouse extends CI_Controller
         );
 
         $this->WarehouseSetting_model->updateFieldById(1, $updateData);
-
-        echo $this->security->get_csrf_hash();
     }
 
     /**
@@ -62,13 +60,30 @@ class Warehouse extends CI_Controller
      */
     public function list()
     {
+        $paramData = $this->input->get();
+
+        $type = isset($paramData['type']) ? $paramData['type'] : '';
+
+        if ( isset($paramData['start']) && isset($paramData['end'])) {
+            $start = $paramData['start'];
+            $end = $paramData['end'];
+        } else {
+            $first = new DateTime('first day of this month');
+            $start = $first->format('Y-m-d');
+
+            $last = new DateTime('last day of this month');
+            $end = $last->format('Y-m-d');
+        }
+
         $warehouse = $this->WarehouseSetting_model->getAll();
 
         $data = [
             'warehouse' => json_decode($warehouse->name),
             'receiver' => json_decode($warehouse->receiver),
             'freight' => json_decode($warehouse->freight),
-            'products' =>  $this->Product_model->getAll(),
+            'products' =>  $this->Product_model->getByDateRange($start, $end, $type),
+            'start' => $start,
+            'end' => $end,
         ];
 
         //layout data

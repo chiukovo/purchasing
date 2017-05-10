@@ -46,6 +46,34 @@ class Product_model extends CI_Model {
 	}
 
 	/**
+	 * get all
+	 */
+	public function getByDateRange($start, $end, $type)
+	{
+		$result = array();
+
+		//check not empty
+		if (empty($start) || empty($end)) {
+			$first = new DateTime('first day of this month');
+    		$start = $first->format('Y-m-d');
+
+			$last = new DateTime('last day of this month');
+    		$end = $last->format('Y-m-d');
+		}
+
+		$get = $this->db->order_by('created_at', 'desc');
+
+		if ($type != '') {
+			$get->where('warehouse', $type);
+		}
+
+		return $get->where('created_at >=', $start . ' 00:00:00')
+			->where('created_at <=', $end . ' 23:59:59')
+			->get(self::DB_NAME)
+			->result_array();
+	}
+
+	/**
 	 * create
 	 *
 	 * @return bool true on success, false on failure

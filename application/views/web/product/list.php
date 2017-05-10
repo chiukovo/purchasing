@@ -1,5 +1,4 @@
 <!-- Include Date Range Picker -->
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/daterangepicker.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/table.css" />
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
