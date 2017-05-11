@@ -35,25 +35,43 @@ class Product_model extends CI_Model {
 		$result = array();
 
 		foreach ($products as $product) {
-			$names[] = $product['name'];
+			if ($product['standard'] != '') {
+				$names[] = $product['name'] . '(' . $product['standard'] . ')';
+			} else {
+				$names[] = $product['name'];
+			}
 		}
 		//取得全部庫存
 		$names = array_unique($names);
 
 		foreach ($names as $name) {
 			$amount = 0;
+			$has = false;
 			foreach ($products as $product) {
-				if ($name == $product['name']) {
-					$result[$name] = array(
-						'name' => $name,
-						'standard' => $product['standard'],
-						'weight' => $product['weight'],
-					);
+				if ($product['standard'] != '') {
+					$productName = $product['name'] . '(' . $product['standard'] . ')';
+				} else {
+					$productName = $product['name'];
+				}
 
-					$amount = $amount + $product['amount'];
+				if ($name == $productName) {
+					if ($product['amount'] > 0) {
+						$result[$name] = array(
+							'name' => $name,
+							'realName' => $product['name'],
+							'standard' => $product['standard'],
+							'weight' => $product['weight'],
+						);
+						$has = true;
+						$amount = $amount + $product['amount'];
+					}
+
 				}
 			}
-			$result[$name]['amount'] = $amount;
+
+			if ( ! empty($result) && $has) {
+				$result[$name]['amount'] = $amount;
+			}
 		}
 
 		return array_values($result);
