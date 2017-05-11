@@ -26,6 +26,40 @@ class Product_model extends CI_Model {
 	}
 
 	/**
+	 * noReapeat
+	 */
+	public function noReapeat()
+	{
+		$products = $this->db->order_by('created_at', 'desc')->get(self::DB_NAME)->result_array();
+
+		$result = array();
+
+		foreach ($products as $product) {
+			$names[] = $product['name'];
+		}
+		//取得全部庫存
+		$names = array_unique($names);
+
+		foreach ($names as $name) {
+			$amount = 0;
+			foreach ($products as $product) {
+				if ($name == $product['name']) {
+					$result[$name] = array(
+						'name' => $name,
+						'standard' => $product['standard'],
+						'weight' => $product['weight'],
+					);
+
+					$amount = $amount + $product['amount'];
+				}
+			}
+			$result[$name]['amount'] = $amount;
+		}
+
+		return array_values($result);
+	}
+
+	/**
 	 * get all
 	 */
 	public function searchByName($search)

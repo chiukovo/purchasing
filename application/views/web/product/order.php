@@ -5,7 +5,7 @@
 	<ul>
 		<li>訂單編號: <?php echo $orderNum;?></li>
 		<li>購買人: <input type="text" v-model="name"></li>
-		<li>地址: 
+		<li>地址:
 			<div id="twzipcode">
 				<div data-role="county" data-style="Style Name" data-value=""></div>
 				<div data-role="district" data-style="Style Name" data-value=""></div>
@@ -21,7 +21,7 @@
 	選擇商品:
 	<select id="productSelect">
 		<option value="">請選擇</option>
-		<option v-for="product in onlineProduct" :value="product.id">{{ product.name }}</option>
+		<option v-for="(product, name) in onlineProduct" :value="product.name">{{ product.name }}</option>
 	</select>
 	<button type="button" @click="addProduct()">增加</button>
 	<div>
@@ -45,7 +45,6 @@
 
 		<div>預付款: <input type="number" v-model="pre_money"></div>
 		<div>
-			匯率提醒: (美金兌台幣匯率: <?php echo $USA;?>, UTC Date: <?php echo $USA_time;?>)</br>
 			輸入匯率: <input type="number" v-model="rate"></br>
 			商品金額(四捨五入): {{ productSum() }}
 		</div>
@@ -53,11 +52,8 @@
 	</div>
 </div>
 
-<script>
-	var USA = <?php echo $USA;?>;
-</script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.twzipcode.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/buy.js?v=13"></script>
+<script src="<?php echo base_url(); ?>assets/js/buy.js?v=15"></script>
 <script>
 	$('#twzipcode').twzipcode();
 	$('#productSelect').select2();

@@ -170,18 +170,9 @@ class Product extends CI_Controller
      */
     public function order()
     {
-        $content = file_get_contents('https://tw.rter.info/capi.php');
-        $currency = json_decode($content);
-
-        //美金匯率
-        $USA = $currency->USDTWD->Exrate;
-        $USA_time = $currency->USDTWD->UTC;
-
         $data = [
             'product' =>  $this->Product_model->getAll(),
             'orderNum' => date('YmdHis') . rand(10, 99),
-            'USA' => $USA,
-            'USA_time' => $USA_time
         ];
 
         //layout data
@@ -195,6 +186,14 @@ class Product extends CI_Controller
     public function getAllProduct()
     {
         echo json_encode($this->Product_model->getAll());
+    }
+
+    /**
+     * 取出不重複商品
+     */
+    public function getProductNotRepeat()
+    {
+        echo json_encode($this->Product_model->noReapeat());
     }
 
     /**

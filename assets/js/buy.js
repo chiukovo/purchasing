@@ -12,12 +12,12 @@ var buy = new Vue({
         idCard: '',
         remark: '',
         pre_money: 0,
-        rate: USA,
+        rate: 0,
         productCount: [],
         csrf_value: $('#csrf').attr('content'),
     },
     mounted: function() {
-        getOnlineProduct();
+        getProduct();
     },
     methods: {
         addProduct: function() {
@@ -25,8 +25,8 @@ var buy = new Vue({
             var checkAdd = true;
 
             //檢查是否已被加入
-            buy.productGroup.map(function(product) {
-                if (product.id == productSelect) {
+            this.productGroup.map(function(product) {
+                if (product.name == productSelect) {
                     checkAdd = false;
                     swal(
                         '注意!',
@@ -38,11 +38,10 @@ var buy = new Vue({
 
             if (productSelect != '' && checkAdd) {
                 this.onlineProduct.filter(function(info) {
-                    if (info.id == productSelect) {
+                    if (info.name == productSelect) {
                         buy.productGroup.push(info);
                         //default 1
                         buy.productCount.push(1);
-
                     }
                 });
             }
@@ -50,7 +49,6 @@ var buy = new Vue({
         },
         changeProductNum: function(num, amount, key) {
             if (parseInt(num) > parseInt(amount)) {
-                console.log('in');
                 buy.productCount[key] = amount;
 
                 swal(
@@ -66,7 +64,7 @@ var buy = new Vue({
             var sum = 0;
             var group = this.productGroup;
             var count = this.productCount;
-            
+
             group.map(function(product, key) {
                 sum += ( parseInt(product.money) * parseInt(count[key]) );
 
@@ -84,11 +82,11 @@ var buy = new Vue({
     }
 });
 
-function getOnlineProduct()
+function getProduct()
 {
     $.ajax({
         type: "GET",
-        url: "getOnlineProduct",
+        url: "getProductNotRepeat",
         success: function(product) {
             buy.onlineProduct = JSON.parse(product);
         },
