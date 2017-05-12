@@ -11,6 +11,7 @@ class Product extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Product_model');
+        $this->load->model('ProductOrder_model');
         $this->load->model('PurchaseOrder_model');
         $this->load->model('WarehouseSetting_model');
 
@@ -178,6 +179,17 @@ class Product extends CI_Controller
         //layout data
         $this->layoutData['content'] = $this->load->view('web/product/order', $data, true);
         $this->load->view('web/layout/app', $this->layoutData);
+    }
+
+    /**
+     * 商品訂單
+     */
+    public function orderUpdate()
+    {
+        $insertData = $this->input->post('insertData');
+        $insertData['created_at'] = date('Y-m-d h:i:s');
+
+        $this->ProductOrder_model->create($insertData);
     }
 
     /**

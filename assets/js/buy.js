@@ -1,3 +1,5 @@
+Vue.use(VeeValidate);
+
 var buy = new Vue({
     el: '#buy',
     data: {
@@ -108,12 +110,19 @@ var buy = new Vue({
             this.costTotalSumUs = Math.round(sumUs);
             this.costTotalSumNt = Math.round(sumNt) + this.totalFare;
         },
+        validateBeforeSubmit: function(insertData) {
+            this.$validator.validateAll().then(() => {
+                orderInsert(insertData);
+            }).catch(() => {
+                //
+            });
+        },
         orderUpdate: function() {
             var county = $('select[name=county]').val();
             var district = $('select[name=district]').val();
             var zipcode = $('input[name=zipcode]').val();
 
-            var updateData = {
+            var insertData = {
                 orderNum: orderNum,
                 buyer: this.name,
                 county: county,
@@ -124,7 +133,8 @@ var buy = new Vue({
                 idCard: this.idCard,
                 remark: this.remark,
                 date: this.date,
-                product: this.onlineProduct,
+                productInfo: JSON.stringify(this.productGroup),
+                productCount: JSON.stringify(this.productCount),
                 pre_money: this.pre_money,
                 rate: this.rate,
                 fare: this.totalFare,
@@ -132,7 +142,7 @@ var buy = new Vue({
                 total_cost_us: this.costTotalSumUs,
             };
 
-            console.log(updateData);
+            this.validateBeforeSubmit(insertData);
         },
     }
 });
@@ -144,6 +154,29 @@ function getProduct()
         url: "getProductNotRepeat",
         success: function(product) {
             buy.onlineProduct = JSON.parse(product);
+        },
+    });
+}
+
+
+function orderInsert(insertData)
+{
+    $.ajax({
+        type: "POST",
+        url: "orderUpdate",
+        data: {
+            insertData: insertData,
+            chiuko_o_token: buy.csrf_value,
+        },
+        success: function(response) {
+            swal({
+                title: "成功",
+                text: '新增成功',
+                type: "success"
+            },
+            function(){
+               location.reload();
+            });
         },
     });
 }

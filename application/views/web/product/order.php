@@ -1,11 +1,23 @@
 <link href="<?php echo base_url(); ?>assets/css/select2.min.css"" rel="stylesheet" />
 <script src="<?php echo base_url(); ?>assets/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/vee-validate/2.0.0-rc.3/vee-validate.min.js"></script>
+<style type="text/css">
+	.is-danger{
+		color: red;
+	}
+</style>
 
 <div id="buy" v-cloak>
 	<ul>
 		<li>訂單編號: <?php echo $orderNum;?></li>
-		<li>訂單日期: <input type="date" data-date-format="DD-YYYY-MM" v-model="date"></li>
-		<li>購買人: <input type="text" v-model="name"></li>
+		<li>訂單日期:
+			<input type="date" name="date" data-date-format="DD-YYYY-MM" v-model="date" v-validate="'required'">
+			<span v-show="errors.has('date')" class="help is-danger">請輸入日期</span>
+		</li>
+		<li>購買人:
+			<input type="text" name="name"  v-model="name" v-validate="'required'">
+			<span v-show="errors.has('name')" class="help is-danger">請輸入購買人</span>
+		</li>
 		<li>地址:
 			<div id="twzipcode">
 				<div data-role="county" data-name="county"></div>
@@ -14,7 +26,10 @@
 				<input type="text" v-model="addressDetail" placeholder="路名">
 			</div>
 		</li>
-		<li>電話: <input type="text" v-model="phone"></li>
+		<li>電話:
+			<input type="phone" v-model="phone" name="phone" v-validate="'required'">
+			<span v-show="errors.has('phone')" class="help is-danger">請輸入電話</span>
+		</li>
 		<li>身分證: <input type="text" v-model="idCard"></li>
 		<li>備註欄: <textarea name="remark" v-model="remark" ></textarea></li>
 	</ul>
@@ -66,7 +81,7 @@
 	var orderNum = <?php echo $orderNum;?>;
 </script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.twzipcode.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/buy.js?v=17"></script>
+<script src="<?php echo base_url(); ?>assets/js/buy.js?v=20"></script>
 <script>
 	$('#twzipcode').twzipcode();
 	$('#productSelect').select2();
