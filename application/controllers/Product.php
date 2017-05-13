@@ -189,7 +189,7 @@ class Product extends CI_Controller
         $insertData = $this->input->post('insertData');
         $insertData['created_at'] = date('Y-m-d h:i:s');
 
-        $this->ProductOrder_model->create($insertData);
+        echo $this->ProductOrder_model->create($insertData);
     }
 
     /**

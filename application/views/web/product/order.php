@@ -40,6 +40,13 @@
 		<option v-for="(product, name) in onlineProduct" :value="product.name">{{ product.name }}</option>
 	</select>
 	</br>
+	選擇所在倉庫:
+	<select id="warehouseSelect" @change="changeWareHouse">
+		<option v-for="(warehouse, key) in warehouseSelect" :value="warehouse">{{ warehouse }}</option>
+	</select>
+	</br>
+	庫存量: <span>{{ amount }}</span>
+	</br>
 	折扣(%): <input type="number" v-model="discount"></br>
 	售價(美金): <input type="number" v-model="price"></br>
 	運費(台幣): <input type="number" v-model="fare"></br>
@@ -54,6 +61,9 @@
 					<th>折扣(%)</th>
 					<th>重量(g)</th>
 					<th>運費</th>
+					<th>所在倉庫</th>
+					<th>庫存量</th>
+					<th>功能</th>
 				</tr>
 				<tr v-for="(product, key) in productGroup">
 					<td>{{ product.name }}</td>
@@ -62,6 +72,9 @@
 					<td><input type="number" style="width: 50px" v-model="product.discount" @change="productSum"></td>
 					<td><input type="number" style="width: 50px" v-model="product.weight" @change="productSum"></td>
 					<td><input type="number" style="width: 50px" v-model="product.fare" @change="productSum"></td>
+					<td>{{ product.warehouse }}</td>
+					<td>{{ product.amount }}</td>
+					<td><button type="button" @click="deleteProduct(key)">刪除</button></td>
 				</tr>
 			</table>
 
@@ -81,8 +94,10 @@
 	var orderNum = <?php echo $orderNum;?>;
 </script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.twzipcode.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/buy.js?v=20"></script>
+<script src="<?php echo base_url(); ?>assets/js/buy.js?v=2"></script>
 <script>
 	$('#twzipcode').twzipcode();
-	$('#productSelect').select2();
+	$('#productSelect').select2().on('change', function (e) {
+		buy.changeProduct(e.target.value);
+	});
 </script>

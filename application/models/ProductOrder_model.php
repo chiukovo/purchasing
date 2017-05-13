@@ -52,22 +52,41 @@ class ProductOrder_model extends CI_Model {
 				$search = array(
 					'name' => $realName,
 					'standard' => $product['standard'],
+					'warehouse' => $product['warehouse'],
 				);
+
+				if ($thisAmount > $product['amount']) {
+					return $product['amount'] . '已無庫存 !';
+				}
+
 				$getWareProduct = $this->Product_model->getByFilters($search);
 
-				$updateWare = array();
-				foreach ($getWareProduct as $wareInfo) {
-					if ($wareInfo['amount'] > 0) {
-						if (($wareInfo['amount'] - $thisAmount) > 0) {
+				foreach ($getWareProduct as $info) {
+					if ($info['amount'] > 0) {
+						if ($info['amount'] >= $thisAmount) {
+							$thisAmount = $info['amount'] - $thisAmount;
+							$updateData = array(
+								'amount' => $thisAmount
+							);
 
+							$this->Product_model->updateFieldById($info['id'], $updateData);
 						} else {
+							$thisAmount = $thisAmount - $info['amount'];
+							$updateData = array(
+								'amount' => 0
+							);
 
+							$this->Product_model->updateFieldById($info['id'], $updateData);
 						}
 					}
 				}
+				$insertData['productInfo'][$key]['amount'] = $insertData['productCount'][$key];
 			}
 		}
-
+		
+		unset($insertData['productCount']);
+		$insertData['productInfo'] = json_encode($insertData['productInfo']);
+		
 		$this->db->insert(self::DB_NAME, $insertData);
 	}
 }

@@ -30,7 +30,9 @@ class Product_model extends CI_Model {
 	 */
 	public function noReapeat()
 	{
-		$products = $this->db->order_by('created_at', 'desc')->get(self::DB_NAME)->result_array();
+		$products = $this->db->order_by('created_at', 'desc')
+		->where('warehouse !=', '')
+		->get(self::DB_NAME)->result_array();
 
 		$result = array();
 
@@ -45,8 +47,9 @@ class Product_model extends CI_Model {
 		$names = array_unique($names);
 
 		foreach ($names as $name) {
-			$amount = 0;
+			$amount = array();
 			$has = false;
+			$warehouse = array();
 			foreach ($products as $product) {
 				if ($product['standard'] != '') {
 					$productName = $product['name'] . '(' . $product['standard'] . ')';
@@ -63,7 +66,14 @@ class Product_model extends CI_Model {
 							'weight' => $product['weight'],
 						);
 						$has = true;
-						$amount = $amount + $product['amount'];
+
+						if ( ! isset($amount[$product['warehouse']])) {
+							$amount[$product['warehouse']] = 0;
+						}
+
+						$amount[$product['warehouse']] += $product['amount'];
+
+						$warehouse[] = $product['warehouse'];
 					}
 
 				}
@@ -71,6 +81,7 @@ class Product_model extends CI_Model {
 
 			if ( ! empty($result) && $has) {
 				$result[$name]['amount'] = $amount;
+				$result[$name]['warehouse'] = array_unique($warehouse);
 			}
 		}
 

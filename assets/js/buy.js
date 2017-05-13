@@ -5,6 +5,10 @@ var buy = new Vue({
     data: {
         onlineProduct: [],
         productGroup: [],
+        warehouseSelect: [],
+        nowProduct: '',
+        nowWareHouse: '',
+        amount: 0,
         name: '',
         county: '',
         district: '',
@@ -35,7 +39,7 @@ var buy = new Vue({
 
             //檢查是否已被加入
             this.productGroup.map(function(product) {
-                if (product.name == productSelect) {
+                if (product.name == productSelect && product.warehouse == buy.nowWareHouse) {
                     checkAdd = false;
                     swal(
                         '注意!',
@@ -52,7 +56,8 @@ var buy = new Vue({
                             name: info.name,
                             realName: info.realName,
                             fare: buy.fare,
-                            amount: info.amount,
+                            amount: buy.amount,
+                            warehouse: buy.nowWareHouse,
                             price: buy.price,
                             discount: buy.discount,
                             weight: info.weight,
@@ -144,6 +149,35 @@ var buy = new Vue({
 
             this.validateBeforeSubmit(insertData);
         },
+        changeProduct: function(name) {
+            this.nowProduct = name;
+            
+            if (name == '') {
+                buy.amount = 0;
+                buy.warehouseSelect = [];
+            } else {
+                this.onlineProduct.map(function(info, key) {
+                    if (info.name == name) {
+                       buy.warehouseSelect = info.warehouse;
+                       buy.amount = info.amount[info.warehouse[0]];
+                       buy.nowWareHouse = info.warehouse[0];
+                    }
+                });
+            }
+        },
+        changeWareHouse: function(e) {
+            var selected = e.target.value;
+            this.nowWareHouse = selected;
+
+            this.onlineProduct.map(function(info, key) {
+                if (info.name == buy.nowProduct) {
+                   buy.amount = info.amount[selected];
+                }
+            });
+        },
+        deleteProduct: function(key) {
+            buy.productGroup.splice(key, 1);
+        },
     }
 });
 
@@ -169,14 +203,25 @@ function orderInsert(insertData)
             chiuko_o_token: buy.csrf_value,
         },
         success: function(response) {
-            swal({
-                title: "成功",
-                text: '新增成功',
-                type: "success"
-            },
-            function(){
-               location.reload();
-            });
+            if (response == '') {
+                swal({
+                    title: "成功",
+                    text: '新增成功',
+                    type: "success"
+                },
+                function(){
+                   location.reload();
+                });
+            } else {
+                swal({
+                    title: "失敗",
+                    text: response,
+                    type: "warning"
+                },
+                function(){
+                });
+            }
+
         },
     });
 }
