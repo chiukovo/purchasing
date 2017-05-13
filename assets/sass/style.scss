@@ -1,0 +1,86 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+html {
+    line-height: 1.6;
+    font-family: "Roboto", sans-serif;
+    font-weight: normal;
+    color: rgba(0,0,0,0.87);
+}
+body {
+    background: #26a69a;
+}
+
+.page-body {
+    margin: 10px;
+}
+
+.hiddensearch {
+    .row, .input-field {
+        margin: 0;
+    }
+    .btn {
+        margin-top: 0.4rem;
+    }
+}
+
+.material-table {
+    table {
+        table-layout: fixed;
+        tr {
+            th {
+                font-weight: 500;
+            }
+            th, td {
+                font-size: 12px;
+                line-height: 3.6;
+                color: rgba(0, 0, 0, 0.87);
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                padding: 0 15px;
+            }
+        }
+    } 
+    .table-title {
+        font-family: 'Noto Sans TC', sans-serif;
+        font-size: 20px;
+        font-weight: 100;
+        color: #000;
+    }
+    .product {
+        border-bottom: solid 1px #f7f7f7;
+        &:hover {
+            background-color: #f7fffe;
+        }
+        .material-icons {
+            font-size: 13px;
+            color: rgba(0,0,0,0.8);
+        }
+    }
+    .expand {
+        background-color: #f7f7f7;
+    }
+}
+
+.table-header {
+    height: 64px;
+    padding: 0 15px;
+
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: flex;
+    -webkit-display: flex;
+    border-bottom: solid 1px #f7f7f7;
+    i {
+        font-size: 24px;
+        color: rgba(0, 0, 0, 0.54);
+    }
+    .actions {
+        display: -webkit-flex;
+        margin-left: auto;
+    }
+    .btn-flat {
+        min-width: 36px;
+        padding: 0 8px;
+    }
+}
