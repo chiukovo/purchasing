@@ -64,8 +64,8 @@ $(function() {
                 <td><?php echo $info['total_cost_us'];?></td>
                 <td><?php echo $info['total_cost_nt'];?></td>
                 <td>
-                    <a href="<?php echo base_url(); ?>product/productEdit?code=<?php echo $info['code'];?>" class="waves-effect btn-flat btn"><i class="material-icons">mode_edit</i></a>
-                    <a onclick="deleteCode('<?php echo $info['code'];?>', '<?php echo $info['date'];?>')" class="waves-effect btn-flat"><i class="material-icons">delete_forever</i></a>
+                    <a href="#modal" class="waves-effect btn-flat btn a-model" data-type="a-model" data-code="<?php echo $info['code'];?>"><i class="material-icons" data-type="a-model">mode_edit</i></a>
+                    <a onclick="deleteCode('<?php echo $info['code'];?>', '<?php echo $info['date'];?>')" class="waves-effect btn-flat e"><i class="material-icons">delete_forever</i></a>
                 </td>
             </tr>
             <tr class="expand">
@@ -109,7 +109,33 @@ $(function() {
 </div>
 
 
+<!-- Modal Structure -->
+<div id="modal" class="modal">
+    <div class="modal-content" id="inlineAjax">
+
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>
+
+
 <script type="text/javascript">
+$('.modal').modal({
+    dismissible: true, // Modal can be dismissed by clicking outside of the modal
+    opacity: .5, // Opacity of modal background
+    inDuration: 300, // Transition in duration
+    outDuration: 200, // Transition out duration
+    startingTop: '4%', // Starting top style attribute
+    endingTop: '10%', // Ending top style attribute
+    ready: function(modal, trigger) {
+        var code = $(trigger).attr('data-code');
+        $("#inlineAjax").load("<?php echo base_url(); ?>product/productEdit?code=" + code);
+    },
+    complete: function() {
+    } 
+});
+
 var list = new Vue({
     el: '#list',
     data: {
@@ -152,9 +178,13 @@ function deleteCode(code, date)
     });
 }
 
-$('.product').click(function() {
-    var target = $(this).next();
-    target.find("div").slideToggle();
+$('.product').click(function(e) {
+    var type = e.target.getAttribute('data-type');
+
+    if (type != 'a-model') {
+        var target = $(this).next();
+        target.find("div").slideToggle();
+    }
 });
 
 $('.search-toggle').click(function() {
