@@ -14,19 +14,11 @@ $(function() {
 </script>
 
 <div class="page-body">
-    <!-- <div>
-        <form>
-            <input type="text" class="date" name="start" value="< ?php echo $start;?>" /> ~
-            <input type="text" class="date" name="end" value="< ?php echo $end;?>" />
-            <button type="submit">查詢</button>
-        </form>
-    </div> -->
-
     <div class="card material-table">
         <div class="table-header">
             <span class="table-title">進貨單列表</span>
             <div class="actions">
-                <a href="<?php echo base_url(); ?>product/keyIn" class="modal-trigger waves-effect btn-flat"><i class="material-icons">add_circle</i></a>
+                <a href="#modalAdd" class="modal-trigger waves-effect btn-flat" data-type="add"><i class="material-icons">add_circle</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat"><i class="material-icons">search</i></a>
             </div>
 
@@ -34,13 +26,13 @@ $(function() {
         <div class="hiddensearch" style="display: none">
             <div id="datatable_filter" class="dataTables_filter col s6">
                 <div class="row">
-                    <div class="input-field col s5">
-                        <input placeholder="Placeholder" id="start" type="text" class="validate date" value="<?php echo $start;?>" />
+                    <div class="input-field col">
+                        <input id="start" type="text" class="validate date" value="<?php echo $start;?>" />
                     </div>
-                    <div class="input-field col s5">
+                    <div class="input-field col">
                         <input id="end" type="text" class="validate date" value="<?php echo $end;?>">
                     </div>
-                    <div class="col s2"><a class="waves-effect waves-light btn">搜尋</a></div>
+                    <div class="col"><a class="waves-effect waves-light btn">搜尋</a></div>
                 </div>
             </div>
         </div>
@@ -52,7 +44,7 @@ $(function() {
                     <th>本單匯率</th>
                     <th>總成本(US)</th>
                     <th>總成本(NT)</th>
-                    <th>功能</th>
+                    <th  class="center-align">功能</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,9 +55,14 @@ $(function() {
                 <td><?php echo $info['rate'];?></td>
                 <td><?php echo $info['total_cost_us'];?></td>
                 <td><?php echo $info['total_cost_nt'];?></td>
-                <td>
-                    <a href="#modal" class="waves-effect btn-flat btn a-model" data-type="a-model" data-code="<?php echo $info['code'];?>"><i class="material-icons" data-type="a-model">mode_edit</i></a>
-                    <a onclick="deleteCode('<?php echo $info['code'];?>', '<?php echo $info['date'];?>')" class="waves-effect btn-flat e"><i class="material-icons">delete_forever</i></a>
+                <td  class="center-align">
+                    <a href="#modalEdit" class="waves-effect btn-flat" data-type="a-model" data-type="edit" data-code="<?php echo $info['code'];?>">
+                        <i class="material-icons" data-type="a-model">mode_edit</i>
+                    </a>
+                    <a onclick="deleteCode('<?php echo $info['code'];?>', '<?php echo $info['date'];?>')" class="waves-effect btn-flat">
+                        <i class="material-icons">delete_forever</i>
+                      </a>
+
                 </td>
             </tr>
             <tr class="expand">
@@ -109,28 +106,34 @@ $(function() {
 </div>
 
 
-<!-- Modal Structure -->
-<div id="modal" class="modal">
-    <div class="modal-content" id="inlineAjax">
-
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+<!-- Modal edit -->
+<div id="modalEdit" class="modal modal-full">
+    <div class="modal-content" id="inlineAjaxEdit">
     </div>
 </div>
 
+<div id="modalAdd" class="modal modal-full">
+    <div class="modal-content" id="inlineAjaxAdd">
+    </div>
+</div>
 
 <script type="text/javascript">
 $('.modal').modal({
-    dismissible: true, // Modal can be dismissed by clicking outside of the modal
+    dismissible: false, // Modal can be dismissed by clicking outside of the modal
     opacity: .5, // Opacity of modal background
-    inDuration: 300, // Transition in duration
+    inDuration: 200, // Transition in duration
     outDuration: 200, // Transition out duration
-    startingTop: '4%', // Starting top style attribute
-    endingTop: '10%', // Ending top style attribute
+    startingTop: '0', // Starting top style attribute
+    endingTop: '0', // Ending top style attribute
     ready: function(modal, trigger) {
         var code = $(trigger).attr('data-code');
-        $("#inlineAjax").load("<?php echo base_url(); ?>product/productEdit?code=" + code);
+        var type = $(trigger).attr('data-type');
+
+        if (type == 'add') {
+            $("#inlineAjaxAdd").load("<?php echo base_url(); ?>product/keyIn");
+        } else {
+            $("#inlineAjaxEdit").load("<?php echo base_url(); ?>product/productEdit?code=" + code);
+        }
     },
     complete: function() {
     } 

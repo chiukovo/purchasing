@@ -11,7 +11,9 @@ body {
 }
 
 .page-body {
-  margin: 10px;
+  min-width: 960px;
+  max-width: 1024px;
+  margin: 10px auto;
 }
 
 .hiddensearch .row, .hiddensearch .input-field {
@@ -26,6 +28,7 @@ body {
 }
 .material-table table tr th {
   font-weight: 500;
+  background-color: #fdfdfd;
 }
 .material-table table tr th, .material-table table tr td {
   font-size: 12px;
@@ -35,6 +38,14 @@ body {
   white-space: nowrap;
   padding: 0 15px;
 }
+.material-table table tr th input, .material-table table tr td input {
+  margin-bottom: 0;
+}
+.material-table table tr th span, .material-table table tr td span {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .material-table .table-title {
   font-family: 'Noto Sans TC', sans-serif;
   font-size: 20px;
@@ -43,13 +54,25 @@ body {
 }
 .material-table .product {
   border-bottom: solid 1px #f7f7f7;
+  cursor: pointer;
 }
 .material-table .product:hover {
   background-color: #f7fffe;
 }
+.material-table .product .btn-flat {
+  padding: 0;
+}
 .material-table .product .material-icons {
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.8);
+  display: inline-block;
+  width: 36px;
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.54);
+  background: #fdfdfd;
+  padding: 0;
+}
+.material-table .product .material-icons:hover {
+  color: #fff;
+  background: #26a69a;
 }
 .material-table .expand {
   background-color: #f7f7f7;
@@ -76,6 +99,23 @@ body {
 .table-header .btn-flat {
   min-width: 36px;
   padding: 0 8px;
+}
+
+.modal-full {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  box-shadow: none;
+}
+.modal-full .card-title {
+  font-family: 'Noto Sans TC', sans-serif;
+  padding: 10px 10px 20px;
+}
+
+.purchase-title {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 30px;
+  color: rgba(0, 0, 0, 0.86);
 }
 
 /*# sourceMappingURL=style.css.map */

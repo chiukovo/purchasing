@@ -1,5 +1,5 @@
 .modal {
-  @extend .z-depth-4;
+  @extend .z-depth-3;
 
   display: none;
   position: fixed;
@@ -16,7 +16,7 @@
   will-change: top, opacity;
 
   @media #{$medium-and-down} {
-   width: 80%;
+   width: 100%;
   }
 
   h1,h2,h3,h4 {
@@ -30,8 +30,8 @@
     cursor: pointer;
   }
 
-  .modal-footer {
-    border-radius: 0 0 2px 2px;
+  .modal-footer, .modal-button {
+    border-radius: 0;
     background-color: #fafafa;
     padding: 4px 6px;
     height: 56px;
