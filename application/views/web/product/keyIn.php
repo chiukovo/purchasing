@@ -13,7 +13,7 @@ $(function() {
 				</div>
 				<div class="modal-footer col s6">
 					<a class="waves-effect waves-light btn deep-orange" @click="insert()" title="儲存">儲存<i class="material-icons left">save</i></a>
-					<a href="#!" class=" modal-close waves-effect btn-flat" title="關閉">關閉<i class="material-icons left">clear</i></a>
+					<a onclick="location.reload()" class=" modal-close waves-effect btn-flat" title="關閉">關閉<i class="material-icons left">clear</i></a>
 				</div>
 			</div>
 			<div class="card">
@@ -75,7 +75,7 @@ $(function() {
 						<label>金額(NT)</label>
 					</div>
 					<div class="input-field col s2">
-						<input class="form-input" type="number" v-model="keyInProduct.remark">
+						<input class="form-input" type="text" v-model="keyInProduct.remark">
 						<label>備註</label>
 					</div>
 					<div class="input-field col s1">
@@ -136,4 +136,5 @@ $(function() {
 		</div>
 	</div>
 </div>
+
 <script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=14"></script>

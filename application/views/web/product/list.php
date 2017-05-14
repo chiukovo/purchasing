@@ -21,7 +21,6 @@ $(function() {
                 <a href="#modalAdd" class="modal-trigger waves-effect btn-flat" data-type="add"><i class="material-icons">add_circle</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat"><i class="material-icons">search</i></a>
             </div>
-
         </div>
         <div class="hiddensearch" style="display: none">
             <div id="datatable_filter" class="dataTables_filter col s6">
