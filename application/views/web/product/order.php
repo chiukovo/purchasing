@@ -1,17 +1,30 @@
+<!-- Include Date Range Picker -->
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/pikaday-package.css" />
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/pikaday-responsive-modernizr.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/pikaday.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/pikaday-responsive.js"></script>
 <link href="<?php echo base_url(); ?>assets/css/select2.min.css"" rel="stylesheet" />
 <script src="<?php echo base_url(); ?>assets/js/select2.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/vee-validate.min.js"></script>
+
 <style type="text/css">
 	.is-danger{
 		color: red;
 	}
 </style>
+<script type="text/javascript">
+$(function() {
+    pikadayResponsive($('#date'));
+});
+</script>
 
 <div id="buy" v-cloak>
+<div class="card">
 	<ul>
 		<li>訂單編號: <?php echo $orderNum;?></li>
 		<li>訂單日期:
-			<input type="date" name="date" data-date-format="DD-YYYY-MM" v-model="date" v-validate="'required'">
+			<input id="date" type="date" name="date" data-date-format="DD-YYYY-MM" v-model="date" v-validate="'required'">
 			<span v-show="errors.has('date')" class="help is-danger">請輸入日期</span>
 		</li>
 		<li>購買人:
@@ -89,12 +102,13 @@
 
 	</div>
 </div>
+</div>
 
 <script type="text/javascript">
 	var orderNum = <?php echo $orderNum;?>;
 </script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.twzipcode.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/buy.js?v=2"></script>
+<script src="<?php echo base_url(); ?>assets/js/buy.js?v=3"></script>
 <script>
 	$('#twzipcode').twzipcode();
 	$('#productSelect').select2().on('change', function (e) {

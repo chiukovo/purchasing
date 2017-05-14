@@ -177,6 +177,8 @@ var buy = new Vue({
         },
         deleteProduct: function(key) {
             buy.productGroup.splice(key, 1);
+            
+            this.productSum();
         },
     }
 });
