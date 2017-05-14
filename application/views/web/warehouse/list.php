@@ -1,78 +1,83 @@
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/daterangepicker.css" />
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/daterangepicker.js"></script>
-<script type="text/javascript">
-$(function() {
-    $('.date').daterangepicker({
-        singleDatePicker: true,
-        locale: {
-          format: 'YYYY-MM-DD'
-        }
-    });
-});
-</script>
 <div class="page-body">
-	<div class="page-tab">
-		<ul>
-			<li><a href="<?php echo base_url()?>warehouse/list?type=&start=<?php echo $start;?>&end=<?php echo $end;?>">全部</a></li>
+	<div class="card material-table">
+        <div class="table-header">
+            <span class="table-title">倉庫庫存列表</span>
+            <div class="actions">
+                <a href="#" class="search-toggle waves-effect btn-flat"><i class="material-icons">search</i></a>
+            </div>
+        </div>
+        <div class="hiddensearch" style="display: none">
+            <div id="datatable_filter" class="dataTables_filter col s6">
+                <form>
+                <div class="row">
+                    <div class="input-field col">
+                        <input id="start" type="text" class="date" value="<?php echo $start;?>" />
+                    </div>
+                    <div class="input-field col">
+                        <input id="end" type="text" class="date" value="<?php echo $end;?>">
+                    </div>
+                    <div class="col"><a onclick="document.forms[0].submit()" class="waves-effect waves-light btn">查詢</a></div>
+                </div>
+                </form>
+            </div>
+        </div>
+		<ul class="page-tabs">
+			<li class="tab active"><a href="<?php echo base_url()?>warehouse/list?type=&start=<?php echo $start;?>&end=<?php echo $end;?>">全部</a></li>
 			<?php foreach ($warehouse as $name) { ?>
-			<li class="active">
+			<li class="tab">
 				<a href="<?php echo base_url()?>warehouse/list?type=<?php echo $name;?>&start=<?php echo $start;?>&end=<?php echo $end;?>"><?php echo $name;?></a>
 			</li>
 			<?php } ?>
 		</ul>
+		<table class="table" id="warehouse">
+			<tr>
+				<th>日期</th>
+				<th>商品名稱</th>
+				<th>規格</th>
+				<th>數量</th>
+				<th>重量</th>
+	            <th>追蹤代碼</th>
+	            <th>存放倉庫</th>
+	            <th>貨運單位</th>
+	            <th>收貨人</th>
+	            <th>備註</th>
+			</tr>
+			<?php foreach($products as $product) {?>
+			<tr>
+				<td><?php echo $product['created_at']?></td>
+				<td><?php echo $product['name']?></td>
+				<td><?php echo $product['standard']?></td>
+				<td><?php echo $product['amount']?></td>
+				<td><?php echo $product['weight']?></td>
+				<td><?php echo $product['tracking_code']?></td>
+				<td>
+				<select @change="onChange" data-type="warehouse" data-id="<?php echo $product['id'];?>">
+					<?php foreach ($warehouse as $name) { ?>
+					<option value="<?php echo $name;?>" <?php if($name == $product['warehouse']) { echo 'selected'; } ?> ><?php echo $name;?></option>
+					<?php } ?>
+				</select>
+				</td>
+				<td>
+				<select @change="onChange" data-type="freight" data-id="<?php echo $product['id'];?>">
+					<?php foreach ($freight as $name) { ?>
+					<option value="<?php echo $name;?>" <?php if($name == $product['freight']) { echo 'selected'; } ?> ><?php echo $name;?></option>
+					<?php } ?>
+				</select>
+				</td>
+				<td>
+				<select @change="onChange" data-type="receiver" data-id="<?php echo $product['id'];?>">
+					<?php foreach ($receiver as $name) { ?>
+					<option value="<?php echo $name;?>" <?php if($name == $product['receiver']) { echo 'selected'; } ?> ><?php echo $name;?></option>
+					<?php } ?>
+				</select>
+				</td>
+				<td><?php echo $product['remark']?></td>
+			</tr>
+			<?php } ?>
+		</table>
 	</div>
-    <form>
-        <input type="text" class="date" name="start" value="<?php echo $start;?>" /> ~
-        <input type="text" class="date" name="end" value="<?php echo $end;?>" />
-        <button type="submit">查詢</button>
-    </form>
-	<table class="table" id="warehouse">
-		<tr>
-			<td>日期</td>
-			<td>商品名稱</td>
-			<td>規格</td>
-			<td>數量</td>
-			<td>重量</td>
-            <th>追蹤代碼</th>
-            <th>存放倉庫</th>
-            <th>貨運單位</th>
-            <th>收貨人</th>
-            <th>備註</th>
-		</tr>
-		<?php foreach($products as $product) {?>
-		<tr>
-			<td><?php echo $product['created_at']?></td>
-			<td><?php echo $product['name']?></td>
-			<td><?php echo $product['standard']?></td>
-			<td><?php echo $product['amount']?></td>
-			<td><?php echo $product['weight']?></td>
-			<td><?php echo $product['tracking_code']?></td>
-			<td>
-			<select @change="onChange" data-type="warehouse" data-id="<?php echo $product['id'];?>">
-				<?php foreach ($warehouse as $name) { ?>
-				<option value="<?php echo $name;?>" <?php if($name == $product['warehouse']) { echo 'selected'; } ?> ><?php echo $name;?></option>
-				<?php } ?>
-			</select>
-			</td>
-			<td>
-			<select @change="onChange" data-type="freight" data-id="<?php echo $product['id'];?>">
-				<?php foreach ($freight as $name) { ?>
-				<option value="<?php echo $name;?>" <?php if($name == $product['freight']) { echo 'selected'; } ?> ><?php echo $name;?></option>
-				<?php } ?>
-			</select>
-			</td>
-			<td>
-			<select @change="onChange" data-type="receiver" data-id="<?php echo $product['id'];?>">
-				<?php foreach ($receiver as $name) { ?>
-				<option value="<?php echo $name;?>" <?php if($name == $product['receiver']) { echo 'selected'; } ?> ><?php echo $name;?></option>
-				<?php } ?>
-			</select>
-			</td>
-			<td><?php echo $product['remark']?></td>
-		</tr>
-		<?php } ?>
-	</table>
+
 </div>
 
 <script type="text/javascript">
@@ -110,4 +115,10 @@ function doUpdate(value)
         },
     });
 }
+$('.search-toggle').click(function() {
+  if ($('.hiddensearch').css('display') == 'none')
+    $('.hiddensearch').slideDown();
+  else
+    $('.hiddensearch').slideUp();
+});
 </script>

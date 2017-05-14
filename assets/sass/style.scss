@@ -6,8 +6,45 @@ html {
     font-weight: normal;
     color: rgba(0,0,0,0.87);
 }
+
 body {
-    background: #26a69a;
+    background-color: #fafafa;
+}
+
+#page-header {
+    height: 44px;
+    background-color: #26a69a;
+    > a {
+        color: #fff;
+        height: 44px;
+        text-align: center;
+        line-height: 44px;
+        display: inline-block;
+        float: left;
+        i {
+            line-height: 44px;
+        }
+    }
+    .button-collapse {
+        width: 44px;
+    }
+    .brand-logo {
+        font-size: 26px;
+        padding: 0 10px;
+    }
+    .side-nav {
+        font-family: 'Noto Sans TC', sans-serif;
+        background-color: #F7F7F7;
+        .userView {
+            font-size: 26px;
+            color: #fff;
+            background-color: #26a69a;
+        }
+    }
+}
+
+#page-container {
+    margin-top: 50px;
 }
 
 .page-body {
@@ -27,7 +64,7 @@ body {
 
 .material-table {
     table {
-        table-layout: fixed;
+        table-layout: auto;
         tr {
             th {
                 font-weight: 500;
@@ -81,6 +118,9 @@ body {
     }
     .expand {
         background-color: #f7f7f7;
+        > td {
+            padding: 0;
+        }
     }
 }
 
@@ -116,15 +156,52 @@ body {
     height: 100%;
     max-height: 100%;
     box-shadow: none;
+}
+
+.card {
     .card-title {
         font-family: 'Noto Sans TC', sans-serif;
         padding: 10px 10px 20px;
     }
 }
 
-
 .purchase-title {
     font-family: 'Noto Sans TC', sans-serif;
     font-size: 30px;
     color: rgba(0,0,0,.86);
+}
+
+
+.page-tabs {
+    display: table;
+    margin: 0;
+    .tab {
+        display: inline-block;
+        a {
+            display: block;
+            color: #333;
+            line-height: 3;
+            padding: 0 15px;
+        }
+        &.active {
+            a {
+                background-color: #eee;
+            }
+        }
+    }
+}
+
+.page-ul {
+    list-style-type: disc !important;
+    li {
+        list-style-type: disc!important;
+    }
+}
+.warehouse-set {
+    .page-ul {
+        padding-left: 26px;
+        li span {
+            padding-right: 10px;
+        }
+    }
 }

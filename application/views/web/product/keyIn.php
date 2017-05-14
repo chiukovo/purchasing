@@ -84,7 +84,7 @@ $(function() {
 				</div>
 				<div class="material-table">
 					<table class="table">
-						<tr>
+						<tr v-show="listProduct.length != 0 ">
 							<th>品名</th>
 							<th>規格</th>
 							<th>數量</th>
@@ -92,7 +92,7 @@ $(function() {
 							<th>金額(US)</th>
 							<th>金額(NT)</th>
 							<th>備註</th>
-							<th class="centered">功能</th>
+							<th class="center-align">功能</th>
 						</tr>
 						<tr v-for="(info, key) in listProduct">
 							<td>
@@ -123,7 +123,7 @@ $(function() {
 								<span v-show="info.isDefault">{{ info.tracking_code }}</span>
 								<span v-show="info.isEdit"><input type="text" v-model="info.tracking_code"></span>
 							</td>
-							<td class="centered">
+							<td class="center-align">
 								<button class="btn btn-edit" v-show="info.isDefault" @click="changeMethod(key, 'edit')">修改</button>
 
 								<button class="btn btn-del" v-show="info.isEdit" @click="changeMethod(key, 'delete')">刪除</button>

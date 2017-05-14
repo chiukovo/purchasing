@@ -1,11 +1,15 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.autocomplete.min.js"></script>
-
+<script type="text/javascript">
+$(function() {
+    pikadayResponsive($('#date'));
+});
+</script>
 <div id="keyIn">
 	<div class="page-body">
 		<div class="purchase-infor col">
 			<div class="row">
 				<div class="purchase-title col s6">
-				<i class="material-icons">playlist_add</i> 新增進貨單
+				<i class="material-icons">border_color</i> 編輯進貨單
 				</div>
 				<div class="modal-footer col s6">
 					<a class="waves-effect waves-light btn deep-orange" @click="insert()" title="儲存">儲存<i class="material-icons left">save</i></a>
@@ -20,8 +24,7 @@
 						<label class="active">訂單日期</label>
 					</div>
 					<div class="input-field col s6">
-						<input type="text" class="validate"
-						v-model="productOrder.idCard">
+						<input type="text" class="validate" v-model="productOrder.idCard">
 						<label>信用卡名稱</label>
 					</div>
 				</div>
@@ -29,15 +32,15 @@
 				<div class="row">
 					<div class="input-field col s4">
 						<label>本單匯率</label>
-						<input class="form-input" type="text" v-model="productOrder.rate">
+						<input type="text" v-model="productOrder.rate">
 					</div>
 					<div class="input-field col s4">
+						<input type="text" v-model="productOrder.total_cost_us">
 						<label>進貨總成本(US)</label>
-							<input class="form-input" type="text" v-model="productOrder.total_cost_us">
 					</div>
 					<div class="input-field col s4">
 						<label>進貨總成本(NT)</label>
-							<input class="form-input" type="text" v-model="productOrder.total_cost_nt">
+						<input type="text" v-model="productOrder.total_cost_nt">
 					</div>
 				</div>
 			</div>
@@ -52,28 +55,28 @@
 					</div>
 					<div class="input-field col s1">
 						<label class="form-label">規格</label>
-						<input class="form-input" type="text" v-model="keyInProduct.standard" >
+						<input type="text" v-model="keyInProduct.standard" >
 					</div>
 					<div class="input-field col s1">
 						<label class="form-label">數量</label>
-						<input class="form-input" type="number" v-model="keyInProduct.amount">
+						<input type="number" v-model="keyInProduct.amount">
 					</div>
 					<div class="input-field col s1">
 						<label class="form-label">重量</label>
-						<input class="form-input" type="number" v-model="keyInProduct.weight">
+						<input type="number" v-model="keyInProduct.weight">
 					</div>
 					<div class="input-field col s1">
 						<label class="form-label">金額(US)</label>
-						<input class="form-input" type="number" v-model="keyInProduct.money_us">
+						<input type="number" v-model="keyInProduct.money_us">
 					</div>
 					<div class="input-field col s1">
 						<label class="form-label">金額(NT)</label>
-						<input class="form-input" type="number" v-model="keyInProduct.money_nt">
+						<input type="number" v-model="keyInProduct.money_nt">
 					</div>
-					<div class="input-field col s1">
+					<!-- <div class="input-field col s1">
 						<label class="form-label">追蹤代碼</label>
-						<input class="form-input" type="number" v-model="keyInProduct.tracking_code">
-					</div>
+						<input type="number" v-model="keyInProduct.tracking_code">
+					</div> -->
 					<!--<div class="input-field col s1">
 						<label class="form-label">存放倉庫</label>
 						<select v-model="keyInProduct.warehouse">
@@ -98,9 +101,9 @@
 							<?php } ?>
 						</select>
 					</div>-->
-					<div class="input-field col s1">
+					<div class="input-field col s2">
 						<label class="form-label">備註</label>
-						<input class="form-input" type="text" v-model="keyInProduct.remark">
+						<input type="text" v-model="keyInProduct.remark">
 					</div>
 					<div class="input-field col s1">
 						<a class="waves-effect waves-light btn" @click="addProduct">新增</a>
@@ -120,7 +123,7 @@
 							<th>貨運單位</th>
 							<th>收貨人</th>-->
 							<th>備註</th>
-							<th>功能</th>
+							<th class="center-align">功能</th>
 						</tr>
 						<tr v-for="(info, key) in listProduct">
 							<td>
@@ -185,10 +188,10 @@
 							<td>
 								<span v-show="info.isDefault">{{ info.remark }}</span>
 								<span v-show="info.isEdit">
-								<input class="form-input" type="text" v-model="info.remark">
+								<input type="text" v-model="info.remark">
 								</span>
 							</td>
-							<td>
+							<td  class="center-align">
 								<button class="btn btn-edit" v-show="info.isDefault" @click="changeMethod(key, 'edit')">修改</button>
 
 								<button class="btn btn-del" v-show="info.isEdit" @click="changeMethod(key, 'delete')">刪除</button>

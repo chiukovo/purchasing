@@ -7,7 +7,43 @@ html {
 }
 
 body {
-  background: #26a69a;
+  background-color: #fafafa;
+}
+
+#page-header {
+  height: 44px;
+  background-color: #26a69a;
+}
+#page-header > a {
+  color: #fff;
+  height: 44px;
+  text-align: center;
+  line-height: 44px;
+  display: inline-block;
+  float: left;
+}
+#page-header > a i {
+  line-height: 44px;
+}
+#page-header .button-collapse {
+  width: 44px;
+}
+#page-header .brand-logo {
+  font-size: 26px;
+  padding: 0 10px;
+}
+#page-header .side-nav {
+  font-family: 'Noto Sans TC', sans-serif;
+  background-color: #F7F7F7;
+}
+#page-header .side-nav .userView {
+  font-size: 26px;
+  color: #fff;
+  background-color: #26a69a;
+}
+
+#page-container {
+  margin-top: 50px;
 }
 
 .page-body {
@@ -24,7 +60,7 @@ body {
 }
 
 .material-table table {
-  table-layout: fixed;
+  table-layout: auto;
 }
 .material-table table tr th {
   font-weight: 500;
@@ -77,6 +113,9 @@ body {
 .material-table .expand {
   background-color: #f7f7f7;
 }
+.material-table .expand > td {
+  padding: 0;
+}
 
 .table-header {
   height: 64px;
@@ -107,7 +146,8 @@ body {
   max-height: 100%;
   box-shadow: none;
 }
-.modal-full .card-title {
+
+.card .card-title {
   font-family: 'Noto Sans TC', sans-serif;
   padding: 10px 10px 20px;
 }
@@ -116,6 +156,37 @@ body {
   font-family: 'Noto Sans TC', sans-serif;
   font-size: 30px;
   color: rgba(0, 0, 0, 0.86);
+}
+
+.page-tabs {
+  display: table;
+  margin: 0;
+}
+.page-tabs .tab {
+  display: inline-block;
+}
+.page-tabs .tab a {
+  display: block;
+  color: #333;
+  line-height: 3;
+  padding: 0 15px;
+}
+.page-tabs .tab.active a {
+  background-color: #eee;
+}
+
+.page-ul {
+  list-style-type: disc !important;
+}
+.page-ul li {
+  list-style-type: disc !important;
+}
+
+.warehouse-set .page-ul {
+  padding-left: 26px;
+}
+.warehouse-set .page-ul li span {
+  padding-right: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */

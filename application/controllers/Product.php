@@ -185,13 +185,29 @@ class Product extends CI_Controller
         }
 
         $data = [
-            'orderList' =>  $this->ProductOrder_model->getByDateRange($start, $end),
+            'orderList' => $this->ProductOrder_model->getByDateRange($start, $end),
             'start' => $start,
             'end' => $end
         ];
 
         //layout data
         $this->layoutData['content'] = $this->load->view('web/product/orderList', $data, true);
+        $this->load->view('web/layout/app', $this->layoutData);
+    }
+
+    /**
+     * order edit
+     */
+    public function orderEdit()
+    {
+        $paramData = $this->input->get();
+
+        $data = [
+            'order' =>  $this->ProductOrder_model->getByFilters(array('id' => $paramData['id']))[0]
+        ];
+
+        //layout data
+        $this->layoutData['content'] = $this->load->view('web/product/orderEdit', $data, true);
         $this->load->view('web/layout/app', $this->layoutData);
     }
 
@@ -229,6 +245,19 @@ class Product extends CI_Controller
         $insertData['created_at'] = date('Y-m-d h:i:s');
 
         echo $this->ProductOrder_model->create($insertData);
+    }
+
+    /**
+     * 商品訂單編輯更新
+     */
+    public function orderEditUpdate()
+    {
+        $updateData = $this->input->post('updateData');
+        $id = $this->input->post('id');
+
+        $updateData['updated_at'] = date('Y-m-d h:i:s');
+
+        echo $this->ProductOrder_model->orderEditUpdate($updateData, $id);
     }
 
     /**

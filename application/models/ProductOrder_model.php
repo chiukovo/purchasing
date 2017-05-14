@@ -66,18 +66,11 @@ class ProductOrder_model extends CI_Model {
 			->result_array();
 	}
 
-	/**
-	 * create
-	 */
-	public function create($insertData)
+	public function updateNewProductAmount($productInfo, $productCount)
 	{
-		//扣掉庫存
-		$insertData['productInfo'] = json_decode($insertData['productInfo'], true);
-		$insertData['productCount'] = json_decode($insertData['productCount'], true);
-
-		if ( ! empty($insertData['productInfo'])) {
-			foreach ($insertData['productInfo'] as $key => $product) {
-				$thisAmount = $insertData['productCount'][$key];
+		if ( ! empty($productInfo)) {
+			foreach ($productInfo as $key => $product) {
+				$thisAmount = $productCount[$key];
 				$realName = $product['realName'];
 				$search = array(
 					'name' => $realName,
@@ -86,7 +79,7 @@ class ProductOrder_model extends CI_Model {
 				);
 
 				if ($thisAmount > $product['amount']) {
-					return $product['amount'] . '已無庫存 !';
+					return $product['realName'] . '已無庫存 !';
 				}
 
 				$getWareProduct = $this->Product_model->getByFilters($search);
@@ -110,6 +103,27 @@ class ProductOrder_model extends CI_Model {
 						}
 					}
 				}
+			}
+		}
+	}
+
+	/**
+	 * create
+	 */
+	public function create($insertData)
+	{
+		//扣掉庫存
+		$insertData['productInfo'] = json_decode($insertData['productInfo'], true);
+		$insertData['productCount'] = json_decode($insertData['productCount'], true);
+
+		$updateAmount = $this->updateNewProductAmount($insertData['productInfo'], $insertData['productCount']);
+
+		if ( !empty($updateAmount)) {
+			return $updateAmount;
+		}
+
+		if ( ! empty($insertData['productInfo'])) {
+			foreach ($insertData['productInfo'] as $key => $product) {
 				$insertData['productInfo'][$key]['amount'] = $insertData['productCount'][$key];
 			}
 		}
@@ -118,6 +132,101 @@ class ProductOrder_model extends CI_Model {
 		$insertData['productInfo'] = json_encode($insertData['productInfo']);
 		
 		$this->db->insert(self::DB_NAME, $insertData);
+	}
+
+	/**
+	 * update
+	 */
+	public function orderEditUpdate($updateData, $id)
+	{
+		$updateData['productInfo'] = json_decode($updateData['productInfo'], true);
+		$updateData['productCount'] = json_decode($updateData['productCount'], true);
+
+		$sourceData = $this->getByFilters(array('id' => $id));
+
+		$sourceProductInfo = json_decode($sourceData[0]['productInfo'], true);
+
+		//檢查刪除商品的情況
+		foreach ($sourceProductInfo as $before) {
+			$isDelete = true;
+			$realName = $before['realName'];
+			$search = array(
+				'name' => $realName,
+				'standard' => $before['standard'],
+				'warehouse' => $before['warehouse'],
+			);
+
+			$getWareProduct = $this->Product_model->getByFilters($search)[0];
+
+			if ( ! empty($updateData['productInfo']) ) {
+				foreach ($updateData['productInfo'] as $key => $now) {
+					$nowAmount = $updateData['productCount'][$key];
+					
+					//計算是多還是少
+					if ($now['name'] == $before['name']) {
+						$isDelete = false;
+
+						if ($before['amount'] > $nowAmount) {
+							$thisAmount = $before['amount'] - $nowAmount;
+							$toUpdateAmount = array(
+								'amount' => $thisAmount
+							);
+
+							$this->Product_model->updateFieldById($getWareProduct['id'], $toUpdateAmount);
+
+						} else if ($before['amount'] < $nowAmount) {
+							$thisAmount = $nowAmount - $before['amount'];
+							$toUpdateAmount = array(
+								'amount' => $thisAmount
+							);
+							
+							$this->Product_model->updateFieldById($getWareProduct['id'], $toUpdateAmount);
+						}
+					}
+				}
+			} else {
+				$isDelete = true;
+			}
+
+			if ($isDelete) {
+				$updateAmount = $before['amount'] + $getWareProduct['amount'];
+				$toUpdateAmount = array(
+					'amount' => $updateAmount
+				);
+
+				$this->Product_model->updateFieldById($getWareProduct['id'], $toUpdateAmount);
+			}
+		}
+
+		//check new add product
+		if ( ! empty($updateData['productInfo'])) {
+			$newAdd = array();
+			$newCount = array();
+
+			foreach ($updateData['productInfo'] as $key => $now) {
+				$isNew = true;
+
+				foreach ($sourceProductInfo as $before) {
+					if ($now['name'] == $before['name']) {
+						$isNew = false;
+					}
+				}
+
+				if ($isNew) {
+					$newAdd[] = $now;
+					$newCount[] = $updateData['productCount'][$key];
+				}
+
+				$updateData['productInfo'][$key]['amount'] = $updateData['productCount'][$key];
+			}
+
+			$this->updateNewProductAmount($newAdd, $newCount);
+		}
+
+		unset($updateData['productCount']);
+		$updateData['productInfo'] = json_encode($updateData['productInfo']);
+
+		$this->updateFieldById($id, $updateData);
 	}
 
 	/**
@@ -149,5 +258,16 @@ class ProductOrder_model extends CI_Model {
 		}
 
 		$this->db->delete(self::DB_NAME, array('id' => $id));
+	}
+
+
+	/**
+	 * update Password By Id
+	 *
+	 * @return bool true on success, false on failure
+	 */
+	public function updateFieldById($id, $updateData)
+	{
+		return $this->db->update(self::DB_NAME, $updateData, array('id' => $id));
 	}
 }

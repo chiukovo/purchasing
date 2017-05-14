@@ -23,6 +23,7 @@ $(function() {
         </div>
         <div class="hiddensearch" style="display: none">
             <div id="datatable_filter" class="dataTables_filter col s6">
+                <form>
                 <div class="row">
                     <div class="input-field col">
                         <input id="start" type="text" class="validate date" value="<?php echo $start;?>" />
@@ -30,8 +31,9 @@ $(function() {
                     <div class="input-field col">
                         <input id="end" type="text" class="validate date" value="<?php echo $end;?>">
                     </div>
-                    <div class="col"><a class="waves-effect waves-light btn">搜尋</a></div>
+                    <div class="col"><a onclick="document.forms[0].submit()" class="waves-effect waves-light btn">搜尋</a></div>
                 </div>
+                </form>
             </div>
         </div>
         <table class="table" id="list" v-cloak>
@@ -42,7 +44,7 @@ $(function() {
                     <th>本單匯率</th>
                     <th>總成本(US)</th>
                     <th>總成本(NT)</th>
-                    <th  class="center-align">功能</th>
+                    <th class="center-align">功能</th>
                 </tr>
             </thead>
             <tbody>

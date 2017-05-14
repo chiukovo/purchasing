@@ -24,15 +24,17 @@ $(function() {
         </div>
         <div class="hiddensearch" style="display: none">
             <div id="datatable_filter" class="dataTables_filter col s6">
+                <form>
                 <div class="row">
                     <div class="input-field col">
-                        <input id="start" type="text" class="validate date" value="<?php echo $start;?>" />
+                        <input id="start" type="text" name="start" class="validate date" value="<?php echo $start;?>" />
                     </div>
                     <div class="input-field col">
-                        <input id="end" type="text" class="validate date" value="<?php echo $end;?>">
+                        <input id="end" type="text" name="end" class="validate date" value="<?php echo $end;?>">
                     </div>
-                    <div class="col"><a class="waves-effect waves-light btn">搜尋</a></div>
+                    <div class="col"><a onclick="document.forms[0].submit()" class="waves-effect waves-light btn">搜尋</a></div>
                 </div>
+                </form>
             </div>
         </div>
         <table class="table" id="list" v-cloak>
@@ -53,10 +55,10 @@ $(function() {
                 <td><?php echo $info['total_cost_us'];?></td>
                 <td><?php echo $info['total_cost_nt'];?></td>
                 <td  class="center-align">
-                    <a href="#modalEdit" class="waves-effect btn-flat" data-type="a-model" data-type="edit">
+                    <a href="#modalEdit" class="waves-effect btn-flat" data-type="a-model" data-type="edit" data-id="<?php echo $info['id'];?>">
                         <i class="material-icons" data-type="a-model">mode_edit</i>
                     </a>
-                    <a onclick="deleteCode('<?php echo $info['id'];?>', '<?php echo $info['buyer'];?>')" class="waves-effect btn-flat" data-type="delete">
+                    <a onclick="deleteOrder('<?php echo $info['id'];?>', '<?php echo $info['buyer'];?>')" class="waves-effect btn-flat" data-type="delete">
                         <i class="material-icons" data-type="delete">delete_forever</i>
                       </a>
 
@@ -117,13 +119,13 @@ $('.modal').modal({
     startingTop: '0', // Starting top style attribute
     endingTop: '0', // Ending top style attribute
     ready: function(modal, trigger) {
-        var code = $(trigger).attr('data-code');
+        var id = $(trigger).attr('data-id');
         var type = $(trigger).attr('data-type');
 
         if (type == 'add') {
             $("#inlineAjaxAdd").load("<?php echo base_url(); ?>product/order");
         } else {
-            $("#inlineAjaxEdit").load("<?php echo base_url(); ?>product/productEdit?code=" + code);
+            $("#inlineAjaxEdit").load("<?php echo base_url(); ?>product/orderEdit?id=" + id);
         }
     },
     complete: function() {
@@ -148,7 +150,7 @@ var list = new Vue({
     }
 });
 
-function deleteCode(id, buyer, product)
+function deleteOrder(id, buyer, product)
 {
     swal({
         title: "注意",
