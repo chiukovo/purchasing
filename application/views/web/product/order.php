@@ -1,6 +1,6 @@
 <link href="<?php echo base_url(); ?>assets/css/select2.min.css"" rel="stylesheet" />
 <script src="<?php echo base_url(); ?>assets/js/select2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/vee-validate/2.0.0-rc.3/vee-validate.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/vee-validate.min.js"></script>
 <style type="text/css">
 	.is-danger{
 		color: red;

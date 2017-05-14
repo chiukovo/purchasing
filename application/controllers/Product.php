@@ -169,6 +169,45 @@ class Product extends CI_Controller
     /**
      * 商品訂單
      */
+    public function orderList()
+    {
+        $paramData = $this->input->get();
+
+        if ( isset($paramData['start']) && isset($paramData['end'])) {
+            $start = $paramData['start'];
+            $end = $paramData['end'];
+        } else {
+            $first = new DateTime('first day of this month');
+            $start = $first->format('Y-m-d');
+
+            $last = new DateTime('last day of this month');
+            $end = $last->format('Y-m-d');
+        }
+
+        $data = [
+            'orderList' =>  $this->ProductOrder_model->getByDateRange($start, $end),
+            'start' => $start,
+            'end' => $end
+        ];
+
+        //layout data
+        $this->layoutData['content'] = $this->load->view('web/product/orderList', $data, true);
+        $this->load->view('web/layout/app', $this->layoutData);
+    }
+
+    /**
+     * delete by id 
+     */
+    public function deleteOrder()
+    {
+        $id = $this->input->post('id');
+
+        $this->ProductOrder_model->deleteById($id);
+    }
+
+    /**
+     * 商品訂單
+     */
     public function order()
     {
         $data = [

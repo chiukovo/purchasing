@@ -27,6 +27,36 @@ class ProductOrder_model extends CI_Model {
 	}
 
 	/**
+	 * get all
+	 */
+	public function getByDateRange($start, $end)
+	{
+		$result = array();
+
+		//check not empty
+		if (empty($start) || empty($end)) {
+			$first = new DateTime('first day of this month');
+    		$start = $first->format('Y-m-d');
+
+			$last = new DateTime('last day of this month');
+    		$end = $last->format('Y-m-d');
+		}
+
+		$get = $this->db->order_by('created_at', 'desc')
+			->where('date >=', $start)
+			->where('date <=', $end)
+			->get(self::DB_NAME)
+			->result_array();
+
+		foreach ($get as $value) {
+			$value['productInfo'] = json_decode($value['productInfo'], true);
+			$result[] = $value;
+		}
+
+		return $result;
+	}
+
+	/**
 	 * get by filters
 	 */
 	public function getByFilters($filters)
@@ -88,5 +118,36 @@ class ProductOrder_model extends CI_Model {
 		$insertData['productInfo'] = json_encode($insertData['productInfo']);
 		
 		$this->db->insert(self::DB_NAME, $insertData);
+	}
+
+	/**
+	 * delete By Id
+	 */
+	public function deleteById($id)
+	{
+		$targetProduct = $this->getByFilters(['id' => $id]);
+		
+		$product = json_decode($targetProduct[0]['productInfo'], true);
+
+		foreach ($product as $info) {
+			$search = array(
+				'name' => $info['realName'],
+				'standard' => $info['standard'],
+				'warehouse' => $info['warehouse'],
+			);
+
+			$getWareProduct = $this->Product_model->getByFilters($search);
+
+			$targetWareProduct = $getWareProduct[0];
+
+			//加回去
+			$udpateWare = array(
+				'amount' => $targetWareProduct['amount'] + $info['amount']
+			);
+
+			$this->Product_model->updateFieldById($targetWareProduct['id'], $udpateWare);
+		}
+
+		$this->db->delete(self::DB_NAME, array('id' => $id));
 	}
 }

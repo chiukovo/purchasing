@@ -1,4 +1,5 @@
 <!-- Include Date Range Picker -->
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/daterangepicker.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/pikaday-package.css" />
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/pikaday-responsive-modernizr.js"></script>
@@ -15,7 +16,7 @@ $(function() {
 <div class="page-body">
     <div class="card material-table">
         <div class="table-header">
-            <span class="table-title">進貨單列表</span>
+            <span class="table-title">訂單列表</span>
             <div class="actions">
                 <a href="#modalAdd" class="modal-trigger waves-effect btn-flat" data-type="add"><i class="material-icons">add_circle</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat"><i class="material-icons">search</i></a>
@@ -38,26 +39,24 @@ $(function() {
             <thead>
                 <tr>
                     <th>訂單日期</th>
-                    <th>信用卡</th>
-                    <th>本單匯率</th>
-                    <th>總成本(US)</th>
-                    <th>總成本(NT)</th>
+                    <th>購買人</th>
+                    <th>商品總金額(美金)</th>
+                    <th>商品總金額(台幣)</th>
                     <th  class="center-align">功能</th>
                 </tr>
             </thead>
             <tbody>
-            <?php foreach($product as $key => $info) { ?>
+            <?php foreach($orderList as $key => $info) { ?>
             <tr class="product">
                 <td><?php echo $info['date'];?></td>
-                <td><?php echo $info['idCard'];?></td>
-                <td><?php echo $info['rate'];?></td>
+                <td><?php echo $info['buyer'];?></td>
                 <td><?php echo $info['total_cost_us'];?></td>
                 <td><?php echo $info['total_cost_nt'];?></td>
                 <td  class="center-align">
-                    <a href="#modalEdit" class="waves-effect btn-flat" data-type="a-model" data-type="edit" data-code="<?php echo $info['code'];?>">
+                    <a href="#modalEdit" class="waves-effect btn-flat" data-type="a-model" data-type="edit">
                         <i class="material-icons" data-type="a-model">mode_edit</i>
                     </a>
-                    <a onclick="deleteCode('<?php echo $info['code'];?>', '<?php echo $info['date'];?>')" class="waves-effect btn-flat" data-type="delete">
+                    <a onclick="deleteCode('<?php echo $info['id'];?>', '<?php echo $info['buyer'];?>')" class="waves-effect btn-flat" data-type="delete">
                         <i class="material-icons" data-type="delete">delete_forever</i>
                       </a>
 
@@ -71,26 +70,20 @@ $(function() {
                                 <th>品名</th>
                                 <th>數量</th>
                                 <th>規格</th>
-                                <th>進貨金額(US)</th>
-                                <th>進貨金額(NT)</th>
-                                <th>追蹤代碼</th>
+                                <th>重量</th>
                                 <th>存放倉庫</th>
-                                <th>貨運單位</th>
-                                <th>收貨人</th>
-                                <th>備註</th>
+                                <th>售價</th>
+                                <th>折扣</th>
                             </tr>
-                            <?php foreach($info['product'] as $productInfo) { ?>
+                            <?php foreach($info['productInfo'] as $productInfo) { ?>
                             <tr>
                                 <td><?php echo $productInfo['name']?></td>
                                 <td><?php echo $productInfo['amount']?></td>
                                 <td><?php echo $productInfo['standard']?></td>
-                                <td><?php echo $productInfo['money_us']?></td>
-                                <td><?php echo $productInfo['money_nt']?></td>
-                                <td><?php echo $productInfo['tracking_code']?></td>
+                                <td><?php echo $productInfo['weight']?></td>
                                 <td><?php echo $productInfo['warehouse']?></td>
-                                <td><?php echo $productInfo['freight']?></td>
-                                <td><?php echo $productInfo['receiver']?></td>
-                                <td><?php echo $productInfo['remark']?></td>
+                                <td><?php echo $productInfo['price']?></td>
+                                <td><?php echo $productInfo['discount']?></td>
                             </tr>
                             <?php } ?>
                         </table>
@@ -128,7 +121,7 @@ $('.modal').modal({
         var type = $(trigger).attr('data-type');
 
         if (type == 'add') {
-            $("#inlineAjaxAdd").load("<?php echo base_url(); ?>product/keyIn");
+            $("#inlineAjaxAdd").load("<?php echo base_url(); ?>product/order");
         } else {
             $("#inlineAjaxEdit").load("<?php echo base_url(); ?>product/productEdit?code=" + code);
         }
@@ -140,26 +133,26 @@ $('.modal').modal({
 var list = new Vue({
     el: '#list',
     data: {
-        count: <?php echo count($product);?>,
-        showProduct: [],
+        count: <?php echo count($orderList);?>,
+        showOrder: [],
     },
     mounted: function () {
         for(num = 0; num < this.count; num++) {
-            this.showProduct.push(false);
+            this.showOrder.push(false);
         }
     },
     methods: {
         checkShow: function (key) {
-            Vue.set(this.showProduct, key, !this.showProduct[key]);
+            Vue.set(this.showOrder, key, !this.showOrder[key]);
         }
     }
 });
 
-function deleteCode(code, date)
+function deleteCode(id, buyer, product)
 {
     swal({
         title: "注意",
-        text: "您確定要刪除" + date + "嗎？",
+        text: "您確定要刪除" + buyer + "嗎？",
         showCancelButton: true,
         cancelButtonText: "取消",
         type: "warning"
@@ -167,9 +160,9 @@ function deleteCode(code, date)
     function () {
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url();?>product/deleteByCode",
+            url: "<?php echo base_url();?>product/deleteOrder",
             data: {
-                code: code,
+                id: id,
                 chiuko_o_token: $('#csrf').attr('content'),
             },
             success: function(response) {
