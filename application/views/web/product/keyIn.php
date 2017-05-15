@@ -29,19 +29,19 @@ $(function() {
 						<label>信用卡名稱</label>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="input-field col s4">
 						<label>本單匯率</label>
-						<input class="form-input" type="text" v-model="productOrder.rate">
+						<input class="form-input" type="number" v-model="productOrder.rate" @change="sumNT">
 					</div>
 					<div class="input-field col s4">
 						<label>進貨總成本(US)</label>
-							<input class="form-input" type="text" v-model="productOrder.total_cost_us">
+						<input class="form-input" type="number" v-model="productOrder.total_cost_us" @change="sumNT">
 					</div>
 					<div class="input-field col s4">
-						<label>進貨總成本(NT)</label>
-							<input class="form-input" type="text" v-model="productOrder.total_cost_nt">
+						<label>進貨總成本(NT) (匯率*總成本)</label>
+						<input class="form-input" type="number" v-model="productOrder.total_cost_nt">
 					</div>
 				</div>
 			</div>
@@ -67,11 +67,11 @@ $(function() {
 						<label>重量</label>
 					</div>
 					<div class="input-field col s1">
-						<input class="form-input" type="number" v-model="keyInProduct.money_us">
+						<input class="form-input" type="number" v-model="keyInProduct.money_us" @change="sumNTAdd('active')">
 						<label>金額(US)</label>
 					</div>
 					<div class="input-field col s1">
-						<input class="form-input" type="number" v-model="keyInProduct.money_nt">
+						<input class="form-input ntAdd" type="number" v-model="keyInProduct.money_nt">
 						<label>金額(NT)</label>
 					</div>
 					<div class="input-field col s2">
@@ -113,15 +113,15 @@ $(function() {
 							</td>
 							<td>
 								<span v-show="info.isDefault">{{ info.money_us }}</span>
-								<span v-show="info.isEdit"><input type="number" v-model="info.money_us" /></span>
+								<span v-show="info.isEdit"><input type="number" v-model="info.money_us"  @change="sumNTEdit(key)" /></span>
 							</td>
 							<td>
 								<span v-show="info.isDefault">{{ info.money_nt }}</span>
 								<span v-show="info.isEdit"><input type="number" v-model="info.money_nt" /></span>
 							</td>
 							<td>
-								<span v-show="info.isDefault">{{ info.tracking_code }}</span>
-								<span v-show="info.isEdit"><input type="text" v-model="info.tracking_code"></span>
+								<span v-show="info.isDefault">{{ info.remark }}</span>
+								<span v-show="info.isEdit"><input type="text" v-model="info.remark"></span>
 							</td>
 							<td class="center-align">
 								<button class="btn btn-edit" v-show="info.isDefault" @click="changeMethod(key, 'edit')">修改</button>
@@ -137,4 +137,4 @@ $(function() {
 	</div>
 </div>
 
-<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=14"></script>
+<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=15"></script>
