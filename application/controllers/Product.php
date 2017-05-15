@@ -73,6 +73,7 @@ class Product extends CI_Controller
 
         //layout data
         $this->layoutData['content'] = $this->load->view('web/product/keyIn', $data, true);
+        $this->layoutData['noShow'] = true;
         $this->load->view('web/layout/app', $this->layoutData);
     }
 
@@ -97,6 +98,7 @@ class Product extends CI_Controller
 
         //layout data
         $this->layoutData['content'] = $this->load->view('web/product/productEdit', $data, true);
+        $this->layoutData['noShow'] = true;
         $this->load->view('web/layout/app', $this->layoutData);
     }
 
@@ -208,11 +210,12 @@ class Product extends CI_Controller
 
         //layout data
         $this->layoutData['content'] = $this->load->view('web/product/orderEdit', $data, true);
+        $this->layoutData['noShow'] = true;
         $this->load->view('web/layout/app', $this->layoutData);
     }
 
     /**
-     * delete by id 
+     * delete by id
      */
     public function deleteOrder()
     {
@@ -233,6 +236,7 @@ class Product extends CI_Controller
 
         //layout data
         $this->layoutData['content'] = $this->load->view('web/product/order', $data, true);
+        $this->layoutData['noShow'] = true;
         $this->load->view('web/layout/app', $this->layoutData);
     }
 

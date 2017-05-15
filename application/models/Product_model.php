@@ -222,6 +222,12 @@ class Product_model extends CI_Model {
 	{
 		$result = array();
 
+		if (empty($product)) {
+			return array(
+				'productsName' => array(),
+				'products' => array(),
+			);
+		}
 		foreach ($products as $product) {
 			$names[] = $product['name'];
 		}
