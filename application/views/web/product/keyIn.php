@@ -137,4 +137,4 @@ $(function() {
 	</div>
 </div>
 
-<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=16"></script>
+<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=17"></script>

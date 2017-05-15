@@ -1,4 +1,3 @@
-<script src="<?php echo base_url(); ?>assets/js/jquery.autocomplete.min.js"></script>
 <script type="text/javascript">
 $(function() {
     pikadayResponsive($('#date'));

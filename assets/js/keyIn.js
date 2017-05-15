@@ -73,12 +73,12 @@ var keyIn = new Vue({
             ajaxKeyInPost();
         },
         sumNT: function () {
-            keyIn.productOrder.total_cost_nt = parseFloat(this.productOrder.rate) * parseInt(this.productOrder.total_cost_us);
+            keyIn.productOrder.total_cost_nt = parseInt(parseFloat(this.productOrder.rate) * parseInt(this.productOrder.total_cost_us));
             this.sumNTAdd('noActive');
             this.sumNTEdit('all');
         },
         sumNTAdd: function (type) {
-            keyIn.keyInProduct.money_nt = parseFloat(this.productOrder.rate) * parseInt(this.keyInProduct.money_us);
+            keyIn.keyInProduct.money_nt = parseInt(parseFloat(this.productOrder.rate) * parseInt(this.keyInProduct.money_us));
 
             if (type != 'noActive') {
                 $('.ntAdd').next().addClass('active');
@@ -87,12 +87,12 @@ var keyIn = new Vue({
         sumNTEdit: function (key) {
             if (key == 'all') {
                 keyIn.listProduct = keyIn.listProduct.map(function (product, key) {
-                    product.money_nt = parseFloat(keyIn.productOrder.rate) * parseInt(product.money_us);
+                    product.money_nt = parseInt(parseFloat(keyIn.productOrder.rate) * parseInt(product.money_us));
 
                     return product;
                 });
             } else {
-                var result = parseFloat(this.productOrder.rate) * parseInt(keyIn.listProduct[key].money_us);
+                var result = parseInt(parseFloat(this.productOrder.rate) * parseInt(keyIn.listProduct[key].money_us));
 
                 keyIn.listProduct[key].money_nt = result;
             }
@@ -149,28 +149,26 @@ function autoSearch()
 
             //add autocomplete
             keyIn.allProduct.map(function (value) {
-                keyIn.allProductName.push({
-                    value: value.name,
-                });
+                keyIn.allProductName[value.name] = null;
             });
         },
     });
 }
 
-$(document).on('keydown.autocomplete', '.autocomplete', function() {
-    $('.autocomplete').autocomplete({
-        lookup: keyIn.allProductName,
-        onSelect: function (suggestion) {
+$(document).ready(function() {
+    $('input.autocomplete').autocomplete({
+        data: keyIn.allProductName,
+        onAutocomplete: function(val) {
             var modelName = $(this).attr('data-model');
             var modelKey = $(this).attr('data-key');
-
             switch (modelName) {
                 case 'keyInProduct':
-                    keyIn.keyInProduct.name = suggestion.value;
+                    keyIn.keyInProduct.name = val.value;
                     break;
                 case 'listProduct':
-                    keyIn.listProduct[modelKey].name = suggestion.value;
+                    keyIn.listProduct[modelKey].name = val.value;
             }
-        }
+        },
+        minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
     });
 });
