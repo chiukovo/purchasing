@@ -12,7 +12,6 @@ var keyIn = new Vue({
         allProductName: [],
         keyInProduct: [],
         listProduct: [],
-        date: '',
         idCard: '',
         isDefault: true,
         isEdit: false,
@@ -70,7 +69,32 @@ var keyIn = new Vue({
         },
         insert: function () {
             ajaxKeyInPost();
-        }
+        },
+        sumNT: function () {
+            keyIn.productOrder.total_cost_nt = parseFloat(this.productOrder.rate) * parseInt(this.productOrder.total_cost_us);
+            this.sumNTAdd('noActive');
+            this.sumNTEdit('all');
+        },
+        sumNTAdd: function (type) {
+            keyIn.keyInProduct.money_nt = parseFloat(this.productOrder.rate) * parseInt(this.keyInProduct.money_us);
+
+            if (type != 'noActive') {
+                $('.ntAdd').next().addClass('active');
+            }
+        },
+        sumNTEdit: function (key) {
+            if (key == 'all') {
+                keyIn.listProduct = keyIn.listProduct.map(function (product, key) {
+                    product.money_nt = parseFloat(keyIn.productOrder.rate) * parseInt(product.money_us);
+
+                    return product;
+                });
+            } else {
+                var result = parseFloat(this.productOrder.rate) * parseInt(keyIn.listProduct[key].money_us);
+
+                keyIn.listProduct[key].money_nt = result;
+            }
+        },
     }
 });
 
@@ -94,6 +118,9 @@ function ajaxKeyInPost()
             return info;
         }
     });
+
+    //setting date
+    keyIn.productOrder.date = $('#date').val();
 
     $.ajax({
         type: "POST",
@@ -129,6 +156,8 @@ function getEditData()
             delete decode['product'];
 
             keyIn.productOrder = decode;
+
+            $('#date').val(decode.date);
         },
     });
 }
@@ -158,7 +187,6 @@ $(document).on('keydown.autocomplete', '.autocomplete', function() {
         onSelect: function (suggestion) {
             var modelName = $(this).attr('data-model');
             var modelKey = $(this).attr('data-key');
-
             switch (modelName) {
                 case 'keyInProduct':
                     keyIn.keyInProduct.name = suggestion.value;

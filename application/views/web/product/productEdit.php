@@ -32,10 +32,10 @@ $(function() {
 				<div class="row">
 					<div class="input-field col s4">
 						<label>本單匯率</label>
-						<input type="text" v-model="productOrder.rate">
+						<input type="text" v-model="productOrder.rate" @change="sumNT">
 					</div>
 					<div class="input-field col s4">
-						<input type="text" v-model="productOrder.total_cost_us">
+						<input type="text" v-model="productOrder.total_cost_us" @change="sumNT">
 						<label>進貨總成本(US)</label>
 					</div>
 					<div class="input-field col s4">
@@ -67,7 +67,7 @@ $(function() {
 					</div>
 					<div class="input-field col s1">
 						<label class="form-label">金額(US)</label>
-						<input type="number" v-model="keyInProduct.money_us">
+						<input type="number" v-model="keyInProduct.money_us" @change="sumNTAdd('active')">
 					</div>
 					<div class="input-field col s1">
 						<label class="form-label">金額(NT)</label>
@@ -144,7 +144,7 @@ $(function() {
 							</td>
 							<td>
 								<span v-show="info.isDefault">{{ info.money_us }}</span>
-								<span v-show="info.isEdit"><input type="number" v-model="info.money_us" /></span>
+								<span v-show="info.isEdit"><input type="number" v-model="info.money_us" @change="sumNTEdit(key)" /></span>
 							</td>
 							<td>
 								<span v-show="info.isDefault">{{ info.money_nt }}</span>
@@ -208,4 +208,4 @@ $(function() {
 <script type="text/javascript">
 	var code = <?php echo $code;?>
 </script>
-<script src="<?php echo base_url(); ?>assets/js/productEdit.js?v=1"></script>
+<script src="<?php echo base_url(); ?>assets/js/productEdit.js?v=3"></script>
