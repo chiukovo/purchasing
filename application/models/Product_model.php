@@ -31,10 +31,14 @@ class Product_model extends CI_Model {
 	public function noReapeat()
 	{
 		$products = $this->db->order_by('created_at', 'desc')
-		->where('warehouse !=', '')
-		->get(self::DB_NAME)->result_array();
+			->where('warehouse !=', '')
+			->get(self::DB_NAME)->result_array();
 
 		$result = array();
+
+		if (empty($products)) {
+			return array();
+		}
 
 		foreach ($products as $product) {
 			if ($product['standard'] != '') {
@@ -222,7 +226,7 @@ class Product_model extends CI_Model {
 	{
 		$result = array();
 
-		if (empty($product)) {
+		if (empty($products)) {
 			return array(
 				'productsName' => array(),
 				'products' => array(),

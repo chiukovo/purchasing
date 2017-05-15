@@ -137,7 +137,7 @@ var buy = new Vue({
                 phone: this.phone,
                 idCard: this.idCard,
                 remark: this.remark,
-                date: this.date,
+                date:  $('#date').val(),
                 productInfo: JSON.stringify(this.productGroup),
                 productCount: JSON.stringify(this.productCount),
                 pre_money: this.pre_money,

@@ -24,7 +24,7 @@ $(function() {
 	<ul>
 		<li>訂單編號: <?php echo $orderNum;?></li>
 		<li>訂單日期:
-			<input id="date" type="date" name="date" data-date-format="DD-YYYY-MM" v-model="date" v-validate="'required'">
+			<input id="date" type="date" class="validate" v-validate="'required'">
 			<span v-show="errors.has('date')" class="help is-danger">請輸入日期</span>
 		</li>
 		<li>購買人:

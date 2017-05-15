@@ -23,9 +23,9 @@
             </div>
         </div>
 		<ul class="page-tabs">
-			<li class="tab active"><a href="<?php echo base_url()?>warehouse/list?type=&start=<?php echo $start;?>&end=<?php echo $end;?>">全部</a></li>
+			<li class="tab <?php if ($type == '') { echo 'active';}?>"><a href="<?php echo base_url()?>warehouse/list?type=&start=<?php echo $start;?>&end=<?php echo $end;?>">全部</a></li>
 			<?php foreach ($warehouse as $name) { ?>
-			<li class="tab">
+			<li class="tab <?php if ($type == $name) { echo 'active';}?>">
 				<a href="<?php echo base_url()?>warehouse/list?type=<?php echo $name;?>&start=<?php echo $start;?>&end=<?php echo $end;?>"><?php echo $name;?></a>
 			</li>
 			<?php } ?>

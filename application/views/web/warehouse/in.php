@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/table.css" />
 <div class="page-body">
-	<h3 class="warehouse-ttl">庫存</h3>
+	<h3 class="warehouse-ttl">商品庫存</h3>
 	<div class="warehouse-search form-search">
 		<form>
 		<input class="form-input" type="search" name="search" value="<?php echo $search;?>">

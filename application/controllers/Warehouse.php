@@ -81,6 +81,7 @@ class Warehouse extends CI_Controller
 
         $data = [
             'warehouse' => json_decode($warehouse->name),
+            'type' => $type,
             'receiver' => json_decode($warehouse->receiver),
             'freight' => json_decode($warehouse->freight),
             'products' =>  $this->Product_model->getByDateRange($start, $end, $type),
