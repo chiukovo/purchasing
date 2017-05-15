@@ -17,7 +17,7 @@
 						<ul class="page-ul">
 							<li v-for="(info, key) in name">
 								<span>{{ info }}</span>
-								<button type="button" class="waves-effect waves-light btn-flat" @click="deleteCheck(key, 'name')"><i class="material-icons">close</i></button>
+								<button type="button" class="waves-effect waves-light btn-flat" @click="deleteCheck(key, 'name', info)"><i class="material-icons">close</i></button>
 							</li>
 						</ul>
 					</div>
@@ -42,7 +42,7 @@
 						<ul class="page-ul">
 							<li v-for="(info, key) in receiver">
 								<span>{{ info }}</span>
-								<button type="button" class="waves-effect waves-light btn-flat" @click="deleteCheck(key, 'receiver')"><i class="material-icons">close</i></button>
+								<button type="button" class="waves-effect waves-light btn-flat" @click="deleteCheck(key, 'receiver', info)"><i class="material-icons">close</i></button>
 							</li>
 						</ul>
 					</div>
@@ -66,7 +66,7 @@
 						<ul class="page-ul">
 							<li v-for="(info, key) in freight">
 								<span>{{ info }}</span>
-								<button type="button" class="waves-effect waves-light btn-flat" @click="deleteCheck(key, 'freight')"><i class="material-icons">close</i></button>
+								<button type="button" class="waves-effect waves-light btn-flat" @click="deleteCheck(key, 'freight', info)"><i class="material-icons">close</i></button>
 							</li>
 						</ul>
 					</div>
@@ -75,4 +75,4 @@
 	    </li>
 	</ul>
 </div>
-<script src="<?php echo base_url(); ?>assets/js/warehouseSetting.js?v=1"></script>
+<script src="<?php echo base_url(); ?>assets/js/warehouseSetting.js?v=2"></script>

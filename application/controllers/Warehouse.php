@@ -53,6 +53,8 @@ class Warehouse extends CI_Controller
         );
 
         $this->WarehouseSetting_model->updateFieldById(1, $updateData);
+
+        echo $this->security->get_csrf_hash();
     }
 
     /**

@@ -42,23 +42,32 @@ var setting = new Vue({
                 doUpdate();
             }
         },
-        deleteCheck: function (key, type) {
+        deleteCheck: function (key, type, info) {
             var updateData;
 
-            switch (type)
-            {
-                case 'name':
-                    this.name.splice(key, 1);
-                    break;
-                case 'receiver':
-                    this.receiver.splice(key, 1);
-                    break;
-                case 'freight':
-                    this.freight.splice(key, 1);
-                    break;
-            }
+            swal({
+                title: "注意",
+                text: "您確定要刪除" + info + "嗎？",
+                showCancelButton: true,
+                cancelButtonText: "取消",
+                type: "warning"
+            },
+            function () {
+                switch (type)
+                {
+                    case 'name':
+                        setting.name.splice(key, 1);
+                        break;
+                    case 'receiver':
+                        setting.receiver.splice(key, 1);
+                        break;
+                    case 'freight':
+                        setting.freight.splice(key, 1);
+                        break;
+                }
 
-            doUpdate();
+                doUpdate();
+            });
         },
     }
 });
