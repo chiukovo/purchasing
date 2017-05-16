@@ -20,7 +20,7 @@ $(function() {
 				<div class="card-title">進貨單資訊</div>
 				<div class="row">
 					<div class="input-field col s6">
-						<input id="date" type="date" class="validate">
+						<input id="date" type="date" class="validate" value="<?php echo date('Y-m-d')?>">
 						<label class="active">訂單日期</label>
 					</div>
 					<div class="input-field col s6">

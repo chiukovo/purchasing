@@ -35,6 +35,8 @@ var keyIn = new Vue({
                 isEdit: false,
             });
 
+            $('.card .row label').removeClass('active');
+
             //emtpy this ヽ(ຈل͜ຈ)ﾉ
             this.keyInProduct = [];
         },
