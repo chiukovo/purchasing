@@ -72,9 +72,7 @@ class Product extends CI_Controller
         ];
 
         //layout data
-        $this->layoutData['content'] = $this->load->view('web/product/keyIn', $data, true);
-        $this->layoutData['noShow'] = true;
-        $this->load->view('web/layout/app', $this->layoutData);
+        $this->load->view('web/product/keyIn', $data);
     }
 
     /**
@@ -97,9 +95,7 @@ class Product extends CI_Controller
         ];
 
         //layout data
-        $this->layoutData['content'] = $this->load->view('web/product/productEdit', $data, true);
-        $this->layoutData['noShow'] = true;
-        $this->load->view('web/layout/app', $this->layoutData);
+        $this->load->view('web/product/productEdit', $data);
     }
 
     /**
@@ -209,9 +205,7 @@ class Product extends CI_Controller
         ];
 
         //layout data
-        $this->layoutData['content'] = $this->load->view('web/product/orderEdit', $data, true);
-        $this->layoutData['noShow'] = true;
-        $this->load->view('web/layout/app', $this->layoutData);
+       $this->load->view('web/product/orderEdit', $data);
     }
 
     /**
@@ -235,9 +229,7 @@ class Product extends CI_Controller
         ];
 
         //layout data
-        $this->layoutData['content'] = $this->load->view('web/product/order', $data, true);
-        $this->layoutData['noShow'] = true;
-        $this->load->view('web/layout/app', $this->layoutData);
+        $this->load->view('web/product/order', $data);
     }
 
     /**
