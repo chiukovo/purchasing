@@ -1,3 +1,9 @@
+Encoding.default_external = 'utf-8'
+# css map for chrome
+sourcemap = true
+# 關閉圖片cache_burster
+asset_cache_buster {|*args| nil }
+
 # 合併sass資料夾內檔案
 # require 'sass-globbing'
 
@@ -36,11 +42,3 @@ line_comments = false # 關閉註解
 # preferred_syntax = :sass
 # and then run:
 # sass-convert -R --from scss --to sass sass scss && rm -rf sass && mv scss sass
-
-Encoding.default_external = 'utf-8'
-
-# css map for chrome
-sourcemap = true
-
-# 關閉圖片cache_burster
-asset_cache_buster {|*args| nil }

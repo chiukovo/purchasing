@@ -69,10 +69,12 @@ class Product extends CI_Controller
             'warehouse' => json_decode($warehouse->name),
             'receiver' => json_decode($warehouse->receiver),
             'freight' => json_decode($warehouse->freight),
+            'noShow' => true,
         ];
 
         //layout data
-        $this->load->view('web/product/keyIn', $data);
+        $this->layoutData['content'] = $this->load->view('web/product/keyIn', $data, true);
+        $this->load->view('web/layout/app', $this->layoutData);
     }
 
     /**
@@ -92,10 +94,12 @@ class Product extends CI_Controller
             'receiver' => json_decode($warehouse->receiver),
             'freight' => json_decode($warehouse->freight),
             'code' => $paramData['code'],
+            'noShow' => true,
         ];
 
         //layout data
-        $this->load->view('web/product/productEdit', $data);
+        $this->layoutData['content'] = $this->load->view('web/product/productEdit', $data, true);
+        $this->load->view('web/layout/app', $this->layoutData);
     }
 
     /**
@@ -201,11 +205,13 @@ class Product extends CI_Controller
         $paramData = $this->input->get();
 
         $data = [
-            'order' =>  $this->ProductOrder_model->getByFilters(array('id' => $paramData['id']))[0]
+            'order' =>  $this->ProductOrder_model->getByFilters(array('id' => $paramData['id']))[0],
+            'noShow' => true,
         ];
 
         //layout data
-       $this->load->view('web/product/orderEdit', $data);
+        $this->layoutData['content'] = $this->load->view('web/product/orderEdit', $data, true);
+        $this->load->view('web/layout/app', $this->layoutData);
     }
 
     /**
@@ -226,10 +232,12 @@ class Product extends CI_Controller
         $data = [
             'product' =>  $this->Product_model->getAll(),
             'orderNum' => date('YmdHis') . rand(10, 99),
+            'noShow' => true,
         ];
-
+        
         //layout data
-        $this->load->view('web/product/order', $data);
+        $this->layoutData['content'] = $this->load->view('web/product/order', $data, true);
+        $this->load->view('web/layout/app', $this->layoutData);
     }
 
     /**

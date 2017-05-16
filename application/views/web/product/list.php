@@ -26,10 +26,10 @@ $(function() {
                 <form>
                 <div class="row">
                     <div class="input-field col">
-                        <input id="start" type="text" class="validate date" value="<?php echo $start;?>" />
+                        <input id="start" type="text" class="date" value="<?php echo $start;?>" />
                     </div>
                     <div class="input-field col">
-                        <input id="end" type="text" class="validate date" value="<?php echo $end;?>">
+                        <input id="end" type="text" class="date" value="<?php echo $end;?>">
                     </div>
                     <div class="col"><a onclick="document.forms[0].submit()" class="waves-effect waves-light btn">搜尋</a></div>
                 </div>
@@ -60,7 +60,7 @@ $(function() {
                         <i class="material-icons" data-type="a-model">mode_edit</i>
                     </a>
                     <a onclick="deleteCode('<?php echo $info['code'];?>', '<?php echo $info['date'];?>')" class="waves-effect btn-flat" data-type="delete">
-                        <i class="material-icons" data-type="delete">delete_forever</i>
+                        <i class="material-icons" data-type="delete">close</i>
                       </a>
 
                 </td>
@@ -121,8 +121,6 @@ $(function() {
 $('.modal').modal({
     dismissible: false, // Modal can be dismissed by clicking outside of the modal
     opacity: .5, // Opacity of modal background
-    inDuration: 200, // Transition in duration
-    outDuration: 200, // Transition out duration
     startingTop: '0', // Starting top style attribute
     endingTop: '0', // Ending top style attribute
     ready: function(modal, trigger) {

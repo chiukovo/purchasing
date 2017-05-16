@@ -5,25 +5,27 @@ $(function() {
 </script>
 <div id="keyIn">
 	<div class="page-body">
-		<div class="purchase-infor col">
+		<div class="purchase-title col">
 			<div class="row">
-				<div class="purchase-title col s6">
-				<i class="material-icons">border_color</i> 編輯進貨單
+				<div class="page-title col s6">
+					<i class="material-icons">border_color</i> 編輯進貨單
 				</div>
-				<div class="modal-footer col s6">
-					<a class="waves-effect waves-light btn deep-orange" @click="insert()" title="儲存">儲存<i class="material-icons left">save</i></a>
+				<div class="page-btnBox col s6">
+				<div class="right">
 					<a onclick="location.reload()" class=" modal-close waves-effect btn-flat" title="關閉">關閉<i class="material-icons left">clear</i></a>
+					<a class="waves-effect waves-light btn deep-orange" @click="insert()" title="儲存">送出<i class="material-icons left">save</i></a>
 				</div>
+			</div>
 			</div>
 			<div class="card">
 				<div class="card-title">進貨單資訊</div>
 				<div class="row">
 					<div class="input-field col s6">
-						<input id="date" type="date" class="validate">
+						<input id="date" type="date">
 						<label class="active">訂單日期</label>
 					</div>
 					<div class="input-field col s6">
-						<input type="text" class="validate" v-model="productOrder.idCard">
+						<input type="text" v-model="productOrder.idCard">
 						<label>信用卡名稱</label>
 					</div>
 				</div>
@@ -191,10 +193,10 @@ $(function() {
 								</span>
 							</td>
 							<td  class="center-align">
-								<button class="btn btn-edit" v-show="info.isDefault" @click="changeMethod(key, 'edit')">修改</button>
+								<a href="#" class="btn btn-flat btn-edit" v-show="info.isDefault" @click="changeMethod(key, 'edit')">修改</a>
 
-								<button class="btn btn-del" v-show="info.isEdit" @click="changeMethod(key, 'delete')">刪除</button>
-								<button class="btn btn-submit" v-show="info.isEdit" @click="changeMethod(key, 'enter')">確認</button>
+								<a href="#" class="btn btn-flat btn-del" v-show="info.isEdit" @click="changeMethod(key, 'delete')">刪除</a>
+								<a href="#" class="btn btn-flat btn-submit" v-show="info.isEdit" @click="changeMethod(key, 'enter')">確認</a>
 							</td>
 						</tr>
 					</table>

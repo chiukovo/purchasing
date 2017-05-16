@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta id="csrf" content="<?php echo $this->security->get_csrf_hash(); ?>">
-
 <title>purchasing</title>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/sweetalert.css">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/materialize.css" />
@@ -22,6 +21,7 @@
 
 <body>
 	<div id="mainBody">
+		<?php if (!isset($noShow)) {?>
 		<div id="page-header">
 			<ul id="slide-out" class="side-nav">
 				<li>
@@ -38,6 +38,7 @@
 	        <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
 	        <a href="#" class="brand-logo">SHOP.</a>
         </div>
+        <?php } ?>
         <div id="page-container">
 			<div class="page-body">
         	<?php echo $content;?>

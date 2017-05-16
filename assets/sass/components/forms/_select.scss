@@ -1,10 +1,11 @@
 /* Select Field
    ========================================================================== */
 
-select { display: none; }
+// select { display: none; }、
 select.browser-default { display: block; }
 
-select {
+select { 
+  font-size: 12px;
   background-color: $select-background;
   width: 100%;
   padding: $select-padding;

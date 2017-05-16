@@ -2546,7 +2546,7 @@ ul:not(.browser-default) li {
 }
 
 a {
-  color: #039be5;
+  color: #26a69a;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -4230,24 +4230,10 @@ a {
 
 html {
   line-height: 1.5;
+  font-size: 12px;
   font-family: "Roboto", sans-serif;
   font-weight: normal;
   color: rgba(0, 0, 0, 0.87);
-}
-@media only screen and (min-width: 0) {
-  html {
-    font-size: 12px;
-  }
-}
-@media only screen and (min-width: 992px) {
-  html {
-    font-size: 13px;
-  }
-}
-@media only screen and (min-width: 1200px) {
-  html {
-    font-size: 15px;
-  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -4442,7 +4428,7 @@ small {
 
 .card-panel {
   transition: box-shadow .25s;
-  padding: 24px;
+  padding: 1rem;
   margin: 0.5rem 0 1rem 0;
   border-radius: 2px;
   background-color: #fff;
@@ -4545,10 +4531,10 @@ small {
   bottom: 0;
   left: 0;
   max-width: 100%;
-  padding: 24px;
+  padding: 1rem;
 }
 .card .card-content {
-  padding: 24px;
+  padding: 1rem;
   border-radius: 0 0 2px 2px;
 }
 .card .card-content p {
@@ -4567,14 +4553,14 @@ small {
   position: relative;
   background-color: inherit;
   border-top: 1px solid rgba(160, 160, 160, 0.2);
-  padding: 16px 24px;
+  padding: 16px 1rem;
 }
 .card .card-action:last-child {
   border-radius: 0 0 2px 2px;
 }
 .card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating) {
   color: #ffab40;
-  margin-right: 24px;
+  margin-right: 1rem;
   transition: color .3s ease;
   text-transform: uppercase;
 }
@@ -4582,7 +4568,7 @@ small {
   color: #ffd8a6;
 }
 .card .card-reveal {
-  padding: 24px;
+  padding: 1rem;
   position: absolute;
   background-color: #fff;
   width: 100%;
@@ -4790,8 +4776,8 @@ small {
   border: none;
   border-radius: 2px;
   display: inline-block;
-  height: 36px;
-  line-height: 36px;
+  height: 32px;
+  line-height: 32px;
   padding: 0 1rem;
   text-transform: uppercase;
   vertical-align: middle;
@@ -5035,8 +5021,8 @@ button.btn-floating {
 }
 
 .btn-large {
-  height: 54px;
-  line-height: 54px;
+  height: 48px;
+  line-height: 48px;
 }
 .btn-large i {
   font-size: 1.6rem;
@@ -5216,7 +5202,7 @@ button.btn-floating {
   background-color: #fafafa;
   padding: 0;
   max-height: 70%;
-  width: 55%;
+  width: 1024px;
   margin: auto;
   overflow-y: auto;
   border-radius: 2px;
@@ -5425,7 +5411,7 @@ button.btn-floating {
   color: rgba(0, 0, 0, 0.6);
   display: inline-block;
   font-size: 1rem;
-  height: 2.6rem;
+  height: 3rem;
   line-height: 32px;
   outline: 0;
   margin: 0;
@@ -5545,7 +5531,7 @@ textarea.materialize-textarea {
   border-bottom: 1px solid #f7f7f7;
   border-radius: 0;
   outline: none;
-  height: 2.6rem;
+  height: 3rem;
   width: 100%;
   font-size: 1rem;
   margin: 0 0 20px 0;
@@ -5826,7 +5812,7 @@ textarea.materialize-textarea + label:after {
 }
 .input-field .prefix {
   position: absolute;
-  width: 2.6rem;
+  width: 3rem;
   font-size: 2rem;
   transition: color .2s;
 }
@@ -5890,7 +5876,7 @@ textarea.materialize-textarea + label:after {
 /* Textarea */
 textarea {
   width: 100%;
-  height: 2.6rem;
+  height: 3rem;
   background-color: transparent;
 }
 textarea.materialize-textarea {
@@ -5899,7 +5885,7 @@ textarea.materialize-textarea {
   padding: .8rem 0 1.6rem 0;
   /* prevents text jump on Enter keypress */
   resize: none;
-  min-height: 2.6rem;
+  min-height: 3rem;
 }
 
 .hiddendiv {
@@ -6306,21 +6292,18 @@ input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::after {
 
 /* Select Field
    ========================================================================== */
-select {
-  display: none;
-}
-
 select.browser-default {
   display: block;
 }
 
 select {
+  font-size: 12px;
   background-color: rgba(255, 255, 255, 0.9);
   width: 100%;
   padding: 5px;
   border: 1px solid #f2f2f2;
   border-radius: 2px;
-  height: 2.6rem;
+  height: 3rem;
 }
 
 .select-label {
@@ -6337,8 +6320,8 @@ select {
   border: none;
   border-bottom: 1px solid #f7f7f7;
   outline: none;
-  height: 2.6rem;
-  line-height: 2.6rem;
+  height: 3rem;
+  line-height: 3rem;
   width: 100%;
   font-size: 1rem;
   margin: 0 0 20px 0;
@@ -6436,8 +6419,8 @@ select:disabled {
 }
 .file-field .btn, .file-field .btn-large {
   float: left;
-  height: 2.6rem;
-  line-height: 2.6rem;
+  height: 3rem;
+  line-height: 3rem;
 }
 .file-field span {
   cursor: pointer;
