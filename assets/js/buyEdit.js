@@ -38,43 +38,51 @@ var buy = new Vue({
             var productSelect = $('#productSelect').val();
             var checkAdd = true;
 
-            //檢查是否已被加入
-            this.productGroup.map(function(product) {
-                if (product.name == productSelect && product.warehouse == buy.nowWareHouse) {
-                    checkAdd = false;
-                    swal(
-                        '注意!',
-                        '此產品已被加入',
-                        'warning'
-                    );
-                }
-            });
-
-            if (productSelect != '' && checkAdd) {
-                this.onlineProduct.filter(function(info) {
-                    if (info.name == productSelect) {
-                        buy.productGroup.push({
-                            name: info.name,
-                            realName: info.realName,
-                            fare: buy.fare,
-                            amount: buy.amount,
-                            warehouse: buy.nowWareHouse,
-                            price: buy.price,
-                            discount: buy.discount,
-                            weight: info.weight,
-                            standard: info.standard,
-                        });
-                        //default 1
-                        buy.productCount.push(1);
+            if ( ! buy.nowWareHouse) {
+                swal(
+                    '注意!',
+                    '請選擇所在倉庫',
+                    'warning'
+                );
+            } else {
+                //檢查是否已被加入
+                this.productGroup.map(function(product) {
+                    if (product.name == productSelect && product.warehouse == buy.nowWareHouse) {
+                        checkAdd = false;
+                        swal(
+                            '注意!',
+                            '此產品已被加入',
+                            'warning'
+                        );
                     }
                 });
 
-                this.price = 0;
-                this.discount = 0;
-                this.fare = 0;
-            }
+                if (productSelect != '' && checkAdd) {
+                    this.onlineProduct.filter(function(info) {
+                        if (info.name == productSelect) {
+                            buy.productGroup.push({
+                                name: info.name,
+                                realName: info.realName,
+                                fare: buy.fare,
+                                amount: buy.amount,
+                                warehouse: buy.nowWareHouse,
+                                price: buy.price,
+                                discount: buy.discount,
+                                weight: info.weight,
+                                standard: info.standard,
+                            });
+                            //default 1
+                            buy.productCount.push(1);
+                        }
+                    });
 
-            this.productSum();
+                    this.price = 0;
+                    this.discount = 0;
+                    this.fare = 0;
+                }
+
+                this.productSum();
+            }
         },
         changeProductNum: function(num, amount, key) {
             if (parseInt(num) > parseInt(amount)) {
@@ -94,7 +102,7 @@ var buy = new Vue({
         productSum: function() {
             var sumUs = 0;
             var sumNt = 0;
-            var fire = 0;
+            var weight = 0;
             var group = this.productGroup;
             var count = this.productCount;
 
@@ -105,14 +113,16 @@ var buy = new Vue({
                     sumUs = sumUs * ( (100 - parseInt(product.discount)) / 100 );
                 }
                 //運費
-                fire += parseInt(product.fare);
+                weight += parseInt(product.weight);
             });
             //扣掉預付
             sumUs = sumUs - parseInt(this.pre_money);
             //乘匯率
             sumNt = sumUs * this.rate;
 
-            this.totalFare = Math.round(fire);
+            //運費的計算
+            //this.totalFare = Math.round(weight);
+
             this.costTotalSumUs = Math.round(sumUs);
             this.costTotalSumNt = Math.round(sumNt) + this.totalFare;
         },
@@ -152,7 +162,7 @@ var buy = new Vue({
         },
         changeProduct: function(name) {
             this.nowProduct = name;
-            
+
             if (name == '') {
                 buy.amount = 0;
                 buy.warehouseSelect = [];
@@ -176,10 +186,19 @@ var buy = new Vue({
                 }
             });
         },
-        deleteProduct: function(key) {
-            buy.productGroup.splice(key, 1);
+        deleteProduct: function(key, thisName) {
+            swal({
+                title: "注意",
+                text: "您確定要刪除" + thisName + "嗎？",
+                showCancelButton: true,
+                cancelButtonText: "取消",
+                type: "warning"
+            },
+            function () {
+                buy.productGroup.splice(key, 1);
 
-            this.productSum();
+                buy.productSum();
+            });
         },
     }
 });

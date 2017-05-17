@@ -126,10 +126,6 @@ $(function() {
 					<input type="number" number v-model="price"></br>
 					<label>售價(美金)</label>
 				</div>
-				<div class="input-field col s4">
-					<input type="number" number v-model="fare"></br>
-					<label>運費(台幣):</label>
-				</div>
 			</div>
 
 			<div class="card-title">商品列表</div>
@@ -142,7 +138,6 @@ $(function() {
 						<th>數量</th>
 						<th>折扣(%)</th>
 						<th>重量(g)</th>
-						<th>運費</th>
 						<th>所在倉庫</th>
 						<th>庫存量</th>
 						<th>功能</th>
@@ -153,10 +148,9 @@ $(function() {
 						<td><input type="number" number v-model="productCount[key]" @change="changeProductNum(productCount[key], product.amount, key)"></td>
 						<td><input type="number" number v-model="product.discount" @change="productSum"></td>
 						<td><input type="number" number v-model="product.weight" @change="productSum"></td>
-						<td><input type="number" number v-model="product.fare" @change="productSum"></td>
 						<td>{{ product.warehouse }}</td>
 						<td>{{ product.amount }}</td>
-						<td><a href="#" @click="deleteProduct(key)">刪除</a></td>
+						<td><a href="#" @click="deleteProduct(key, product.name)">刪除</a></td>
 					</tr>
 				</table>
 			</div>
@@ -175,7 +169,7 @@ $(function() {
 				</li>
 				<li class="red-text">
 					<label>預付款(美金)</label>
-					-{{ pre_money }}
+					{{ (pre_money == 0 ) ? pre_money : - pre_money }}
 				</li>
 			</ul>
 		</div>

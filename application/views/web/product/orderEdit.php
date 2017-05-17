@@ -45,13 +45,13 @@ $(function() {
 		<li>身分證: <input type="text" v-model="idCard"></li>
 		<li>備註欄: <textarea name="remark" v-model="remark" ></textarea></li>
 	</ul>
-	
+
 	選擇商品:
 	<select id="productSelect">
 		<option value="">請選擇</option>
 		<option v-for="(product, name) in onlineProduct" :value="product.name">{{ product.name }}</option>
 	</select>
-	
+
 	<div class="input-field col s12">
 	選擇所在倉庫:
 	<select id="warehouseSelect" @change="changeWareHouse">
@@ -74,7 +74,6 @@ $(function() {
 					<th>數量</th>
 					<th>折扣(%)</th>
 					<th>重量(g)</th>
-					<th>運費</th>
 					<th>所在倉庫</th>
 					<th>庫存量</th>
 					<th>功能</th>
@@ -85,10 +84,9 @@ $(function() {
 					<td><input type="number" style="width: 50px" v-model="productCount[key]" @change="changeProductNum(productCount[key], product.amount, key)"></td>
 					<td><input type="number" style="width: 50px" v-model="product.discount" @change="productSum"></td>
 					<td><input type="number" style="width: 50px" v-model="product.weight" @change="productSum"></td>
-					<td><input type="number" style="width: 50px" v-model="product.fare" @change="productSum"></td>
 					<td>{{ product.warehouse }}</td>
 					<td>{{ product.amount }}</td>
-					<td><button type="button" @click="deleteProduct(key)">刪除</button></td>
+					<td><a href="#" @click="deleteProduct(key, product.name)">刪除</a></td>
 				</tr>
 			</table>
 
