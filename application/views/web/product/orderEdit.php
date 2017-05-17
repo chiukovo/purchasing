@@ -19,88 +19,174 @@ $(function() {
 </script>
 
 <div id="buy" v-cloak>
-<div class="card">
-	<ul>
-		<li>訂單編號: <?php echo $order['orderNum'];?></li>
-		<li>訂單日期:
-			<input id="date" type="date" name="date" v-model="date" v-validate="'required'">
-			<span v-show="errors.has('date')" class="help is-danger">請輸入日期</span>
-		</li>
-		<li>購買人:
-			<input type="text" name="name"  v-model="name" v-validate="'required'">
-			<span v-show="errors.has('name')" class="help is-danger">請輸入購買人</span>
-		</li>
-		<li>地址:
-			<div id="twzipcode">
-				<div data-role="county" data-name="county"></div>
-				<div data-role="district" data-name="district"></div>
-				<div data-role="zipcode" data-name="zipcode"></div>
-				<input type="text" v-model="addressDetail" placeholder="路名">
+	<div class="page-body">
+		<div class="row">
+			<div class="page-title col s6">
+				<i class="material-icons">playlist_play</i> 編輯訂單
 			</div>
-		</li>
-		<li>電話:
-			<input type="phone" v-model="phone" name="phone" v-validate="'required'">
-			<span v-show="errors.has('phone')" class="help is-danger">請輸入電話</span>
-		</li>
-		<li>身分證: <input type="text" v-model="idCard"></li>
-		<li>備註欄: <textarea name="remark" v-model="remark" ></textarea></li>
-	</ul>
-
-	選擇商品:
-	<select id="productSelect">
-		<option value="">請選擇</option>
-		<option v-for="(product, name) in onlineProduct" :value="product.name">{{ product.name }}</option>
-	</select>
-
-	<div class="input-field col s12">
-	選擇所在倉庫:
-	<select id="warehouseSelect" @change="changeWareHouse">
-		<option v-for="(warehouse, key) in warehouseSelect" :value="warehouse">{{ warehouse }}</option>
-	</select>
-	</div>
-
-	庫存量: <span>{{ amount }}</span>
-	</br>
-	折扣(%): <input type="number" v-model="discount"></br>
-	售價(美金): <input type="number" v-model="price"></br>
-	運費(台幣): <input type="number" v-model="fare"></br>
-	<button type="button" @click="addProduct()">增加</button>
-	<div>
-		商品列表:
-			<table>
-				<tr>
-					<th>名稱</th>
-					<th>售價</th>
-					<th>數量</th>
-					<th>折扣(%)</th>
-					<th>重量(g)</th>
-					<th>所在倉庫</th>
-					<th>庫存量</th>
-					<th>功能</th>
-				</tr>
-				<tr v-for="(product, key) in productGroup">
-					<td>{{ product.name }}</td>
-					<td><input type="number" style="width: 50px" v-model="product.price" @change="productSum"></td>
-					<td><input type="number" style="width: 50px" v-model="productCount[key]" @change="changeProductNum(productCount[key], product.amount, key)"></td>
-					<td><input type="number" style="width: 50px" v-model="product.discount" @change="productSum"></td>
-					<td><input type="number" style="width: 50px" v-model="product.weight" @change="productSum"></td>
-					<td>{{ product.warehouse }}</td>
-					<td>{{ product.amount }}</td>
-					<td><a href="#" @click="deleteProduct(key, product.name)">刪除</a></td>
-				</tr>
-			</table>
-
-		<div>預付款(美金): <input type="number" v-model="pre_money" @change="productSum"></div>
-		<div>
-			輸入匯率: <input type="number" v-model="rate" @change="productSum"></br>
-			總運費: {{ totalFare }}</br>
-			商品總金額(美金): {{ costTotalSumUs }}</br>
-			商品總金額+運費(台幣): {{ costTotalSumNt }}</br>
-			<button type="button" @click="orderUpdate">送出</button>
+			<div class="page-btnBox col s6">
+				<div class="right">
+					<a onclick="location.reload()" class=" modal-close waves-effect btn-flat" title="關閉">關閉<i class="material-icons left">clear</i></a>
+					<a class="waves-effect waves-light btn deep-orange" @click="orderUpdate" title="儲存">送出<i class="material-icons left">save</i></a>
+				</div>
+			</div>
 		</div>
+		<div class="card">
+			<div class="card-title">訂購人資訊</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<input type="text" value="<?php echo$order['orderNum'];?>" class="disabled" v-validate="'required'">
+					<label class="active">訂單編號</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="date" type="date" value="<?php echo date('Y-m-d')?>">
+					<label class="active">訂單日期</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s4">
+					<input type="text" name="name"  v-model="name" v-validate="'required'">
+					<label for="name">購買人</label>
+					<span v-show="errors.has('name')">請輸入購買人</span>
+				</div>
+				<div class="input-field col s4">
+					<input type="tel" v-model="phone" name="phone" v-validate="'required'">
+					<label for="phone">電話</label>
+					<span v-show="errors.has('phone')">請輸入電話</span>
+				</div>
+				<div class="input-field col s4">
+					<input type="text" v-model="idCard">
+					<label>身分證</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s1">
+					<label>寄件地址</label>
+				</div>
+				<div class="input-field col s11">
+					<div id="twzipcode" class="select-field">
+						<div class="col s2">
+							<div data-role="county" data-name="county"></div>
+						</div>
+						<div class="col s2">
+							<div data-role="district" data-name="district"></div>
+						</div>
+						<div class="col s1">
+							<div data-role="zipcode" data-name="zipcode"></div>
+						</div>
+						<div class="col s7">
+							<input type="text" v-model="addressDetail" placeholder="詳細地址">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<textarea id="textarea" class="materialize-textarea" name="remark" v-model="remark"></textarea>
+					<label for="textarea">備註欄</label>
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-title">訂單資訊</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<input type="number" v-model="pre_money" @change="productSum">
+					<label for="textarea">預付款(美金)</label>
+				</div>
+				<div class="input-field col s6">
+					<input type="number" v-model="rate" @change="productSum">
+					<label for="textarea">匯率</label>
+				</div>
+			</div>
+			<div class="card-title">新增商品</div>
+			<div class="row select-field">
+				<div class="input-field col s1"><label>選擇商品</label></div>
+				<div class="input-field col s6">
+					<select id="productSelect">
+						<option>請選擇</option>
+						<option v-for="(product, name) in onlineProduct" :value="product.name">{{ product.name }}</option>
+					</select>
+				</div>
+				<div class="input-field col s3">
+					<select id="warehouseSelect" @change="changeWareHouse">
+						<option value="">倉庫選擇</option>
+						<option v-for="(warehouse, key) in warehouseSelect" :value="warehouse">{{ warehouse }}</option>
+					</select>
+				</div>
+				<div class="input-field col s1">
+					<input type="text" :value="'庫存量: '+ amount" class="disabled">
+				</div>
+				<div class="input-field col s1 center-align">
+					<a class="waves-effect waves-light btn" @click="addProduct">新增</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s4">
+					<input type="number" v-model="discount">
+					<label>折扣(%)</label>
+				</div>
+				<div class="input-field col s4">
+					<input type="number" v-model="price"></br>
+					<label>售價(美金)</label>
+				</div>
+			</div>
 
+			<div class="card-title">商品列表</div>
+			<div class="material-table">
+				<table>
+					<tr>
+						<th>名稱</th>
+						<th>售價</th>
+						<th>數量</th>
+						<th>折扣(%)</th>
+						<th>重量(g)</th>
+						<th>所在倉庫</th>
+						<th>庫存量</th>
+						<th>功能</th>
+					</tr>
+					<tr v-for="(product, key) in productGroup">
+						<td>{{ product.name }}</td>
+						<td><input type="number" v-model="product.price" @change="productSum"></td>
+						<td><input type="number" v-model="productCount[key]" @change="changeProductNum(productCount[key], product.amount, key)"></td>
+						<td><input type="number" v-model="product.discount" @change="productSum"></td>
+						<td><input type="number" v-model="product.weight" @change="productSum"></td>
+						<td>{{ product.warehouse }}</td>
+						<td>{{ product.amount }}</td>
+						<td><a href="#" @click="deleteProduct(key, product.name)">刪除</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
-</div>
+	<div class="card-footer row">
+		<div class="left">
+			<ul class="listTotal">
+				<li>
+					<label>商品總金額(美金/台幣)</label>
+					USD {{ costTotalSumUs }} / NT 台幣123
+				</li>
+				<li>
+					<label>運費</label>
+					{{ totalFare }}
+				</li>
+				<li class="red-text">
+					<label>預付款(美金)</label>
+					{{ (pre_money == 0 ) ? pre_money : - pre_money }}
+				</li>
+			</ul>
+		</div>
+		<div class="right">
+			<div class="totalFare">
+				<div class="totalFare-title left">
+					總金額 (商品總金額+運費(台幣))
+				</div>
+				<div class="totalFare-num right red-text">
+					{{ costTotalSumNt }}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript">

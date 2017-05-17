@@ -40,12 +40,12 @@ $(function() {
 				</div>
 			</div>
 			<div class="row">
-				<div class="input-field col s4">
+				<div class="input-field col s4" :class="errors.has('name') ? 'error' : ''">
 					<input type="text" id="name" name="name"  v-model="name" v-validate="'required'">
 					<label for="name">購買人</label>
 					<span v-show="errors.has('name')">請輸入購買人</span>
 				</div>
-				<div class="input-field col s4">
+				<div class="input-field col s4" :class="errors.has('name') ? 'error' : ''">
 					<input type="tel" id="phone" v-model="phone" name="phone" v-validate="'required'">
 					<label for="phone">電話</label>
 					<span v-show="errors.has('phone')">請輸入電話</span>
@@ -119,11 +119,11 @@ $(function() {
 			</div>
 			<div class="row">
 				<div class="input-field col s4">
-					<input type="number" number v-model="discount">
+					<input type="number" v-model="discount">
 					<label>折扣(%)</label>
 				</div>
 				<div class="input-field col s4">
-					<input type="number" number v-model="price"></br>
+					<input type="number" v-model="price"></br>
 					<label>售價(美金)</label>
 				</div>
 			</div>
@@ -144,10 +144,10 @@ $(function() {
 					</tr>
 					<tr v-for="(product, key) in productGroup">
 						<td>{{ product.name }}</td>
-						<td><input type="number" number v-model="product.price" @change="productSum"></td>
-						<td><input type="number" number v-model="productCount[key]" @change="changeProductNum(productCount[key], product.amount, key)"></td>
-						<td><input type="number" number v-model="product.discount" @change="productSum"></td>
-						<td><input type="number" number v-model="product.weight" @change="productSum"></td>
+						<td><input type="number" v-model="product.price" @change="productSum"></td>
+						<td><input type="number" v-model="productCount[key]" @change="changeProductNum(productCount[key], product.amount, key)"></td>
+						<td><input type="number" v-model="product.discount" @change="productSum"></td>
+						<td><input type="number" v-model="product.weight" @change="productSum"></td>
 						<td>{{ product.warehouse }}</td>
 						<td>{{ product.amount }}</td>
 						<td><a href="#" @click="deleteProduct(key, product.name)">刪除</a></td>
@@ -178,7 +178,7 @@ $(function() {
 				<div class="totalFare-title left">
 					總金額 (商品總金額+運費(台幣))
 				</div>
-				<div class="totalFare-num right teal-text">
+				<div class="totalFare-num right red-text">
 					{{ costTotalSumNt }}
 				</div>
 			</div>

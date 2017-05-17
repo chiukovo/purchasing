@@ -8,7 +8,7 @@ $(function() {
 		<div class="purchase-title col">
 			<div class="row">
 				<div class="page-title col s6">
-					<i class="material-icons">border_color</i> 編輯進貨單
+					<i class="material-icons">playlist_play</i> 編輯進貨單
 				</div>
 				<div class="page-btnBox col s6">
 				<div class="right">

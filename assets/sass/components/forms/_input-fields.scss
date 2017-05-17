@@ -277,11 +277,14 @@ textarea {
   margin-top: -1 * $input-margin-bottom;
   display: block;
   opacity: 1;
-  position: static;
+  // position: static;
 
   li {
+    font-size: $input-font-size;
     .highlight { color: #444; }
-
+    span {
+      font-size: $input-font-size;
+    }
     img {
       height: $dropdown-item-height - 10;
       width: $dropdown-item-height - 10;

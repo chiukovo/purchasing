@@ -162,7 +162,7 @@ body {
 .card {
     .card-title {
         font-family: 'Noto Sans TC', sans-serif;
-        padding: 10px 10px 20px;
+        padding: 1rem 1.3rem 2rem;
     }
 }
 
@@ -214,6 +214,16 @@ input.disabled {
     cursor: no-drop;
     pointer-events: none;
 }
+.input-field.error {
+    input {
+        border-bottom-color: red;
+    }
+    span {
+        position: absolute;
+        bottom: 0;
+        color: red;
+    }
+}
 
 .noPro {
     text-align: center;
@@ -245,7 +255,9 @@ input.disabled {
     right: 10px;
     bottom: 10px;
     &-title {
-        font-size: 2.6rem;
+        font-family: 'Noto Sans TC', sans-serif;
+        font-size: 2rem;
+        font-weight: 100;
         line-height: 36px;
     }
     &-num {
