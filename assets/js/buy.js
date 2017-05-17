@@ -151,16 +151,19 @@ var buy = new Vue({
         },
         changeProduct: function(name) {
             this.nowProduct = name;
-            
+
             if (name == '') {
                 buy.amount = 0;
                 buy.warehouseSelect = [];
             } else {
                 this.onlineProduct.map(function(info, key) {
                     if (info.name == name) {
-                       buy.warehouseSelect = info.warehouse;
-                       buy.amount = info.amount[info.warehouse[0]];
-                       buy.nowWareHouse = info.warehouse[0];
+                        buy.warehouseSelect = info.warehouse;
+                        buy.amount = info.amount[info.warehouse[0]];
+
+                        if ( ! buy.nowWareHouse) {
+                            buy.amount = info.allAmount;
+                        }
                     }
                 });
             }
@@ -171,13 +174,17 @@ var buy = new Vue({
 
             this.onlineProduct.map(function(info, key) {
                 if (info.name == buy.nowProduct) {
-                   buy.amount = info.amount[selected];
+                    if ( ! selected) {
+                        buy.amount = info.allAmount;
+                    } else {
+                        buy.amount = info.amount[selected];
+                    }
                 }
             });
         },
         deleteProduct: function(key) {
             buy.productGroup.splice(key, 1);
-            
+
             this.productSum();
         },
     }

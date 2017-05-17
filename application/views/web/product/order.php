@@ -41,12 +41,14 @@ $(function() {
 			</div>
 			<div class="row">
 				<div class="input-field col s4">
-					<input type="text" name="name"  v-model="name" v-validate="'required'">
-					<label for="phone" data-error="請輸入購買人">購買人</label>
+					<input type="text" id="name" name="name"  v-model="name" v-validate="'required'">
+					<label for="name">購買人</label>
+					<span v-show="errors.has('name')">請輸入購買人</span>
 				</div>
 				<div class="input-field col s4">
 					<input type="tel" id="phone" v-model="phone" name="phone" v-validate="'required'">
-					<label for="phone" data-error="請輸入電話">電話</label>
+					<label for="phone">電話</label>
+					<span v-show="errors.has('phone')">請輸入電話</span>
 				</div>
 				<div class="input-field col s4">
 					<input type="text" v-model="idCard">
@@ -85,11 +87,11 @@ $(function() {
 			<div class="card-title">訂單資訊</div>
 			<div class="row">
 				<div class="input-field col s6">
-					<input type="number" number v-model="pre_money" @change="productSum">
+					<input type="number" v-model="pre_money" @change="productSum">
 					<label for="textarea">預付款(美金)</label>
 				</div>
 				<div class="input-field col s6">
-					<input type="number" number v-model="rate" @change="productSum">
+					<input type="number" v-model="rate" @change="productSum">
 					<label for="textarea">匯率</label>
 				</div>
 			</div>
@@ -104,7 +106,7 @@ $(function() {
 				</div>
 				<div class="input-field col s3">
 					<select id="warehouseSelect" @change="changeWareHouse">
-						<option>倉庫選擇</option>
+						<option value="">倉庫選擇</option>
 						<option v-for="(warehouse, key) in warehouseSelect" :value="warehouse">{{ warehouse }}</option>
 					</select>
 				</div>
@@ -173,7 +175,7 @@ $(function() {
 				</li>
 				<li class="red-text">
 					<label>預付款(美金)</label>
-					- 500
+					-{{ pre_money }}
 				</li>
 			</ul>
 		</div>
@@ -194,7 +196,7 @@ $(function() {
 	var orderNum = <?php echo $orderNum;?>;
 </script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.twzipcode.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/buy.js?v=3"></script>
+<script src="<?php echo base_url(); ?>assets/js/buy.js?v=5"></script>
 <script>
 	$('#twzipcode').twzipcode();
 	$('#productSelect').select2().on('change', function (e) {

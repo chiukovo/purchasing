@@ -54,6 +54,8 @@ class Product_model extends CI_Model {
 			$amount = array();
 			$has = false;
 			$warehouse = array();
+			$allAmount = 0;
+
 			foreach ($products as $product) {
 				if ($product['standard'] != '') {
 					$productName = $product['name'] . '(' . $product['standard'] . ')';
@@ -78,6 +80,7 @@ class Product_model extends CI_Model {
 						$amount[$product['warehouse']] += $product['amount'];
 
 						$warehouse[] = $product['warehouse'];
+						$allAmount += $product['amount'];
 					}
 
 				}
@@ -85,6 +88,7 @@ class Product_model extends CI_Model {
 
 			if ( ! empty($result) && $has) {
 				$result[$name]['amount'] = $amount;
+				$result[$name]['allAmount'] = $allAmount;
 				$result[$name]['warehouse'] = array_unique($warehouse);
 			}
 		}
