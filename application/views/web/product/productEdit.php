@@ -29,7 +29,7 @@ $(function() {
 						<label>信用卡名稱</label>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="input-field col s4">
 						<label>本單匯率</label>
@@ -209,4 +209,4 @@ $(function() {
 <script type="text/javascript">
 	var code = <?php echo $code;?>
 </script>
-<script src="<?php echo base_url(); ?>assets/js/productEdit.js?v=3"></script>
+<script src="<?php echo base_url(); ?>assets/js/productEdit.js?v=4"></script>

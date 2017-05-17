@@ -234,7 +234,7 @@ class Product extends CI_Controller
             'orderNum' => date('YmdHis') . rand(10, 99),
             'noShow' => true,
         ];
-        
+
         //layout data
         $this->layoutData['content'] = $this->load->view('web/product/order', $data, true);
         $this->load->view('web/layout/app', $this->layoutData);

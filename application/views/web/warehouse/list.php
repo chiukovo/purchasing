@@ -50,9 +50,14 @@
 				<td><?php echo $product['standard']?></td>
 				<td><?php echo $product['amount']?></td>
 				<td><?php echo $product['weight']?></td>
-				<td><?php echo $product['tracking_code']?></td>
+				<td>
+                    <input @change="onChange" type="text" data-type="tracking_code" data-id="<?php echo $product['id'];?>" value="<?php echo $product['tracking_code']?>" placeholder="請輸入追蹤代碼">
+                </td>
 				<td>
 				<select @change="onChange" data-type="warehouse" data-id="<?php echo $product['id'];?>">
+                    <?php if ($product['warehouse'] == '') { ?>
+                        <option>請選擇</option>
+                    <?php } ?>
 					<?php foreach ($warehouse as $name) { ?>
 					<option value="<?php echo $name;?>" <?php if($name == $product['warehouse']) { echo 'selected'; } ?> ><?php echo $name;?></option>
 					<?php } ?>
@@ -60,6 +65,9 @@
 				</td>
 				<td>
 				<select @change="onChange" data-type="freight" data-id="<?php echo $product['id'];?>">
+                    <?php if ($product['freight'] == '') { ?>
+                        <option>請選擇</option>
+                    <?php } ?>
 					<?php foreach ($freight as $name) { ?>
 					<option value="<?php echo $name;?>" <?php if($name == $product['freight']) { echo 'selected'; } ?> ><?php echo $name;?></option>
 					<?php } ?>
@@ -67,6 +75,9 @@
 				</td>
 				<td>
 				<select @change="onChange" data-type="receiver" data-id="<?php echo $product['id'];?>">
+                    <?php if ($product['receiver'] == '') { ?>
+                        <option>請選擇</option>
+                    <?php } ?>
 					<?php foreach ($receiver as $name) { ?>
 					<option value="<?php echo $name;?>" <?php if($name == $product['receiver']) { echo 'selected'; } ?> ><?php echo $name;?></option>
 					<?php } ?>
@@ -110,8 +121,8 @@ function doUpdate(value)
             id: warehouse.id,
             chiuko_o_token: warehouse.csrf_value,
         },
-        success: function() {
-            location.reload();
+        success: function(csrf) {
+            warehouse.csrf_value = csrf;
         },
     });
 }

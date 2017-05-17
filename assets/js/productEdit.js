@@ -23,6 +23,12 @@ var keyIn = new Vue({
     },
     methods: {
         addProduct: function () {
+            if( ! this.keyInProduct.money_us) {
+                this.keyInProduct.money_us = 0;
+            }
+            if( ! this.keyInProduct.money_nt) {
+                this.keyInProduct.money_nt = 0;
+            }
             this.listProduct.push({
                 name: this.keyInProduct.name,
                 weight: this.keyInProduct.weight,
@@ -35,7 +41,7 @@ var keyIn = new Vue({
                 isEdit: false,
             });
 
-            $('.card .row label').removeClass('active');
+            $('.purchase-add .card .row label').removeClass('active');
 
             //emtpy this ヽ(ຈل͜ຈ)ﾉ
             this.keyInProduct = [];
@@ -73,6 +79,13 @@ var keyIn = new Vue({
             ajaxKeyInPost();
         },
         sumNT: function () {
+            if( ! this.productOrder.rate) {
+                keyIn.productOrder.rate = 0;
+            }
+
+            if( ! this.productOrder.total_cost_us) {
+                keyIn.productOrder.total_cost_us = 0;
+            }
             keyIn.productOrder.total_cost_nt = parseInt(parseFloat(this.productOrder.rate) * parseInt(this.productOrder.total_cost_us));
             this.sumNTAdd('noActive');
             this.sumNTEdit('all');
@@ -87,6 +100,10 @@ var keyIn = new Vue({
         sumNTEdit: function (key) {
             if (key == 'all') {
                 keyIn.listProduct = keyIn.listProduct.map(function (product, key) {
+                    if(typeof product.money_us == "undefined") {
+                        product.money_us = 0;
+                    }
+
                     product.money_nt = parseInt(parseFloat(keyIn.productOrder.rate) * parseInt(product.money_us));
 
                     return product;

@@ -85,11 +85,11 @@ $(function() {
 			<div class="card-title">訂單資訊</div>
 			<div class="row">
 				<div class="input-field col s6">
-					<input type="number" v-model="pre_money" @change="productSum">
+					<input type="number" number v-model="pre_money" @change="productSum">
 					<label for="textarea">預付款(美金)</label>
 				</div>
 				<div class="input-field col s6">
-					<input type="number" v-model="rate" @change="productSum">
+					<input type="number" number v-model="rate" @change="productSum">
 					<label for="textarea">匯率</label>
 				</div>
 			</div>
@@ -117,15 +117,15 @@ $(function() {
 			</div>
 			<div class="row">
 				<div class="input-field col s4">
-					<input type="number" v-model="discount">
+					<input type="number" number v-model="discount">
 					<label>折扣(%)</label>
 				</div>
 				<div class="input-field col s4">
-					<input type="number" v-model="price"></br>
+					<input type="number" number v-model="price"></br>
 					<label>售價(美金)</label>
 				</div>
 				<div class="input-field col s4">
-					<input type="number" v-model="fare"></br>
+					<input type="number" number v-model="fare"></br>
 					<label>運費(台幣):</label>
 				</div>
 			</div>
@@ -147,11 +147,11 @@ $(function() {
 					</tr>
 					<tr v-for="(product, key) in productGroup">
 						<td>{{ product.name }}</td>
-						<td><input type="number" v-model="product.price" @change="productSum"></td>
-						<td><input type="number" v-model="productCount[key]" @change="changeProductNum(productCount[key], product.amount, key)"></td>
-						<td><input type="number" v-model="product.discount" @change="productSum"></td>
-						<td><input type="number" v-model="product.weight" @change="productSum"></td>
-						<td><input type="number" v-model="product.fare" @change="productSum"></td>
+						<td><input type="number" number v-model="product.price" @change="productSum"></td>
+						<td><input type="number" number v-model="productCount[key]" @change="changeProductNum(productCount[key], product.amount, key)"></td>
+						<td><input type="number" number v-model="product.discount" @change="productSum"></td>
+						<td><input type="number" number v-model="product.weight" @change="productSum"></td>
+						<td><input type="number" number v-model="product.fare" @change="productSum"></td>
 						<td>{{ product.warehouse }}</td>
 						<td>{{ product.amount }}</td>
 						<td><a href="#" @click="deleteProduct(key)">刪除</a></td>

@@ -34,15 +34,15 @@ $(function() {
 				<div class="row">
 					<div class="input-field col s4">
 						<label>本單匯率</label>
-						<input class="form-input" type="number" v-model="productOrder.rate" @change="sumNT">
+						<input class="form-input" type="number" v-model.number="productOrder.rate" @change="sumNT">
 					</div>
 					<div class="input-field col s4">
 						<label>進貨總成本(US)</label>
-						<input class="form-input" type="number" v-model="productOrder.total_cost_us" @change="sumNT">
+						<input class="form-input" type="number" v-model.number="productOrder.total_cost_us" @change="sumNT">
 					</div>
 					<div class="input-field col s4">
 						<label>進貨總成本(NT) (匯率*總成本)</label>
-						<input class="form-input" type="number" v-model="productOrder.total_cost_nt">
+						<input class="form-input" type="number" v-model.number="productOrder.total_cost_nt">
 					</div>
 				</div>
 			</div>
@@ -60,19 +60,19 @@ $(function() {
 						<label>規格</label>
 					</div>
 					<div class="input-field col s1">
-						<input class="form-input" type="number" v-model="keyInProduct.amount">
+						<input class="form-input" type="number" v-model.number="keyInProduct.amount">
 						<label>數量</label>
 					</div>
 					<div class="input-field col s1">
-						<input class="form-input" type="number" v-model="keyInProduct.weight">
+						<input class="form-input" type="number" v-model.number="keyInProduct.weight">
 						<label>重量</label>
 					</div>
 					<div class="input-field col s1">
-						<input class="form-input" type="number" v-model="keyInProduct.money_us" @change="sumNTAdd('active')">
+						<input class="form-input" type="number" v-model.number="keyInProduct.money_us" @change="sumNTAdd('active')">
 						<label>金額(US)</label>
 					</div>
 					<div class="input-field col s1">
-						<input class="form-input ntAdd" type="number" v-model="keyInProduct.money_nt">
+						<input class="form-input ntAdd" type="number" v-model.number="keyInProduct.money_nt">
 						<label>金額(NT)</label>
 					</div>
 					<div class="input-field col s2">
@@ -106,19 +106,19 @@ $(function() {
 							</td>
 							<td>
 								<span v-show="info.isDefault">{{ info.amount }}</span>
-								<span v-show="info.isEdit"><input type="number" v-model="info.amount" /></span>
+								<span v-show="info.isEdit"><input type="number" v-model.number="info.amount" /></span>
 							</td>
 							<td>
 								<span v-show="info.isDefault">{{ info.weight }}</span>
-								<span v-show="info.isEdit"><input type="number" v-model="info.weight" /></span>
+								<span v-show="info.isEdit"><input type="number" v-model.number="info.weight" /></span>
 							</td>
 							<td>
 								<span v-show="info.isDefault">{{ info.money_us }}</span>
-								<span v-show="info.isEdit"><input type="number" v-model="info.money_us"  @change="sumNTEdit(key)" /></span>
+								<span v-show="info.isEdit"><input type="number" v-model.number="info.money_us"  @change="sumNTEdit(key)" /></span>
 							</td>
 							<td>
 								<span v-show="info.isDefault">{{ info.money_nt }}</span>
-								<span v-show="info.isEdit"><input type="number" v-model="info.money_nt" /></span>
+								<span v-show="info.isEdit"><input type="number" v-model.number="info.money_nt" /></span>
 							</td>
 							<td>
 								<span v-show="info.isDefault">{{ info.remark }}</span>
@@ -138,4 +138,4 @@ $(function() {
 	</div>
 </div>
 
-<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=17"></script>
+<script src="<?php echo base_url(); ?>assets/js/keyIn.js?v=20"></script>
