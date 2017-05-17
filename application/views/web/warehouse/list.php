@@ -48,8 +48,8 @@
 				<td><?php echo $product['created_at']?></td>
 				<td><?php echo $product['name']?></td>
 				<td><?php echo $product['standard']?></td>
-				<td><?php echo $product['amount']?></td>
-				<td><?php echo $product['weight']?></td>
+				<td><?php echo format_money_nt($product['amount']);?></td>
+				<td><?php echo format_money_nt($product['weight']);?></td>
 				<td>
                     <input @change="onChange" type="text" data-type="tracking_code" data-id="<?php echo $product['id'];?>" value="<?php echo $product['tracking_code']?>" placeholder="請輸入追蹤代碼">
                 </td>

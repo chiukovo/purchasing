@@ -53,8 +53,8 @@ $(function() {
                 <td><?php echo $info['date'];?></td>
                 <td><?php echo $info['idCard'];?></td>
                 <td><?php echo $info['rate'];?></td>
-                <td><?php echo $info['total_cost_us'];?></td>
-                <td><?php echo $info['total_cost_nt'];?></td>
+                <td><?php echo format_money_nt($info['total_cost_us']);?></td>
+                <td><?php echo format_money_nt($info['total_cost_nt']);?></td>
                 <td  class="center-align">
                     <a href="#modalEdit" class="waves-effect btn-flat" data-type="a-model" data-type="edit" data-code="<?php echo $info['code'];?>">
                         <i class="material-icons" data-type="a-model">mode_edit</i>
@@ -134,7 +134,7 @@ $('.modal').modal({
         }
     },
     complete: function() {
-    } 
+    }
 });
 
 var list = new Vue({
