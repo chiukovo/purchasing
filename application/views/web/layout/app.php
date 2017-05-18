@@ -32,7 +32,6 @@
 				<li><a href="<?php echo base_url(); ?>product/list">進貨單列表</a></li>
 				<li><a href="<?php echo base_url(); ?>warehouse/setting">倉庫設定</a></li>
 				<li><a href="<?php echo base_url(); ?>warehouse/list">倉庫</a></li>
-				<li><a href="<?php echo base_url(); ?>warehouse/in">庫存</a></li>
 				<li><a href="<?php echo base_url(); ?>product/orderList">訂單列表</a></li>
 			</ul>
 	        <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>

@@ -44,12 +44,12 @@ $(function() {
 				</div>
 			</div>
 			<div class="row">
-				<div class="input-field col s4">
+				<div class="input-field col s4" :class="errors.has('name') ? 'error' : ''">
 					<input type="text" name="name"  v-model="name" v-validate="'required'">
 					<label for="name">購買人</label>
 					<span v-show="errors.has('name')">請輸入購買人</span>
 				</div>
-				<div class="input-field col s4">
+				<div class="input-field col s4" :class="errors.has('name') ? 'error' : ''">
 					<input type="tel" v-model="phone" name="phone" v-validate="'required'">
 					<label for="phone">電話</label>
 					<span v-show="errors.has('phone')">請輸入電話</span>
@@ -134,8 +134,9 @@ $(function() {
 
 			<div class="card-title">商品列表</div>
 			<div class="material-table">
+				<div class="noPro" v-show="productGroup.length == 0">請新增商品</div>
 				<table>
-					<tr>
+					<tr v-show="productGroup.length > 0">
 						<th>名稱</th>
 						<th>售價</th>
 						<th>數量</th>

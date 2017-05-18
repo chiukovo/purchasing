@@ -128,7 +128,6 @@ function changeMethod(nowKey)
         return product;
     });
 }
-
 function ajaxKeyInPost()
 {
     //array remove empty data
@@ -141,18 +140,26 @@ function ajaxKeyInPost()
     //setting date
     keyIn.productOrder.date = $('#date').val();
 
-    $.ajax({
-        type: "POST",
-        url: "productEditUpdate",
-        data: {
-            listProduct: keyIn.listProduct,
-            productOrder: keyIn.productOrder,
-            chiuko_o_token: keyIn.csrf_value,
-        },
-        success: function(response) {
-            location.reload();
-        },
-    });
+    if (keyIn.listProduct.length == 0) {
+        swal(
+            '注意!',
+            '請至少選擇一個產品',
+            'warning'
+        );
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "productEditUpdate",
+            data: {
+                listProduct: keyIn.listProduct,
+                productOrder: keyIn.productOrder,
+                chiuko_o_token: keyIn.csrf_value,
+            },
+            success: function(response) {
+                location.reload();
+            },
+        });
+    }
 }
 
 function getEditData()

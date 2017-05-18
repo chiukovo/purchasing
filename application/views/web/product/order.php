@@ -34,9 +34,10 @@ $(function() {
 					<input type="text" value="<?php echo $orderNum;?>" class="disabled">
 					<label class="active">訂單編號</label>
 				</div>
-				<div class="input-field col s6">
+				<div class="input-field col s6" :class="errors.has('date') ? 'error' : ''">
 					<input id="date" type="date" value="<?php echo date('Y-m-d')?>">
 					<label class="active">訂單日期</label>
+					<span v-show="errors.has('date')">請輸入日期</span>
 				</div>
 			</div>
 			<div class="row">
@@ -45,7 +46,7 @@ $(function() {
 					<label for="name">購買人</label>
 					<span v-show="errors.has('name')">請輸入購買人</span>
 				</div>
-				<div class="input-field col s4" :class="errors.has('name') ? 'error' : ''">
+				<div class="input-field col s4" :class="errors.has('phone') ? 'error' : ''">
 					<input type="tel" id="phone" v-model="phone" name="phone" v-validate="'required'">
 					<label for="phone">電話</label>
 					<span v-show="errors.has('phone')">請輸入電話</span>
@@ -130,9 +131,9 @@ $(function() {
 
 			<div class="card-title">商品列表</div>
 			<div class="material-table">
-				<div class="noPro">請新增商品</div>
+				<div class="noPro" v-show="productGroup.length == 0">請新增商品</div>
 				<table>
-					<tr>
+					<tr v-show="productGroup.length > 0">
 						<th>名稱</th>
 						<th>售價</th>
 						<th>數量</th>

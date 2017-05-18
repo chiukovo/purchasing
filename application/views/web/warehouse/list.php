@@ -17,6 +17,14 @@
                     <div class="input-field col">
                         <input id="end" type="text" class="date" value="<?php echo $end;?>">
                     </div>
+                    <div class="input-field col">
+                        <select name="name">
+                            <option value="">全部產品</option>
+                            <?php foreach($productName as $name) {?>
+                                <option value="<?php echo $name?>" <?php if($nowName == $name) { echo "selected"; }?>><?php echo $name?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
                     <div class="col"><a onclick="document.forms[0].submit()" class="waves-effect waves-light btn">查詢</a></div>
                 </div>
                 </form>
@@ -29,6 +37,9 @@
 				<a href="<?php echo base_url()?>warehouse/list?type=<?php echo $name;?>&start=<?php echo $start;?>&end=<?php echo $end;?>"><?php echo $name;?></a>
 			</li>
 			<?php } ?>
+            <li>
+
+            </li>
 		</ul>
 		<table class="table" id="warehouse">
 			<tr>

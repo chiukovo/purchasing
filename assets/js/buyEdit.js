@@ -244,7 +244,7 @@ function orderUpdate(updateData)
             if (response == '') {
                 swal({
                     title: "成功",
-                    text: '新增成功',
+                    text: '修改成功',
                     type: "success"
                 },
                 function(){

@@ -26,6 +26,22 @@ class Product_model extends CI_Model {
 	}
 
 	/**
+	 * get all
+	 */
+	public function getAllName()
+	{
+		$name = array();
+
+		$all = $this->db->order_by('created_at', 'desc')->get(self::DB_NAME)->result_array();
+
+		foreach ($all as $value) {
+			$name[] = $value['name'];
+		}
+
+		return array_unique($name);
+	}
+
+	/**
 	 * noReapeat
 	 */
 	public function noReapeat()
@@ -135,7 +151,7 @@ class Product_model extends CI_Model {
 	/**
 	 * get all
 	 */
-	public function getByDateRange($start, $end, $type)
+	public function getByDateRange($start, $end, $type, $name = '')
 	{
 		$result = array();
 
@@ -152,6 +168,10 @@ class Product_model extends CI_Model {
 
 		if ($type != '') {
 			$get->where('warehouse', $type);
+		}
+
+		if ($name != '') {
+			$get->where('name', $name);
 		}
 
 		return $get->where('created_at >=', $start . ' 00:00:00')

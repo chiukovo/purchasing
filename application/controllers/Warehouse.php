@@ -66,6 +66,8 @@ class Warehouse extends CI_Controller
 
         $type = isset($paramData['type']) ? $paramData['type'] : '';
 
+        $name = isset($paramData['name']) ? $paramData['name'] : '';
+
         if ( isset($paramData['start']) && isset($paramData['end'])) {
             $start = $paramData['start'];
             $end = $paramData['end'];
@@ -79,12 +81,18 @@ class Warehouse extends CI_Controller
 
         $warehouse = $this->WarehouseSetting_model->getAll();
 
+        $products = $this->Product_model->getByDateRange($start, $end, $type, $name);
+
+        $productName = $this->Product_model->getAllName();
+
         $data = [
             'warehouse' => json_decode($warehouse->name),
             'type' => $type,
+            'nowName' => $name,
             'receiver' => json_decode($warehouse->receiver),
             'freight' => json_decode($warehouse->freight),
-            'products' =>  $this->Product_model->getByDateRange($start, $end, $type),
+            'products' => $products,
+            'productName' => $productName,
             'start' => $start,
             'end' => $end,
         ];
