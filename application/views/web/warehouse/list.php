@@ -47,7 +47,8 @@
 				<th>商品名稱</th>
 				<th>規格</th>
 				<th>數量</th>
-				<th>重量</th>
+                <th>重量</th>
+				<th>混合箱重量</th>
 	            <th>追蹤代碼</th>
 	            <th>存放倉庫</th>
 	            <th>貨運單位</th>
@@ -60,7 +61,10 @@
 				<td><?php echo $product['name']?></td>
 				<td><?php echo $product['standard']?></td>
 				<td><?php echo format_money_nt($product['amount']);?></td>
-				<td><?php echo format_money_nt($product['weight']);?></td>
+                <td><?php echo format_money_nt($product['weight']);?></td>
+				<td>
+                    <input @change="onChange" type="number" data-type="boxWeight" data-id="<?php echo $product['id'];?>" value="<?php echo $product['boxWeight'];?>" style="width: 50px">
+                </td>
 				<td>
                     <input @change="onChange" type="text" data-type="tracking_code" data-id="<?php echo $product['id'];?>" value="<?php echo $product['tracking_code']?>" placeholder="請輸入追蹤代碼">
                 </td>
