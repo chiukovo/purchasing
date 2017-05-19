@@ -9,6 +9,7 @@ var buy = new Vue({
         nowProduct: '',
         nowWareHouse: '',
         amount: 0,
+        lb_price: 0,
         name: '',
         county: '',
         district: '',
@@ -68,6 +69,7 @@ var buy = new Vue({
                                 price: buy.price,
                                 discount: buy.discount,
                                 weight: info.weight,
+                                boxWeight: info.boxWeight,
                                 standard: info.standard,
                             });
                             //default 1
@@ -102,6 +104,7 @@ var buy = new Vue({
             var sumUs = 0;
             var sumNt = 0;
             var weight = 0;
+            var boxWeight = 0;
             var group = this.productGroup;
             var count = this.productCount;
 
@@ -111,8 +114,10 @@ var buy = new Vue({
                 if ( parseInt(product.discount) > 0 ) {
                     sumUs = sumUs * ( (100 - parseInt(product.discount)) / 100 );
                 }
-                //運費
+                //總重量
                 weight += parseInt(product.weight);
+                //混合箱
+                boxWeight += parseInt(product.boxWeight);
             });
             //扣掉預付
             sumUs = sumUs - parseInt(this.pre_money);
@@ -120,7 +125,7 @@ var buy = new Vue({
             sumNt = sumUs * this.rate;
 
             //運費的計算
-            //this.totalFare = Math.round(weight);
+            this.totalFare = Math.round(weight + (boxWeight * this.lb_price));
 
             this.costTotalSumUs = Math.round(sumUs);
             this.costTotalSumNt = Math.round(sumNt) + this.totalFare;
@@ -153,6 +158,7 @@ var buy = new Vue({
                 pre_money: this.pre_money,
                 rate: this.rate,
                 fare: this.totalFare,
+                lb_price: this.lb_price,
                 total_cost_nt: this.costTotalSumNt,
                 total_cost_us: this.costTotalSumUs,
             };

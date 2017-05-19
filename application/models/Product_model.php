@@ -86,6 +86,7 @@ class Product_model extends CI_Model {
 							'realName' => $product['name'],
 							'standard' => $product['standard'],
 							'weight' => $product['weight'],
+							'boxWeight' => $product['boxWeight'],
 						);
 						$has = true;
 

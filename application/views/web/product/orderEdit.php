@@ -98,6 +98,10 @@ $(function() {
 					<input type="number" v-model="rate" @change="productSum">
 					<label for="textarea">匯率</label>
 				</div>
+				<div class="input-field col s4">
+					<input type="number" v-model="lb_price" @change="productSum"></br>
+					<label>每個lb價格</label>
+				</div>
 			</div>
 			<div class="card-title">新增商品</div>
 			<div class="row select-field">
@@ -152,6 +156,7 @@ $(function() {
 						<td><input type="number" v-model="productCount[key]" @change="changeProductNum(productCount[key], product.amount, key)"></td>
 						<td><input type="number" v-model="product.discount" @change="productSum"></td>
 						<td><input type="number" v-model="product.weight" @change="productSum"></td>
+						<td><input type="number" v-model="product.boxWeight" @change="productSum"></td>
 						<td>{{ product.warehouse }}</td>
 						<td>{{ product.amount }}</td>
 						<td><a href="#" @click="deleteProduct(key, product.name)">刪除</a></td>
@@ -195,6 +200,7 @@ $(function() {
 	var orderNum = "<?php echo $order['orderNum'];?>";
 	var name = "<?php echo $order['buyer'];?>";
 	var date = "<?php echo $order['date'];?>";
+	var lb_price = "<?php echo $order['lb_price'];?>";
 	var county = "<?php echo $order['county'];?>";
 	var district = "<?php echo $order['district'];?>";
 	var zipcode = "<?php echo $order['zipcode'];?>";
@@ -210,7 +216,7 @@ $(function() {
 	var productInfo = '<?php echo $order['productInfo'];?>';
 </script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.twzipcode.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/buyEdit.js?v=6"></script>
+<script src="<?php echo base_url(); ?>assets/js/buyEdit.js?v=8"></script>
 <script>
 	$(document).ready(function(){
 		$('#twzipcode').twzipcode();

@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class AddBoxWeight extends AbstractMigration
+class AddLbPrice extends AbstractMigration
 {
     /**
      * Migrate Up.
@@ -10,8 +10,8 @@ class AddBoxWeight extends AbstractMigration
     public function up()
     {
         $this->query("
-            ALTER TABLE `product`
-            ADD COLUMN `boxWeight` FLOAT DEFAULT 0 AFTER `weight`
+            ALTER TABLE `product_order`
+            ADD COLUMN `lb_price` FLOAT DEFAULT 0 AFTER `fare`
         ");
     }
 

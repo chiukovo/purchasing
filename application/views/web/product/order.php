@@ -95,6 +95,10 @@ $(function() {
 					<input type="number" v-model="rate" @change="productSum">
 					<label for="textarea">匯率</label>
 				</div>
+				<div class="input-field col s4">
+					<input type="number" v-model="lb_price" @change="productSum"></br>
+					<label>每個lb價格</label>
+				</div>
 			</div>
 			<div class="card-title">新增商品</div>
 			<div class="row select-field">
@@ -139,6 +143,7 @@ $(function() {
 						<th>數量</th>
 						<th>折扣(%)</th>
 						<th>重量(g)</th>
+						<th>混合箱重</th>
 						<th>所在倉庫</th>
 						<th>庫存量</th>
 						<th>功能</th>
@@ -149,6 +154,7 @@ $(function() {
 						<td><input type="number" v-model="productCount[key]" @change="changeProductNum(productCount[key], product.amount, key)"></td>
 						<td><input type="number" v-model="product.discount" @change="productSum"></td>
 						<td><input type="number" v-model="product.weight" @change="productSum"></td>
+						<td><input type="number" v-model="product.boxWeight" @change="productSum"></td>
 						<td>{{ product.warehouse }}</td>
 						<td>{{ product.amount }}</td>
 						<td><a href="#" @click="deleteProduct(key, product.name)">刪除</a></td>
@@ -191,7 +197,7 @@ $(function() {
 	var orderNum = <?php echo $orderNum;?>;
 </script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.twzipcode.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/buy.js?v=5"></script>
+<script src="<?php echo base_url(); ?>assets/js/buy.js?v=7"></script>
 <script>
 	$('#twzipcode').twzipcode();
 	$('#productSelect').select2().on('change', function (e) {
