@@ -161,7 +161,7 @@ function ajaxKeyInPost()
                 chiuko_o_token: keyIn.csrf_value,
             },
             success: function(response) {
-                location.href = "/purchasing/product/list";
+                location.href = "/purchasing/product/dataList";
             },
         });
     }

@@ -60,7 +60,7 @@ class Warehouse extends CI_Controller
     /**
      * list
      */
-    public function list()
+    public function dataList()
     {
         $paramData = $this->input->get();
 

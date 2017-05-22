@@ -32,7 +32,7 @@ class Product extends CI_Controller
     /**
      * 進貨單列表
      */
-    public function list()
+    public function dataList()
     {
         $paramData = $this->input->get();
 
