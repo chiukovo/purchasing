@@ -3,7 +3,7 @@ var keyIn = new Vue({
     data: {
         productOrder: {
             date: '',
-            idCard: '',
+            idCard: ' ',
             rate: 0,
             total_cost_us: 0,
             total_cost_nt: 0,
@@ -12,7 +12,6 @@ var keyIn = new Vue({
         allProductName: {},
         keyInProduct: [],
         listProduct: [],
-        idCard: '',
         isDefault: true,
         isEdit: false,
         csrf_value: $('#csrf').attr('content'),
