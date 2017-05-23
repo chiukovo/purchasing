@@ -89,11 +89,16 @@ class Product extends CI_Controller
             redirect('/product/list');
         }
 
+        if ( ! isset($paramData['date']) || empty($paramData['date'])) {
+            redirect('/product/list');
+        }
+
         $data = [
             'warehouse' => json_decode($warehouse->name),
             'receiver' => json_decode($warehouse->receiver),
             'freight' => json_decode($warehouse->freight),
             'code' => $paramData['code'],
+            'date' => $paramData['date'],
             'noShow' => true,
         ];
 

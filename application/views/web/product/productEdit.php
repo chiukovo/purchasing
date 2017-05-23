@@ -21,7 +21,7 @@ $(function() {
 				<div class="card-title">進貨單資訊</div>
 				<div class="row">
 					<div class="input-field col s6">
-						<input id="date" type="date">
+						<input id="date" type="date" value="<?php echo $date;?>">
 						<label class="active">訂單日期</label>
 					</div>
 					<div class="input-field col s6">

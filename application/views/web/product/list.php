@@ -57,7 +57,7 @@ $(function() {
                 <td><?php echo format_money_nt($info['total_cost_nt']);?></td>
                 <td  class="center-align">
                     <a href="#modalEdit" class="waves-effect btn-flat" data-type="a-model" data-type="edit" data-code="<?php echo $info['code'];?>">
-                        <i class="material-icons" data-type="a-model">mode_edit</i>
+                        <i class="material-icons" data-type="a-model" data-date="<?php echo $info['date'];?>">mode_edit</i>
                     </a>
                     <a onclick="deleteCode('<?php echo $info['code'];?>', '<?php echo $info['date'];?>')" class="waves-effect btn-flat" data-type="delete">
                         <i class="material-icons" data-type="delete">close</i>
@@ -126,11 +126,12 @@ $('.modal').modal({
     ready: function(modal, trigger) {
         var code = $(trigger).attr('data-code');
         var type = $(trigger).attr('data-type');
+        var date = $(trigger).attr('data-date');
 
         if (type == 'add') {
             $("#inlineAjaxAdd").load("<?php echo base_url(); ?>product/keyIn");
         } else {
-            $("#inlineAjaxEdit").load("<?php echo base_url(); ?>product/productEdit?code=" + code);
+            $("#inlineAjaxEdit").load("<?php echo base_url(); ?>product/productEdit?code=" + code + "&date=" + date);
         }
     },
     complete: function() {
